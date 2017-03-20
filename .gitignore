@@ -1,0 +1,26 @@
+_drafts/
+_site/
+.sass-cache
+# emacs backup file
+*~
+# emacs recovery file
+\#*\#
+# emacs lock file
+.\#*
+#build directory
+build
+#object files
+*.o
+
+#static libraries
+*.a
+
+#share libraries
+*.dylib
+
+#executables
+a.out
+*.x
+
+#generate documentation
+*/doc/*

@@ -1,0 +1,18 @@
+{% if page.keypoints %}
+<div class="panel panel-success" style="margin-top: 50px;">
+    <div class="panel-heading">
+        <h3 class="panel-title">Key points</h3>
+    </div>
+    <div class="panel-body">
+        <div class="row">
+            <div class="col-md-12">
+                <ul>
+                  {% for keypoint in page.keypoints %}
+                      <li>{{ keypoint | markdownify }}</li>
+                  {% endfor %}
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+{% endif %}
