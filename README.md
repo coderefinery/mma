@@ -4,4 +4,4 @@
 
 ## Credit and license
 
-- https://coderefinery.github.io/cmake/license/
+- https://coderefinery.github.io/mma/license/
