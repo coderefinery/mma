@@ -13,4 +13,4 @@ keypoints:
 
 ## Section
 
-Write me ...
+legacy code, higher level tooling, parallelization
