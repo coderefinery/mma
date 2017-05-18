@@ -1,7 +1,7 @@
 ---
 layout: episode
-title: Testing Fortran with pytest
-teaching: 90
+title: API design
+teaching: 20
 exercises: 0
 questions:
   - Write me.

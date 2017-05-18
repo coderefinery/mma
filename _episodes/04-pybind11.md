@@ -1,7 +1,7 @@
 ---
 layout: episode
 title: Hands-on example using PyBind11
-teaching: 90
+teaching: 40
 exercises: 0
 questions:
   - Write me.

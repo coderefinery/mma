@@ -1,7 +1,7 @@
 ---
 layout: episode
 title: Building mixed-language projects with CMake
-teaching: 90
+teaching: 30
 exercises: 0
 questions:
   - Write me.

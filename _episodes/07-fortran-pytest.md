@@ -1,7 +1,7 @@
 ---
 layout: episode
-title: Fortran, C and C++ talking to each other
-teaching: 90
+title: Testing Fortran with pytest
+teaching: 40
 exercises: 0
 questions:
   - Write me.

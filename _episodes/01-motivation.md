@@ -1,7 +1,7 @@
 ---
 layout: episode
 title: Motivation
-teaching: 90
+teaching: 10
 exercises: 0
 questions:
   - Write me.

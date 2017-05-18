@@ -1,7 +1,7 @@
 ---
 layout: episode
 title: Roadmap for migrating and modularizing legacy code
-teaching: 90
+teaching: 10
 exercises: 0
 questions:
   - Write me.
