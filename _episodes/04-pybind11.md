@@ -1,12 +1,12 @@
 ---
 layout: episode
-title: Motivation
+title: Hands-on example using PyBind11
 teaching: 90
 exercises: 0
 questions:
   - Write me.
 objectives:
-  - Write me.
+  - Unit testing and prototyping of C++ code.
 keypoints:
   - Write me.
 ---

@@ -1,6 +1,6 @@
 ---
 layout: episode
-title: Motivation
+title: Overview over different approaches
 teaching: 90
 exercises: 0
 questions:

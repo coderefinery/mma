@@ -1,6 +1,6 @@
 ---
 layout: episode
-title: Motivation
+title: API design
 teaching: 90
 exercises: 0
 questions:
