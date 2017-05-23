@@ -12,23 +12,6 @@ keypoints:
 ---
 
 ## Section
-We start out with examples with different technologies. We are getting our hands dirty with SWIG, Boost and Pybind11. 
-
-![Python and C/C++](../assets/img/python-c.png "Python and C/C++. Licences CC BY 3.0"){:class="img-repsonsive"}
-
-```python
->>> import scipy
->>> import tss_ext
->>> scipy.sin(3.141592653/3)
-0.86602540368613978
->>> tss_ext.ts_sin(3.141592653/3,15)
-0.8660254036861398
->>> 
-```
-Here we import the well known scipy, https://www.scipy.org package, and call the function sin(). We also import the unknown tss_ext library and call a function ts_sin() which returns the approximately same result as scipy.sin().
-
-The tss_ext library is a shared library built from C++ source files, made available to the python interpreter with the Boost Library. Here the python scripting environment has been extended with functions from a C++ code base.
-
 There exist several technologies which make this possible:
 
 * SWIG
