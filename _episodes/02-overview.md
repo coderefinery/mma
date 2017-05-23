@@ -13,7 +13,7 @@ keypoints:
 
 ## Section
 We start out with examples with different technologies. We are getting our hands dirty with SWIG, Boost and Pybind11. 
-![Python and C/C++](../assets/img/python_call_c.001.jpeg "Python and C/C++" Licences CC BY 3.0"){:class="img-repsonsive"}
+![Python and C/C++](../assets/img/mma.001.png "Python and C/C++" Licences CC BY 3.0"){:class="img-repsonsive"}
 
 ```python
 >>> import scipy
@@ -37,7 +37,7 @@ There exist several technologies which make this possible:
 * Cython
 
 ## Conda environment
-We will create three different work environments in Anaconda. Here it is assumed that you have anaconda2 installed. Below is the necessary steps to install Anconda2 in your home area as ~/Anaconda2
+We will create three different work environments in Anaconda. Here it is assumed that you have anaconda2 installed. Below is the necessary steps to install Anconda2 in your home area as ~/anaconda2
 
 ```shell
 curl -OL https://repo.continuum.io/archive/Anaconda2-4.3.1-Linux-x86_64.sh
