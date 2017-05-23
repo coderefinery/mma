@@ -22,7 +22,7 @@ All these motivation point to a situation where we want to extend the ability of
 
 We start out with examples with different technologies. We are getting our hands dirty with SWIG, Boost and Pybind11. 
 
-![Python and C/C++](../assets/img/python-c.png "Python and C/C++. Licences CC BY 3.0"){:class="img-repsonsive"}
+![Python and C/C++]({{ site.baseurl }}/img/python-c.png "Python and C/C++. Licences CC BY 3.0"){:class="img-repsonsive"}
 
 ```python
 >>> import scipy
@@ -66,7 +66,7 @@ class Employee {
 };
 
 ```
-![C/C++-class hierarchy](../assets/img/classhierarchy.png "Class hierarchy. Licences CC BY 3.0"){:class="img-repsonsive"}
+![C/C++-class hierarchy]({{ site.baseurl }}/img/classhierarchy.png "Class hierarchy. Licences CC BY 3.0"){:class="img-repsonsive"}
 
 The figure shows two classes SalariedEmployee and CommisionEmploye which inherit Employee. These two classes must implement the virtual functions according to the C++-standard.
 
