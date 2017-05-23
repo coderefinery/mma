@@ -179,11 +179,53 @@ double cos(double x,int N) {
 }
 
 ```
-Now we need a interface file which describes how these functions can be called. In SWIG nomenclature this is a i-file. Here we define the module name and state which functions that needs wrappers.
+Now we need a interface file which describes how these functions can be called. In SWIG nomenclature this is a i-file. Here we define the module name and which functions that needs wrappers.
 
+```C++
+// taylor.i
+%module taylor
+%{
+  // include C++ header
+#include "taylor_series.h"
+  %}
 
+double sin(double x, int N);
+double cos(double x, int N);
+```
+The module will be named taylor and it is the function sin() and cos() which will be available for Python. We leave out the function factorial().
 
-### By reference
+We generate the wrapper, and compile the code to a share library called _taylor.so.
+
+```shell
+(swig-example) [lynx@swig]$ swig -python taylor.i
+(swig-example) [lynx@swig]$ g++ -c -fpic -Isrc `python-config --cflags` src/taylor_series_bv.cpp taylor_wrap.c 
+(swig-example) [lynx@swig]$ g++ -shared `python-config --ldflags` taylor_wrap.o taylor_series_bv.o -o _taylor.so
+(swig-example) [lynx@swig]$ ls
+src       taylor.py   taylor_series_bv.o  taylor_wrap.c
+taylor.i  taylor.pyc  _taylor.so          taylor_wrap.o
+(swig-example) [lynx@swig]$ python
+```
+
+There several files in our subdirectory. It is the _taylor.so we will load into our Python interpreter. Start python as above.
+
+```python
+>>> import taylor
+>>> taylor.sin(3.141592653/4,14)
+0.7071067810822858
+>>> taylor.cos(3.141592653/4,14)
+0.7071067812908091
+>>> import scipy
+>>> scipy.sin(3.141592653/4)
+0.70710678108228586
+>>> scipy.cos(3.141592653/4)
+0.70710678129080917
+```
+Our Taylor-functions are available for use by Python.
+
+There is a jungle of C++ constructs and complexities which we have avoided in this example. For instance, the functions arguments are passed by value, which not very likely in C++, as arguments are passed by reference.
+
+### Arguments passed by reference
+As we want use functions which call by reference, our interface file becomes less intuitive.
 
 Here is our C++-source code of the Taylor Series, the taylor_series.cpp:
 ``` C++
