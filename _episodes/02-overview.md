@@ -32,13 +32,164 @@ Cython:"All of this makes Cython the ideal language for wrapping external C libr
 
 
 ##SWIG
-The swig example. Listed is three functions, Taylor series of sin(), cos() and a helper function factorial() written in C++. We gone call these functions from Pyhone using SWIG
+Our source code contains three functions, Taylor series of sin(), cos() and a helper function factorial(). We will make these functions available in our Python interpreter with the use of SWIG
 
-Simplified Wrapper and Interface Generator,http://www.swig.org/ (SWIG). It is a software tool for making programs/applications written C/C++ accessible from a high-level programming language. Python is on of these high-level programming languages, but there is a range of others(C#,Common Lisp, Go,R, Lua et cetera).
+``` Simplified Wrapper and Interface Generator,http://www.swig.org/ (SWIG). It is a software tool for making programs/applications written C/C++ accessible from a high-level programming language. Python is on of these high-level programming languages, but there is a range of others(C#,Common Lisp, Go,R, Lua et cetera).
+```
+Start out with at empty subdirectory, your C++ compiler and the Anaconda2 enviroment available in your path:
+```shell
+[lynx@~]$mkdir swig
+[lynx@swig]$ type conda
+conda is /home/lynx/anaconda2/bin/conda
+[lynx@swig]$ type g++
+g++ is /share/apps/software/Core/GCCcore/6.3.0/bin/g++
+[lynx@swig]$ g++ --version
+g++ (GCC) 6.3.0
+Copyright (C) 2016 Free Software Foundation, Inc.
+This is free software; see the source for copying conditions.  There is NO
+warranty; not even for MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+
+```
+Create a SWIG enabled environment in conda. Here we also add scipy to have available for possible comparisons with the methods we have implemented.
 
 
-Here is our C++-source code of the Taylor Series, the tayolor_series.cpp:
+``` shell
+[lynx@swig]$echo ${PATH}
+/home/lynx/anaconda2/bin:/home/lynx/local/bin:/usr/lib64/qt-3.3/bin:/usr/local/bin:/bin:/usr/bin:/usr/local/sbin:/usr/sbin:/sbin:/opt/ganglia/bin:/opt/ganglia/sbin:/usr/java/latest/bin:/opt/pdsh/bin:/opt/rocks/bin:/opt/rocks/sbin:/home/lynx/bin
+
+[lynx@swig]$conda create --name swig-example                         
+Fetching package metadata .........
+Solving package specifications: 
+Package plan for installation in environment /home/lynx/anaconda2/envs/swig-example:
+
+Proceed ([y]/n)? y
+
+#
+# To activate this environment, use:
+# > source activate swig-example
+#
+# To deactivate this environment, use:
+# > source deactivate swig-example
+#
+
+
+[lynx@swig]$source activate swig-example
+```
+
+Note how you get '(swig-example)' at the start of your prompt when you have activated this environment:
+
+```shell
+(swig-example) [lynx@swig]$ conda install scipy swig
+Fetching package metadata .........
+Solving package specifications: .
+
+Package plan for installation in environment /home/lynx/anaconda2/envs/swig-example:
+
+The following NEW packages will be INSTALLED:
+
+    libgfortran: 3.0.0-1           
+    mkl:         2017.0.1-0        
+    numpy:       1.12.1-py27_0     
+    openssl:     1.0.2k-2          
+    pcre:        8.39-1            
+    pip:         9.0.1-py27_1      
+    python:      2.7.13-0          
+    readline:    6.2-2             
+    scipy:       0.19.0-np112py27_0
+    setuptools:  27.2.0-py27_0     
+    sqlite:      3.13.0-0          
+    swig:        3.0.10-0          
+    tk:          8.5.18-0          
+    wheel:       0.29.0-py27_0     
+    zlib:        1.2.8-3           
+
+Proceed ([y]/n)? y
+libgfortran-3. 100% |##########################################| Time: 0:00:00   6.36 MB/s
+mkl-2017.0.1-0 100% |##########################################| Time: 0:00:02  66.96 MB/s
+openssl-1.0.2k 100% |##########################################| Time: 0:00:00  70.17 MB/s
+readline-6.2-2 100% |##########################################| Time: 0:00:00  62.06 MB/s
+sqlite-3.13.0- 100% |##########################################| Time: 0:00:00  72.32 MB/s
+tk-8.5.18-0.ta 100% |##########################################| Time: 0:00:00  70.14 MB/s
+zlib-1.2.8-3.t 100% |##########################################| Time: 0:00:00  45.90 MB/s
+pcre-8.39-1.ta 100% |##########################################| Time: 0:00:00  62.08 MB/s
+python-2.7.13- 100% |##########################################| Time: 0:00:00  72.23 MB/s
+numpy-1.12.1-p 100% |##########################################| Time: 0:00:00  74.48 MB/s
+setuptools-27. 100% |##########################################| Time: 0:00:00  59.51 MB/s
+swig-3.0.10-0. 100% |##########################################| Time: 0:00:00  69.37 MB/s
+wheel-0.29.0-p 100% |##########################################| Time: 0:00:00  40.78 MB/s
+pip-9.0.1-py27 100% |##########################################| Time: 0:00:00  67.90 MB/s
+scipy-0.19.0-n 100% |##########################################| Time: 0:00:00  71.99 MB/s
+
+```
+Now we create a src subdirectory with the source files taylor_series.h and taylor_series.h
+
+Here is the contents of the taylor_series.h:
+```C++
+#ifndef TAYLOR_SERIES_H_
+#define TAYLOR_SERIES_H_
+
+extern unsigned long long factorial( int n);
+extern double sin(double x, int N);
+extern double cos(double x,int N);
+
+#endif // TAYLOR_SERIES_H_
+
+```
+
+The contents of taylor_series.cpp:
+
+```C++
+#include <math.h>
+#include "taylor_series.h"
+
+unsigned long long factorial( int n){
+  unsigned long long result = 1;
+  if ( n != 0)
+     for (int i = 0; i < n; i++)
+       result = result * (i+1);
+  return result;
+};
+
+double sin(double x, int N){
+  double    sum = 0.0;
+  int par,sign;
+  unsigned long int fac;
+  for (int i = 0; i < N; i++) {
+    par = (1+2*i);
+    fac = factorial(par);
+    sign = pow((-1),i);
+    sum = sum + sign*pow(x,par)/fac;
+
+  }
+
+  return sum;
+}
+
+double cos(double x,int N) {
+  double sum = 0.0;
+  int par,sign;
+  unsigned long int fac;
+  for (int i = 0; i < N; i++) {
+    par = 2*i;
+    fac = factorial(par);
+    sign = pow((-1),i);
+    sum = sum + sign*pow(x,par)/fac;
+  }
+  return sum;
+}
+
+```
+Now we need a interface file which describes how these functions can be called. In SWIG nomenclature this is a i-file. Here we define the module name and state which functions that needs wrappers.
+
+
+
+### By reference
+
+Here is our C++-source code of the Taylor Series, the taylor_series.cpp:
 ``` C++
+//
+// taylor_series.cpp
+//
 #include <iostream>
 #include <math.h>
 #include "taylor_series.h"
@@ -157,72 +308,8 @@ Sign up for free: https://anaconda.org
 
 We then proceed to create the three work environments need for the examples, assuming that the Anaconda2 binary subdirectory is first in your PATH.
 
-First we create the SWIG work environment
-
-``` shell
-echo ${PATH}
-/home/lynx/anaconda2/bin:/home/lynx/local/bin:/usr/lib64/qt-3.3/bin:/usr/local/bin:/bin:/usr/bin:/usr/local/sbin:/usr/sbin:/sbin:/opt/ganglia/bin:/opt/ganglia/sbin:/usr/java/latest/bin:/opt/pdsh/bin:/opt/rocks/bin:/opt/rocks/sbin:/home/lynx/bin
-
-conda create --name swig-example                         
-Fetching package metadata .........
-Solving package specifications: 
-Package plan for installation in environment /home/lynx/anaconda2/envs/swig-example:
-
-Proceed ([y]/n)? y
-
-#
-# To activate this environment, use:
-# > source activate swig-example
-#
-# To deactivate this environment, use:
-# > source deactivate swig-example
-#
 
 
-source activate swig-example
-(swig-example) [lynx@login-0-0 Downloads]$ conda install scipy swig
-Fetching package metadata .........
-Solving package specifications: .
-
-Package plan for installation in environment /home/lynx/anaconda2/envs/swig-example:
-
-The following NEW packages will be INSTALLED:
-
-    libgfortran: 3.0.0-1           
-    mkl:         2017.0.1-0        
-    numpy:       1.12.1-py27_0     
-    openssl:     1.0.2k-2          
-    pcre:        8.39-1            
-    pip:         9.0.1-py27_1      
-    python:      2.7.13-0          
-    readline:    6.2-2             
-    scipy:       0.19.0-np112py27_0
-    setuptools:  27.2.0-py27_0     
-    sqlite:      3.13.0-0          
-    swig:        3.0.10-0          
-    tk:          8.5.18-0          
-    wheel:       0.29.0-py27_0     
-    zlib:        1.2.8-3           
-
-Proceed ([y]/n)? y
-libgfortran-3. 100% |##########################################| Time: 0:00:00   6.36 MB/s
-mkl-2017.0.1-0 100% |##########################################| Time: 0:00:02  66.96 MB/s
-openssl-1.0.2k 100% |##########################################| Time: 0:00:00  70.17 MB/s
-readline-6.2-2 100% |##########################################| Time: 0:00:00  62.06 MB/s
-sqlite-3.13.0- 100% |##########################################| Time: 0:00:00  72.32 MB/s
-tk-8.5.18-0.ta 100% |##########################################| Time: 0:00:00  70.14 MB/s
-zlib-1.2.8-3.t 100% |##########################################| Time: 0:00:00  45.90 MB/s
-pcre-8.39-1.ta 100% |##########################################| Time: 0:00:00  62.08 MB/s
-python-2.7.13- 100% |##########################################| Time: 0:00:00  72.23 MB/s
-numpy-1.12.1-p 100% |##########################################| Time: 0:00:00  74.48 MB/s
-setuptools-27. 100% |##########################################| Time: 0:00:00  59.51 MB/s
-swig-3.0.10-0. 100% |##########################################| Time: 0:00:00  69.37 MB/s
-wheel-0.29.0-p 100% |##########################################| Time: 0:00:00  40.78 MB/s
-pip-9.0.1-py27 100% |##########################################| Time: 0:00:00  67.90 MB/s
-scipy-0.19.0-n 100% |##########################################| Time: 0:00:00  71.99 MB/s
-
-source deactivate
-```
 
 ##Boost
 ```shell
