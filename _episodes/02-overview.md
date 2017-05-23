@@ -13,6 +13,7 @@ keypoints:
 
 ## Section
 We start out with examples with different technologies. We are getting our hands dirty with SWIG, Boost and Pybind11. 
+
 ![Python and C/C++](../assets/img/python-c.png "Python and C/C++" Licences CC BY 3.0"){:class="img-repsonsive"}
 
 ```python
