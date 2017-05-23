@@ -20,7 +20,96 @@ There exist several technologies which make this possible:
 * Pybind11
 * Cython
 
-## Conda environment
+Simplified Wrapper and Interface Generator (SWIG) is a tool that simplies the two step process of making a wrapper and generating a interface which makes the wrapper callable from the interpreter. According to the SWIG documentation, "SWIG was orignally designed to make it extremely easy for scientist and engineers to build extensible scientific software without having a degree in software engineering". So SWIG should really be the only thing we need, right? Could be, but before giving a motivation for the other tools, it is worth mentioning that SWIG support a range of interpreting languages, not only Python.
+
+F2PY is a tool for interfacing Fortan and Python. According to "Python Scripting for Computational Science" transfering Numpy arrays between Python and compiled Fortran code is easier with F2PY than SWIG.
+
+Boost is a huge C++-library which works with almost any C++-compiler. The Python interface tool was added to the Boost library around 2002 by David Abrahams. Hence, if you a have special C++-compiler, Boost.Python could be your most suitable tool for integrating Python and C++.
+
+"Pybind11 is a lightweight-header only library that exposes C++-types in Python and vice versa, mainly to create Python bindings of existing C++ code.", according to the Pybind11 web page, https://pybind11.readthedocs.io/en/stable/intro.html. The point it is lightweight and targeting the combination of Python and C++11compliant compilers. Consequently, the interface code becomes more straight forward.
+
+Cython:"All of this makes Cython the ideal language for wrapping external C libraries, embedding CPython into existing applications, and for fast C modules that speed up the execution of Python code.", see webpage http://cython.org
+
+
+##SWIG
+The swig example. Listed is three functions, Taylor series of sin(), cos() and a helper function factorial() written in C++. We gone call these functions from Pyhone using SWIG
+
+Simplified Wrapper and Interface Generator,http://www.swig.org/ (SWIG). It is a software tool for making programs/applications written C/C++ accessible from a high-level programming language. Python is on of these high-level programming languages, but there is a range of others(C#,Common Lisp, Go,R, Lua et cetera).
+
+
+Here is our C++-source code of the Taylor Series, the tayolor_series.cpp:
+``` C++
+#include <iostream>
+#include <math.h>
+#include "taylor_series.h"
+
+unsigned long long factorial( int n){
+  unsigned long long result = 1;
+  if ( n != 0)
+     for (int i = 0; i < n; i++)
+       result = result * (i+1);
+  return result;
+};
+
+double ts_sin(double& x, int N){
+  long double numerator,denomi;
+  double    sum = 0.0;
+  int par,sign;
+  unsigned long int fac;
+  for (int i = 0; i < N; i++) {
+    par = (1+2*i);
+    fac = factorial(par);
+    sign = pow((-1),i);
+    sum = sum + sign*pow(x,par)/fac;
+
+  }
+
+  return sum;
+}
+
+double ts_cos(double& x,int N) {
+  long double numerator,denomi;
+  double sum = 0.0;
+  int par,sign;
+  unsigned long int fac;
+  for (int i = 0; i < N; i++) {
+    par = 2*i;
+    fac = factorial(par);
+    sign = pow((-1),i);
+    sum = sum + sign*pow(x,par)/fac;
+  }
+  return sum;
+}
+```
+The file tayour_series.h:
+
+```C++
+#ifndef TAYLOR_SERIES_H_
+#define TAYLOR_SERIES_H_
+
+extern unsigned long long factorial( int n);
+extern double ts_sin(double& x, int N);
+extern double ts_cos(double& x,int N);
+
+#endif // TAYLOR_SERIES_H_
+
+```
+
+To make these functions available for the Python interpreter with the use of SWIG, we need to write a interface file, a %.i file. In our example called tss.i:
+```C++
+// file: tss.i
+%module tss
+%{
+  // include C++ header
+#include "taylor_series.h"
+  %}
+
+%include "typemaps.i"
+%apply double *INPUT {double& x }
+%include "taylor_series.h"
+```
+
+## Installation of Anaconda - the Conda environment
 We will create three different work environments in Anaconda. Here it is assumed that you have anaconda2 installed. Below is the necessary steps to install Anconda2 in your home area as ~/anaconda2
 
 ```shell
@@ -133,84 +222,6 @@ pip-9.0.1-py27 100% |##########################################| Time: 0:00:00  
 scipy-0.19.0-n 100% |##########################################| Time: 0:00:00  71.99 MB/s
 
 source deactivate
-```
-
-##SWIG
-The swig example. Listed is three functions, Taylor series of sin(), cos() and a helper function factorial() written in C++. We gone call these functions from Pyhone using SWIG
-
-Simplified Wrapper and Interface Generator,http://www.swig.org/ (SWIG). It is a software tool for making programs/applications written C/C++ accessible from a high-level programming language. Python is on of these high-level programming languages, but there is a range of others(C#,Common Lisp, Go,R, Lua et cetera).
-
-
-Here is our C++-source code of the Taylor Series, the tayolor_series.cpp:
-``` C++
-#include <iostream>
-#include <math.h>
-#include "taylor_series.h"
-
-unsigned long long factorial( int n){
-  unsigned long long result = 1;
-  if ( n != 0)
-     for (int i = 0; i < n; i++)
-       result = result * (i+1);
-  return result;
-};
-
-double ts_sin(double& x, int N){
-  long double numerator,denomi;
-  double    sum = 0.0;
-  int par,sign;
-  unsigned long int fac;
-  for (int i = 0; i < N; i++) {
-    par = (1+2*i);
-    fac = factorial(par);
-    sign = pow((-1),i);
-    sum = sum + sign*pow(x,par)/fac;
-
-  }
-
-  return sum;
-}
-
-double ts_cos(double& x,int N) {
-  long double numerator,denomi;
-  double sum = 0.0;
-  int par,sign;
-  unsigned long int fac;
-  for (int i = 0; i < N; i++) {
-    par = 2*i;
-    fac = factorial(par);
-    sign = pow((-1),i);
-    sum = sum + sign*pow(x,par)/fac;
-  }
-  return sum;
-}
-```
-The file tayour_series.h:
-
-```C++
-#ifndef TAYLOR_SERIES_H_
-#define TAYLOR_SERIES_H_
-
-extern unsigned long long factorial( int n);
-extern double ts_sin(double& x, int N);
-extern double ts_cos(double& x,int N);
-
-#endif // TAYLOR_SERIES_H_
-
-```
-
-To make these functions available for the Python interpreter with the use of SWIG, we need to write a interface file, a %.i file. In our example called tss.i:
-```C++
-// file: tss.i
-%module tss
-%{
-  // include C++ header
-#include "taylor_series.h"
-  %}
-
-%include "typemaps.i"
-%apply double *INPUT {double& x }
-%include "taylor_series.h"
 ```
 
 ##Boost
