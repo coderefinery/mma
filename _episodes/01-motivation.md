@@ -76,8 +76,14 @@ From Python we would like to make use of these classes and their methods in a wa
 >>> t = CommisionEmployee('Molly','Malone', "333-33-3333",19000,.05,)
 >>> u = SalariedEmployee('John','Jones', '111-11-1111', 15000)
 >>> t.earnings()
+20150
 >>> u.earnings()
+15000
 ```
+How do we accomplish this, making the Employee class hierarchy available in the python interpreter? Python, as most scripting language, has a foreign function interface which defines how external functions commands can hook into the interpreter, here the C/C++ reference manual https://docs.python.org/2/c-api/.
+
+You will need to write a special wrapper that serves as a glue between the C/C++function and the Python interpreter. The Python interpreter also needs to known how to call the wrapper (the name,arguments. We could do this by following the reference manual, but here we will show how this can be done with different tools.
+
 
 Inspired by the SWIG-3.0 documentation, http://www.swig.org/Doc3.0/
 Reference to book
