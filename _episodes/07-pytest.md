@@ -1,6 +1,6 @@
 ---
 layout: episode
-title: Testing Fortran with pytest
+title: Testing dynamic libraries with pytest
 teaching: 40
 exercises: 0
 questions:
