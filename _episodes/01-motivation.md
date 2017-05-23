@@ -26,10 +26,10 @@ We start out with examples with different technologies. We are getting our hands
 
 ```python
 >>> import scipy
->>> import tss_ext
+>>> import taylor
 >>> scipy.sin(3.141592653/3)
 0.86602540368613978
->>> tss_ext.ts_sin(3.141592653/3,15)
+>>> taylor.sin(3.141592653/3,15)
 0.8660254036861398
 >>> 
 ```
