@@ -354,6 +354,8 @@ We then proceed to create the three work environments need for the examples, ass
 
 
 ##Boost
+We create a new Anaconda enviroment for use with the Boost-example. Here we install the Boost Library and scipy (for comparision). Remember to deactivate your current conda environment before creating the Boost environment `source deactivate`:
+
 ```shell
 [lynx@login-0-0 Downloads]$ conda create --name boost-example
 Fetching package metadata .........
@@ -402,6 +404,87 @@ Proceed ([y]/n)? y
 icu-54.1-0.tar 100% |##########################################| Time: 0:00:00  13.09 MB/s
 boost-1.61.0-p 100% |##########################################| Time: 0:00:01  16.30 MB/s
 
+```
+Make a new subdirectory with a src subdirectory:
+
+```shell
+(boost-example) [lynx@boost]$ mkdir -p boost/src
+(boost-example) [lynx@boost]$ cd boost
+```
+In the src-directory make a file boost_taylor.cpp with following contains:
+```C++
+#include <boost/python/module.hpp>
+#include <boost/python/def.hpp>
+#include <boost/python/tuple.hpp>
+
+unsigned long long factorial( int n){
+  unsigned long long result = 1;
+  if ( n != 0)
+     for (int i = 0; i < n; i++)
+       result = result * (i+1);
+  return result;
+};
+
+double sin(double x, int N){
+  long double numerator,denomi;
+  double    sum = 0.0;
+  int par,sign;
+  unsigned long int fac;
+  for (int i = 0; i < N; i++) {
+    par = (1+2*i);
+    fac = factorial(par);
+    sign = pow((-1),i);
+    sum = sum + sign*pow(x,par)/fac;
+
+  }
+
+  return sum;
+}
+
+double cos(double x,int N) {
+  long double numerator,denomi;
+  double sum = 0.0;
+  int par,sign;
+  unsigned long int fac;
+  for (int i = 0; i < N; i++) {
+    par = 2*i;
+    fac = factorial(par);
+    sign = pow((-1),i);
+    sum = sum + sign*pow(x,par)/fac;
+  }
+  return sum;
+}
+
+
+BOOST_PYTHON_MODULE(taylor_boost)
+{
+  using namespace boost::python;
+  def("sin", sin);
+  def("cos", cos);
+}
+ 
+```
+Compiling the boost version and start python:
+
+``` shell
+g++ --std=c++11 --shared src/boost_taylor.cpp -I${HOME}/anaconda2/envs/boost-example/include `python-config --cflags` -L${HOME}/anaconda2/envs/boost-example/lib/ -lboost_python `python-config --ldflags` -fpic -o taylor_boost.so
+python
+```
+Load the module:
+```python
+ython 2.7.13 |Continuum Analytics, Inc.| (default, Dec 20 2016, 23:09:15) 
+[GCC 4.4.7 20120313 (Red Hat 4.4.7-1)] on linux2
+Type "help", "copyright", "credits" or "license" for more information.
+Anaconda is brought to you by Continuum Analytics.
+Please check out: http://continuum.io/thanks and https://anaconda.org
+>>> import taylor_boost
+>>> taylor_boost.sin(3.141592653/3,15)
+0.8660254036861398
+>>> exit()
+```
+Remember to deactivate the environment:
+
+```shell
 source deactivate
 ```
 
