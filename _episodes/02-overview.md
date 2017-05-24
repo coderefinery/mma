@@ -321,63 +321,6 @@ source deactivate
 
 
 ##PyBind11
-The PyBind11 library is installed from conda-forge. Remember to use the -c to add conda-forge as a additinal channel to search for packages.
-```shell
-[lynx@login-0-0 Downloads]$ conda create --name pybind11-example
-Fetching package metadata .........
-Solving package specifications: 
-Package plan for installation in environment /home/lynx/anaconda2/envs/pybind11-example:
-
-Proceed ([y]/n)? y
-
-#
-# To activate this environment, use:
-# > source activate pybind11-example
-#
-# To deactivate this environment, use:
-# > source deactivate pybind11-example
-#
-
-[lynx@login-0-0 Downloads]$ source activate pybind11-example
-(pybind11-example) [lynx@login-0-0 Downloads]$ conda install scipy         
-Fetching package metadata .........
-Solving package specifications: .
-
-Package plan for installation in environment /home/lynx/anaconda2/envs/pybind11-example:
-
-The following NEW packages will be INSTALLED:
-
-    libgfortran: 3.0.0-1           
-    mkl:         2017.0.1-0        
-    numpy:       1.12.1-py27_0     
-    openssl:     1.0.2k-2          
-    pip:         9.0.1-py27_1      
-    python:      2.7.13-0          
-    readline:    6.2-2             
-    scipy:       0.19.0-np112py27_0
-    setuptools:  27.2.0-py27_0     
-    sqlite:      3.13.0-0          
-    tk:          8.5.18-0          
-    wheel:       0.29.0-py27_0     
-    zlib:        1.2.8-3           
-
-Proceed ([y]/n)? 
-
-(pybind11-example) [lynx@login-0-0 Downloads]$ conda install -c conda-forge pybind11  
-Fetching package metadata ...........
-Solving package specifications: .
-
-Package plan for installation in environment /home/lynx/anaconda2/envs/pybind11-example:
-
-The following NEW packages will be INSTALLED:
-
-    pybind11: 2.1.1-py27_0 conda-forge
-
-Proceed ([y]/n)? 
-
-pybind11-2.1.1 100% |##########################################| Time: 0:00:00 231.13 kB/s
-
-```
 Make a subdirectory pybind11 with an additional src subdirectory:
 
 ``` shell
