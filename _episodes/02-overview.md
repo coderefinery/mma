@@ -20,7 +20,7 @@ There exist several technologies which make this possible:
 * Pybind11
 * Cython
 
-Simplified Wrapper and Interface Generator (SWIG) is a tool that simplies the two step process of making a wrapper and generating a interface which makes the wrapper callable from the interpreter. According to the SWIG documentation, "SWIG was orignally designed to make it extremely easy for scientist and engineers to build extensible scientific software without having a degree in software engineering". So SWIG should really be the only thing we need, right? Could be, but before giving a motivation for the other tools, it is worth mentioning that SWIG support a range of interpreting languages, not only Python.
+Simplified Wrapper and Interface Generator (SWIG) is a tool that simplies the two step process of making a wrapper and generating a interface which makes the wrapper callable from the interpreter. According to the SWIG documentation, "SWIG was orignally designed to make it extremely easy for scientist and engineers to build extensible scientific software without having a degree in software engineering". So SWIG should really be the only thing we need, right? Could be, but before giving a motivation for the other tools, it is worth mentioning that SWIG support a range of interpreting languages (C#,Common Lisp, Go,R, Lua ...), not only Python.
 
 F2PY is a tool for interfacing Fortan and Python. According to "Python Scripting for Computational Science" transfering Numpy arrays between Python and compiled Fortran code is easier with F2PY than SWIG.
 
@@ -34,8 +34,6 @@ Cython:"All of this makes Cython the ideal language for wrapping external C libr
 ### SWIG
 
 Our source code contains three functions, Taylor series of sin(), cos() and a helper function factorial(). We will make sin() and cos() available in our Python interpreter with the use of SWIG
-
-Simplified Wrapper and Interface Generator,http://www.swig.org/ (SWIG). It is a software tool for making programs/applications written C/C++ accessible from a high-level programming language. Python is on of these high-level programming languages, but there is a range of others(C#,Common Lisp, Go,R, Lua et cetera).
 
 Start out with at empty subdirectory, your C++ compiler and the Anaconda2 enviroment available in your path. Activate the swig-example environment:
 ```shell
@@ -56,6 +54,7 @@ Now we create a src subdirectory with the source files taylor_series.h and taylo
 
 Here is the contents of the taylor_series.h:
 ```C++
+// taylor_series.h
 #ifndef TAYLOR_SERIES_H_
 #define TAYLOR_SERIES_H_
 
@@ -70,6 +69,7 @@ extern double cos(double x,int N);
 The contents of taylor_series.cpp:
 
 ```C++
+// taylor_series.cpp
 #include <math.h>
 #include "taylor_series.h"
 
