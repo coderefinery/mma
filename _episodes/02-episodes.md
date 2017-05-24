@@ -57,7 +57,7 @@ Our source code contains three functions, Taylor series of sin(), cos() and a
 helper function factorial(). We will make these functions available in our
 Python interpreter with the use of SWIG
 >>>>>>> gh-pages
-Start out with at empty subdirectory, your C++ compiler and the Anaconda2 enviroment 
+Start out with at empty subdirectory, your C++ compiler and the Anaconda2 enviroment
 available in your path. Activate the swig-example environment:
 ```shell
 [lynx@~]$mkdir swig
@@ -158,7 +158,7 @@ _taylor.so.
 
 ```shell
 (swig-example) [lynx@swig]$ swig -python taylor.i
-(swig-example) [lynx@swig]$ g++ -c -fpic -Isrc `python-config --cflags` src/taylor_series_bv.cpp taylor_wrap.c 
+(swig-example) [lynx@swig]$ g++ -c -fpic -Isrc `python-config --cflags` src/taylor_series_bv.cpp taylor_wrap.c
 (swig-example) [lynx@swig]$ g++ -shared `python-config --ldflags` taylor_wrap.o taylor_series_bv.o -o _taylor.so
 (swig-example) [lynx@swig]$ ls
 src       taylor.py   taylor_series_bv.o  taylor_wrap.c
@@ -244,7 +244,7 @@ BOOST_PYTHON_MODULE(taylor_boost)
   def("sin", sin);
   def("cos", cos);
 }
- 
+
 ```
 Compiling the boost version and start python:
 
@@ -254,7 +254,7 @@ python
 ```
 Load the module:
 ```python
-ython 2.7.13 |Continuum Analytics, Inc.| (default, Dec 20 2016, 23:09:15) 
+ython 2.7.13 |Continuum Analytics, Inc.| (default, Dec 20 2016, 23:09:15)
 [GCC 4.4.7 20120313 (Red Hat 4.4.7-1)] on linux2
 Type "help", "copyright", "credits" or "license" for more information.
 Anaconda is brought to you by Continuum Analytics.
@@ -386,7 +386,7 @@ CMakeLists.txt  src
 -- Check for working CXX compiler: /usr/bin/c++ -- works
 -- Detecting CXX compiler ABI info
 -- Detecting CXX compiler ABI info - done
--- Found PythonInterp: /home/lynx/anaconda2/envs/pybind11-example/bin/python (found version "2.7.13") 
+-- Found PythonInterp: /home/lynx/anaconda2/envs/pybind11-example/bin/python (found version "2.7.13")
 -- Found PythonLibs: /home/lynx/anaconda2/envs/pybind11-example/lib/libpython2.7.so
 -- Performing Test HAS_CPP14_FLAG
 -- Performing Test HAS_CPP14_FLAG - Failed
@@ -405,7 +405,7 @@ Scanning dependencies of target taylor
 Linking CXX shared module taylor.so
 [100%] Built target taylor
 (pybind11-example) [lynx@build]$ python
-Python 2.7.13 |Continuum Analytics, Inc.| (default, Dec 20 2016, 23:09:15) 
+Python 2.7.13 |Continuum Analytics, Inc.| (default, Dec 20 2016, 23:09:15)
 [GCC 4.4.7 20120313 (Red Hat 4.4.7-1)] on linux2
 Type "help", "copyright", "credits" or "license" for more information.
 Anaconda is brought to you by Continuum Analytics.
@@ -413,7 +413,7 @@ Please check out: http://continuum.io/thanks and https://anaconda.org
 >>> import taylor
 >>> taylor.sin(3.141592653/3,14)
 0.8660254036861398
->>> 
+>>>
 
 
 ``` shell

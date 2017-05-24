@@ -259,8 +259,8 @@ CMakeLists.txt  CMakeLists.txt~  taylor.i  taylor_series.cpp  taylor_series.h
 -- Check for working CXX compiler: /usr/bin/c++ -- works
 -- Detecting CXX compiler ABI info
 -- Detecting CXX compiler ABI info - done
--- Found SWIG: /home/lynx/anaconda2/envs/swig-example/bin/swig (found version "3.0.10") 
--- Found PythonLibs: /usr/lib64/libpython2.7.so (found version "2.7.5") 
+-- Found SWIG: /home/lynx/anaconda2/envs/swig-example/bin/swig (found version "3.0.10")
+-- Found PythonLibs: /usr/lib64/libpython2.7.so (found version "2.7.5")
 -- Configuring done
 -- Generating done
 -- Build files have been written to: /home/lynx/src/c++/numcom/taylor_series/swig/build
@@ -273,7 +273,7 @@ Linking CXX shared module ../lib/_taylor.so
 [100%] Built target _taylor
 (swig-example) [lynx@build]$ cd lib
 (swig-example) [lynx@lib]$ python
-Python 2.7.13 |Continuum Analytics, Inc.| (default, Dec 20 2016, 23:09:15) 
+Python 2.7.13 |Continuum Analytics, Inc.| (default, Dec 20 2016, 23:09:15)
 [GCC 4.4.7 20120313 (Red Hat 4.4.7-1)] on linux2
 Type "help", "copyright", "credits" or "license" for more information.
 Anaconda is brought to you by Continuum Analytics.
@@ -281,6 +281,6 @@ Please check out: http://continuum.io/thanks and https://anaconda.org
 >>> import _taylor as taylor
 >>> taylor.sin(3.141592356/3,15)
 0.8660253541861354
->>> 
+>>>
 
 ```
