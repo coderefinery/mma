@@ -150,9 +150,11 @@ functions that needs wrappers.
 double sin(double x, int N);
 double cos(double x, int N);
 ```
-The module will be named taylor and it is the function sin() and cos() which will be available for Python. We leave out the function factorial().
+The module will be named taylor and it is the function sin() and cos() which
+will be available for Python. We leave out the function factorial().
 
-We generate the wrapper, and compile the code to a share library called _taylor.so.
+We generate the wrapper, and compile the code to a share library called
+_taylor.so.
 
 ```shell
 (swig-example) [lynx@swig]$ swig -python taylor.i
@@ -180,7 +182,9 @@ There several files in our subdirectory. It is the _taylor.so we will load into 
 ```
 Our Taylor-functions are available for use by Python.
 
-There is a jungle of C++ constructs and complexities which we have avoided in this example. For instance, the functions arguments are passed by value, which not very likely in C++, as arguments are passed by reference.
+There is a jungle of C++ constructs and complexities which we have avoided in
+this example. For instance, the functions arguments are passed by value, which
+not very likely in C++, as arguments are passed by reference.
 
 ### Boost
 Make a new subdirectory with a src subdirectory:

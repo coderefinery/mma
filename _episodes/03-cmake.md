@@ -155,7 +155,8 @@ $ cmake ..
 $ make
 ```
 
-This is very similar to the steps taken when building taylor library with Pybind11. Here is the CMakeLists.txt from that example:
+This is very similar to the steps taken when building taylor library with
+Pybind11. Here is the CMakeLists.txt from that example:
 ```CMAKE
 cmake_minimum_required(VERSION 2.8 FATAL_ERROR)
 project(taylor)
@@ -172,8 +173,11 @@ provided by the Pybind11 installation. pybind11_add_module() generates steps
 necessary for building the python extension taylor.so.
 
 ## CMake and SWIG
-SWIG can also use CMake as generator for the building process. This time we make use
-of the same source code as in the Pybind11 example, we pass the arguments by reference, as we would expect of C++ code. This requires some changes to our interface file:
+
+SWIG can also use CMake as generator for the building process. This time we
+make use of the same source code as in the Pybind11 example, we pass the
+arguments by reference, as we would expect of C++ code. This requires some
+changes to our interface file:
 ```swig
 //
 // file: taylor.i

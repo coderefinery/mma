@@ -20,22 +20,45 @@ There exist several technologies which make this possible:
 * Pybind11
 * Cython
 
-Simplified Wrapper and Interface Generator (SWIG) is a tool that simplies the two step process of making a wrapper and generating a interface which makes the wrapper callable from the interpreter. According to the SWIG documentation, "SWIG was orignally designed to make it extremely easy for scientist and engineers to build extensible scientific software without having a degree in software engineering". So SWIG should really be the only thing we need, right? Could be, but before giving a motivation for the other tools, it is worth mentioning that SWIG support a range of interpreting languages (C#,Common Lisp, Go,R, Lua ...), not only Python.
+Simplified Wrapper and Interface Generator (SWIG) is a tool that simplies the
+two step process of making a wrapper and generating a interface which makes the
+wrapper callable from the interpreter. According to the SWIG documentation,
+"SWIG was orignally designed to make it extremely easy for scientist and
+engineers to build extensible scientific software without having a degree in
+software engineering". So SWIG should really be the only thing we need, right?
+Could be, but before giving a motivation for the other tools, it is worth
+mentioning that SWIG support a range of interpreting languages (C#,Common Lisp,
+Go,R, Lua ...), not only Python.
 
-F2PY is a tool for interfacing Fortan and Python. According to "Python Scripting for Computational Science" transfering Numpy arrays between Python and compiled Fortran code is easier with F2PY than SWIG.
+F2PY is a tool for interfacing Fortan and Python. According to "Python
+Scripting for Computational Science" transfering Numpy arrays between Python
+and compiled Fortran code is easier with F2PY than SWIG.
 
-Boost is a huge C++-library which works with almost any C++-compiler. The Python interface tool was added to the Boost library around 2002 by David Abrahams. Hence, if you a have special C++-compiler, Boost.Python could be your most suitable tool for integrating Python and C++.
+Boost is a huge C++-library which works with almost any C++-compiler. The
+Python interface tool was added to the Boost library around 2002 by David
+Abrahams. Hence, if you a have special C++-compiler, Boost.Python could be your
+most suitable tool for integrating Python and C++.
 
-"Pybind11 is a lightweight-header only library that exposes C++-types in Python and vice versa, mainly to create Python bindings of existing C++ code.", according to the Pybind11 web page, https://pybind11.readthedocs.io/en/stable/intro.html. The point it is lightweight and targeting the combination of Python and C++11compliant compilers. Consequently, the interface code becomes more straight forward.
+"Pybind11 is a lightweight-header only library that exposes C++-types in Python
+and vice versa, mainly to create Python bindings of existing C++ code.",
+according to the Pybind11 web page,
+https://pybind11.readthedocs.io/en/stable/intro.html. The point it is
+lightweight and targeting the combination of Python and C++11compliant
+compilers. Consequently, the interface code becomes more straight forward.
 
-Cython:"All of this makes Cython the ideal language for wrapping external C libraries, embedding CPython into existing applications, and for fast C modules that speed up the execution of Python code.", see webpage http://cython.org
+Cython:"All of this makes Cython the ideal language for wrapping external C
+libraries, embedding CPython into existing applications, and for fast C modules
+that speed up the execution of Python code.", see webpage http://cython.org
 
 
 ### SWIG
 
-Our source code contains three functions, Taylor series of sin(), cos() and a helper function factorial(). We will make sin() and cos() available in our Python interpreter with the use of SWIG
+Our source code contains three functions, Taylor series of sin(), cos() and a
+helper function factorial(). We will make sin() and cos() available in our
+Python interpreter with the use of SWIG
 
-Start out with at empty subdirectory, your C++ compiler and the Anaconda2 enviroment available in your path. Activate the swig-example environment:
+Start out with at empty subdirectory, your C++ compiler and the Anaconda2
+enviroment available in your path. Activate the swig-example environment:
 ```shell
 [lynx@~]$mkdir swig
 [lynx@swig]$ type conda
@@ -50,7 +73,8 @@ warranty; not even for MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 [lynx@swig]$ source activate swig-example
 (swig-example)[lynx@swig]$
 ```
-Now we create a src subdirectory with the source files taylor_series.h and taylor_series.h
+Now we create a src subdirectory with the source files taylor_series.h and
+taylor_series.h
 
 Here is the contents of the taylor_series.h:
 ```C++
@@ -110,7 +134,9 @@ double cos(double x,int N) {
 }
 
 ```
-Now we need a interface file which describes how these functions can be called. In SWIG nomenclature this is a i-file. Here we define the module name and which functions that needs wrappers.
+Now we need a interface file which describes how these functions can be called.
+In SWIG nomenclature this is a i-file. Here we define the module name and which
+functions that needs wrappers.
 
 ```C++
 // taylor.i
@@ -123,9 +149,11 @@ Now we need a interface file which describes how these functions can be called. 
 double sin(double x, int N);
 double cos(double x, int N);
 ```
-The module will be named taylor and it is the function sin() and cos() which will be available for Python. We leave out the function factorial().
+The module will be named taylor and it is the function sin() and cos() which
+will be available for Python. We leave out the function factorial().
 
-We generate the wrapper, and compile the code to a share library called _taylor.so.
+We generate the wrapper, and compile the code to a share library called
+_taylor.so.
 
 ```shell
 (swig-example) [lynx@swig]$ swig -python taylor.i
@@ -137,7 +165,8 @@ taylor.i  taylor.pyc  _taylor.so          taylor_wrap.o
 (swig-example) [lynx@swig]$ python
 ```
 
-There several files in our subdirectory. It is the _taylor.so we will load into our Python interpreter. Start python as above.
+There several files in our subdirectory. It is the _taylor.so we will load into
+our Python interpreter. Start python as above.
 
 ```python
 >>> import taylor
@@ -153,7 +182,9 @@ There several files in our subdirectory. It is the _taylor.so we will load into 
 ```
 Our Taylor-functions are available for use by Python.
 
-There is a jungle of C++ constructs and complexities which we have avoided in this example. For instance, the functions arguments are passed by value, which not very likely in C++, as arguments are passed by reference.
+There is a jungle of C++ constructs and complexities which we have avoided in
+this example. For instance, the functions arguments are passed by value, which
+not very likely in C++, as arguments are passed by reference.
 
 ### Arguments passed by reference
 As we want use functions which call by reference, our interface file becomes less intuitive.
@@ -219,7 +250,9 @@ extern double ts_cos(double& x,int N);
 
 ```
 
-To make these functions available for the Python interpreter with the use of SWIG, we need to write a interface file, a %.i file. In our example called tss.i:
+To make these functions available for the Python interpreter with the use of
+SWIG, we need to write a interface file, a %.i file. In our example called
+tss.i:
 ```C++
 // file: tss.i
 %module tss
