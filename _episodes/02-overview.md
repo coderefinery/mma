@@ -32,10 +32,11 @@ Cython:"All of this makes Cython the ideal language for wrapping external C libr
 
 
 ##SWIG
-Our source code contains three functions, Taylor series of sin(), cos() and a helper function factorial(). We will make these functions available in our Python interpreter with the use of SWIG
 
-``` Simplified Wrapper and Interface Generator,http://www.swig.org/ (SWIG). It is a software tool for making programs/applications written C/C++ accessible from a high-level programming language. Python is on of these high-level programming languages, but there is a range of others(C#,Common Lisp, Go,R, Lua et cetera).
-```
+Our source code contains three functions, Taylor series of sin(), cos() and a helper function factorial(). We will make sin() and cos() available in our Python interpreter with the use of SWIG
+
+Simplified Wrapper and Interface Generator,http://www.swig.org/ (SWIG). It is a software tool for making programs/applications written C/C++ accessible from a high-level programming language. Python is on of these high-level programming languages, but there is a range of others(C#,Common Lisp, Go,R, Lua et cetera).
+
 Start out with at empty subdirectory, your C++ compiler and the Anaconda2 enviroment available in your path. Activate the swig-example environment:
 ```shell
 [lynx@~]$mkdir swig
