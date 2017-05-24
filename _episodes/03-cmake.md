@@ -172,5 +172,111 @@ provided by the Pybind11 installation. pybind11_add_module() generates steps
 necessary for building the python extension taylor.so.
 
 ## CMake and SWIG
+SWIG can also use CMake as generator for the building process. This time we make use
+of the same source code as in the Pybind11 example, we pass the arguments by reference, as we would expect of C++ code. This requires some changes to our interface file:
+```swig
+//
+// file: taylor.i
+// SWIG - interface file
+//
+%module taylor
+%{
+  // include C++ header
+#include "taylor_series.h"
+  %}
 
+%include "typemaps.i"
+%apply double *INPUT {double& x }
+%include "taylor_series.h"
 
+```
+We put the interface file in a src subdirectory together with the source files:
+```shell
+[lynx@~]$mkdir -p swigcmake/src
+[lynx@~]$cd swigcmake/src
+```
+After making the files the src subdirectory will contain:
+```shell
+[lynx@src]$ ls
+taylor.i  taylor_series.cpp  taylor_series.h
+[lynx@src]$ cd ..
+[lynx@swigcmake]$
+```
+Move up one directory. Here we will make a CMakeLists.txt. It will contain:
+```CMake
+cmake_minimum_required(VERSION 2.8 FATAL_ERROR)
+
+SET(CMAKE_LIBRARY_OUTPUT_DIRECTORY
+   ${CMAKE_BINARY_DIR}/lib
+   )
+
+FIND_PACKAGE(SWIG REQUIRED)
+INCLUDE(${SWIG_USE_FILE})
+
+FIND_PACKAGE(PythonLibs)
+
+ADD_SUBDIRECTORY(src)
+```
+Here we state that the library we will make will be output to a lib subdirectory.
+The SWIG library is necessary. The SWIG package will set the ${SWIG_USE_FILE}
+environment variable. The variable points to CMake file which will be loaded and
+executed by the INCLUDE statement. The find_package(PythonLIbs) finds python.h and
+the python libraries. At the end we add the 'src'-subdirectory. CMake will search
+this directory for an additional CMakeLists.txt.
+
+In the 'src'-subdirectory we make a CMakeLists.txt containing:
+```CMake
+INCLUDE_DIRECTORIES(${PYTHON_INCLUDE_PATH})
+INCLUDE_DIRECTORIES(${CMAKE_CURRENT_SOURCE_DIR})
+
+SET(CMAKE_SWIG_FLAGS "")
+
+SET_SOURCE_FILES_PROPERTIES(taylor.i PROPERTIES CPLUSPLUS ON)
+SET_SOURCE_FILES_PROPERTIES(taylor.i PROPERTIES SWIG_FLAGS "-includeall")
+
+SWIG_ADD_MODULE(taylor python taylor.i taylor_series.cpp)
+SWIG_LINK_LIBRARIES(taylor ${PYTHON_LIBRARIES})
+
+```
+Our 'src'-subdirectory contains:
+```shell
+(swig-example) [lynx@src]$ ls
+CMakeLists.txt  CMakeLists.txt~  taylor.i  taylor_series.cpp  taylor_series.h
+(swig-example) [lynx@src]$ cd ..
+(swig-example) [lynx@swigexample]$ mdkir build;cd build
+(swig-example) [lynx@build]$ cmake ..
+-- The C compiler identification is GNU 4.8.5
+-- The CXX compiler identification is GNU 4.8.5
+-- Check for working C compiler: /usr/bin/cc
+-- Check for working C compiler: /usr/bin/cc -- works
+-- Detecting C compiler ABI info
+-- Detecting C compiler ABI info - done
+-- Check for working CXX compiler: /usr/bin/c++
+-- Check for working CXX compiler: /usr/bin/c++ -- works
+-- Detecting CXX compiler ABI info
+-- Detecting CXX compiler ABI info - done
+-- Found SWIG: /home/lynx/anaconda2/envs/swig-example/bin/swig (found version "3.0.10") 
+-- Found PythonLibs: /usr/lib64/libpython2.7.so (found version "2.7.5") 
+-- Configuring done
+-- Generating done
+-- Build files have been written to: /home/lynx/src/c++/numcom/taylor_series/swig/build
+(swig-example) [lynx@build]$ make
+[ 33%] Swig source
+Scanning dependencies of target _taylor
+[ 66%] Building CXX object src/CMakeFiles/_taylor.dir/taylorPYTHON_wrap.cxx.o
+[100%] Building CXX object src/CMakeFiles/_taylor.dir/taylor_series.cpp.o
+Linking CXX shared module ../lib/_taylor.so
+[100%] Built target _taylor
+(swig-example) [lynx@build]$ cd lib
+(swig-example) [lynx@lib]$ python
+Python 2.7.13 |Continuum Analytics, Inc.| (default, Dec 20 2016, 23:09:15) 
+[GCC 4.4.7 20120313 (Red Hat 4.4.7-1)] on linux2
+Type "help", "copyright", "credits" or "license" for more information.
+Anaconda is brought to you by Continuum Analytics.
+Please check out: http://continuum.io/thanks and https://anaconda.org
+>>> import _taylor as taylor
+>>> taylor.sin(3.141592356/3,15)
+0.8660253541861354
+>>> 
+
+```
