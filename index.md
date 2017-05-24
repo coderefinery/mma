@@ -67,7 +67,7 @@ Sign up for free: https://anaconda.org
 
 We then proceed to create the three work environments need for the examples, assuming that the Anaconda2 binary subdirectory is first in your PATH.
 
-## Creating the work environment one - the swig-example
+## Creating the first work environment - the swig-example
 Create a SWIG enabled environment in conda. Here we also add scipy to have available for possible comparisons with the methods we have implemented.
 
 
@@ -137,6 +137,56 @@ swig-3.0.10-0. 100% |##########################################| Time: 0:00:00  
 wheel-0.29.0-p 100% |##########################################| Time: 0:00:00  40.78 MB/s
 pip-9.0.1-py27 100% |##########################################| Time: 0:00:00  67.90 MB/s
 scipy-0.19.0-n 100% |##########################################| Time: 0:00:00  71.99 MB/s
+
+```
+## Creating the second work environment - the boost-example
+We create a new Anaconda enviroment for use with the Boost-example. Here we install the Boost Library and scipy (for comparision). Remember to deactivate your current conda environment before creating the Boost environment `source deactivate`:
+
+```shell
+[lynx@~]$ conda create --name boost-example
+Fetching package metadata .........
+Solving package specifications: 
+Package plan for installation in environment /home/lynx/anaconda2/envs/boost-example:
+
+Proceed ([y]/n)? y
+
+#
+# To activate this environment, use:
+# > source activate boost-example
+#
+# To deactivate this environment, use:
+# > source deactivate boost-example
+#
+
+[lynx@login-0-0 Downloads]$ source activate boost-example
+(boost-example) [lynx@login-0-0 Downloads]$ conda install scipy boost
+Fetching package metadata .........
+Solving package specifications: .
+
+Package plan for installation in environment /home/lynx/anaconda2/envs/boost-example:
+
+The following NEW packages will be INSTALLED:
+
+    boost:       1.61.0-py27_0     
+    icu:         54.1-0            
+    libgfortran: 3.0.0-1           
+    mkl:         2017.0.1-0        
+    numpy:       1.12.1-py27_0     
+    openssl:     1.0.2k-2          
+    pip:         9.0.1-py27_1      
+    python:      2.7.13-0          
+    readline:    6.2-2             
+    scipy:       0.19.0-np112py27_0
+    setuptools:  27.2.0-py27_0     
+    sqlite:      3.13.0-0          
+    tk:          8.5.18-0          
+    wheel:       0.29.0-py27_0     
+    zlib:        1.2.8-3           
+
+Proceed ([y]/n)? y
+
+icu-54.1-0.tar 100% |##########################################| Time: 0:00:00  13.09 MB/s
+boost-1.61.0-p 100% |##########################################| Time: 0:00:01  16.30 MB/s
 
 ```
 

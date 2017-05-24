@@ -236,57 +236,6 @@ To make these functions available for the Python interpreter with the use of SWI
 
 
 ##Boost
-We create a new Anaconda enviroment for use with the Boost-example. Here we install the Boost Library and scipy (for comparision). Remember to deactivate your current conda environment before creating the Boost environment `source deactivate`:
-
-```shell
-[lynx@login-0-0 Downloads]$ conda create --name boost-example
-Fetching package metadata .........
-Solving package specifications: 
-Package plan for installation in environment /home/lynx/anaconda2/envs/boost-example:
-
-Proceed ([y]/n)? y
-
-#
-# To activate this environment, use:
-# > source activate boost-example
-#
-# To deactivate this environment, use:
-# > source deactivate boost-example
-#
-
-[lynx@login-0-0 Downloads]$ source activate
-(root) [lynx@login-0-0 Downloads]$ source deactivate
-[lynx@login-0-0 Downloads]$ source activate boost-example
-(boost-example) [lynx@login-0-0 Downloads]$ conda install scipy boost
-Fetching package metadata .........
-Solving package specifications: .
-
-Package plan for installation in environment /home/lynx/anaconda2/envs/boost-example:
-
-The following NEW packages will be INSTALLED:
-
-    boost:       1.61.0-py27_0     
-    icu:         54.1-0            
-    libgfortran: 3.0.0-1           
-    mkl:         2017.0.1-0        
-    numpy:       1.12.1-py27_0     
-    openssl:     1.0.2k-2          
-    pip:         9.0.1-py27_1      
-    python:      2.7.13-0          
-    readline:    6.2-2             
-    scipy:       0.19.0-np112py27_0
-    setuptools:  27.2.0-py27_0     
-    sqlite:      3.13.0-0          
-    tk:          8.5.18-0          
-    wheel:       0.29.0-py27_0     
-    zlib:        1.2.8-3           
-
-Proceed ([y]/n)? y
-
-icu-54.1-0.tar 100% |##########################################| Time: 0:00:00  13.09 MB/s
-boost-1.61.0-p 100% |##########################################| Time: 0:00:01  16.30 MB/s
-
-```
 Make a new subdirectory with a src subdirectory:
 
 ```shell
