@@ -489,12 +489,8 @@ source deactivate
 ```
 
 
-##F2PY
-
-##Cython
-
 ##PyBind11
-
+The PyBind11 library is installed from conda-forge. Remember to use the -c to add conda-forge as a additinal channel to search for packages.
 ```shell
 [lynx@login-0-0 Downloads]$ conda create --name pybind11-example
 Fetching package metadata .........
@@ -550,6 +546,106 @@ Proceed ([y]/n)?
 
 pybind11-2.1.1 100% |##########################################| Time: 0:00:00 231.13 kB/s
 
+```
+Make a subdirectory pybind11 with an additional src subdirectory:
+
+``` shell
+mkdir -p pybind11/src
+cd pybind11/src
+```
+In src subdirectory we will have three files:
+``` shell
+(pybind11-example) [lynx@lsrc]$ ls
+py11taylor.cpp  taylor_series.cpp  taylor_series.h
+```
+The contents of taylor_series.cpp and taylor_series.h will we recognize from the SWIG-example, with a few differences:
+```C++
+// taylor_series.h
+#ifndef TAYLOR_SERIES_H_
+#define TAYLOR_SERIES_H_
+
+unsigned long long factorial( int n);
+double ts_sin(double& x, int N);
+double ts_cos(double& x,int N);
+
+#endif // TAYLOR_SERIES_H_
+```
+
+```C++
+// taylor_series.cpp
+#include <math.h>
+#include "taylor_series.h"
+
+unsigned long long factorial( int n){
+  unsigned long long result = 1;
+  if ( n != 0)
+     for (int i = 0; i < n; i++)
+       result = result * (i+1);
+  return result;
+};
+
+double ts_sin(double& x, int N){
+  long double numerator,denomi;
+  double    sum = 0.0;
+  int par,sign;
+  unsigned long int fac;
+  for (int i = 0; i < N; i++) {
+    par = (1+2*i);
+    fac = factorial(par);
+    sign = pow((-1),i);
+    sum = sum + sign*pow(x,par)/fac;
+
+  }
+
+  return sum;
+}
+
+double ts_cos(double& x,int N) {
+  long double numerator,denomi;
+  double sum = 0.0;
+  int par,sign;
+  unsigned long int fac;
+  for (int i = 0; i < N; i++) {
+    par = 2*i;
+    fac = factorial(par);
+    sign = pow((-1),i);
+    sum = sum + sign*pow(x,par)/fac;
+  }
+  return sum;
+}
+```
+
+The Pybind11 file:
+```C++
+// py11taylor.cpp
+#include <pybind11/pybind11.h>
+#include "taylor_series.h"
+
+namespace py = pybind11;
+
+PYBIND11_PLUGIN(taylor) {
+  py::module t("taylro", "Taylor Series tailored plugin");
+   t.def("sin", &ts_sin, "A sinus Taylor Series function")
+    .def("cos", &ts_cos, "A cosinus Taylor Series function");
+  return t.ptr();
+}
+```
+Create these files with your favorite editor, and leave the subdirectory.
+In the directory above we make CMakeLists.txt with following contents:
+```CMAKE
+cmake_minimum_required(VERSION 2.8 FATAL_ERROR)
+project(taylor)
+find_package(pybind11 REQUIRED)
+include_directories(src)
+set(SOURCE_FILES src/taylor_series.cpp src/py11tts.cpp)
+pybind11_add_module(tts ${SOURCE_FILES})
+```
+
+```shell
+```
+
+``` shell
+
 source deactivate
 ```
 ## Managing environments under Anaconda
@@ -560,3 +656,8 @@ source activate <environment name>
 (<environment-name>)[lynx@login-0-0] source deactivate
 ```
 The following web page describes how to manage enviroments, https://conda.io/docs/using/envs.html
+
+##F2PY
+
+##Cython
+
