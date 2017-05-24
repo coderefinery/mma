@@ -691,42 +691,6 @@ Please check out: http://continuum.io/thanks and https://anaconda.org
 >>> 
 
 
-
-
-
-
-(pybind11-example) [lynx@pybind11]$ cd build
-(pybind11-example) [lynx@build]$ cmake ..
--- The C compiler identification is GNU 4.8.5
--- The CXX compiler identification is GNU 4.8.5
--- Check for working C compiler: /usr/bin/cc
--- Check for working C compiler: /usr/bin/cc -- works
--- Detecting C compiler ABI info
--- Detecting C compiler ABI info - done
--- Check for working CXX compiler: /usr/bin/c++
--- Check for working CXX compiler: /usr/bin/c++ -- works
--- Detecting CXX compiler ABI info
--- Detecting CXX compiler ABI info - done
--- Found PythonInterp: /home/lynx/anaconda2/envs/pybind11-example/bin/python (found version "2.7.13") 
--- Found PythonLibs: /home/lynx/anaconda2/envs/pybind11-example/lib/libpython2.7.so
--- Performing Test HAS_CPP14_FLAG
--- Performing Test HAS_CPP14_FLAG - Failed
--- Performing Test HAS_CPP11_FLAG
--- Performing Test HAS_CPP11_FLAG - Success
--- Performing Test HAS_FLTO
--- Performing Test HAS_FLTO - Success
--- LTO enabled
--- Configuring done
--- Generating done
--- Build files have been written to: /home/lynx/src/c++/numcom/taylor_series/pybind11/build
-```
-We have now generated a makefile for building the taylor shared library:
-```shell
-(pybind11-example) [lynx@build]$ make
-(pybind11-example) [lynx@build]$ python
-
-```
-
 ``` shell
 
 source deactivate
