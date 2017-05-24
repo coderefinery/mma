@@ -31,7 +31,7 @@ Boost is a huge C++-library which works with almost any C++-compiler. The Python
 Cython:"All of this makes Cython the ideal language for wrapping external C libraries, embedding CPython into existing applications, and for fast C modules that speed up the execution of Python code.", see webpage http://cython.org
 
 
-##SWIG
+### SWIG
 
 Our source code contains three functions, Taylor series of sin(), cos() and a helper function factorial(). We will make sin() and cos() available in our Python interpreter with the use of SWIG
 
@@ -236,7 +236,7 @@ To make these functions available for the Python interpreter with the use of SWI
 
 
 
-##Boost
+### Boost
 Make a new subdirectory with a src subdirectory:
 
 ```shell
@@ -321,7 +321,7 @@ source deactivate
 ```
 
 
-##PyBind11
+### PyBind11
 Make a subdirectory pybind11 with an additional src subdirectory:
 
 ``` shell
