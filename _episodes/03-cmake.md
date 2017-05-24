@@ -155,10 +155,22 @@ $ cmake ..
 $ make
 ```
 
-
+This is very similar to the steps taken when building taylor library with Pybind11. Here is the CMakeLists.txt from that example:
+```CMAKE
+cmake_minimum_required(VERSION 2.8 FATAL_ERROR)
+project(taylor)
+find_package(pybind11 REQUIRED)
+include_directories(src)
+set(SOURCE_FILES src/taylor_series.cpp src/py11taylor.cpp)
+pybind11_add_module(taylor ${SOURCE_FILES})
 ```
-Here we introduce an example C++ project which we hook up to PyBind11 in the
-next section.
+Here we require that Pybind11 exists if not the generation will stop. We add
+'src' as a subdirectory to include ( equals -I src when passing arguments to
+compiler). The command set enables a environmental variable, here call SOURCE_FILES.
+The variable is used in the pybind11_add_module() which is a CMake module
+provided by the Pybind11 installation. pybind11_add_module() generates steps
+necessary for building the python extension taylor.so.
 
-We need a hands-on early in the workshop to keep people motivated and engaged.
-Try to have an exercise not more than 20 minutes into the workshop.
+## CMake and SWIG
+
+
