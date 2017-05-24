@@ -624,7 +624,7 @@ The Pybind11 file:
 namespace py = pybind11;
 
 PYBIND11_PLUGIN(taylor) {
-  py::module t("taylro", "Taylor Series tailored plugin");
+  py::module t("taylor", "Taylor Series tailored plugin");
    t.def("sin", &ts_sin, "A sinus Taylor Series function")
     .def("cos", &ts_cos, "A cosinus Taylor Series function");
   return t.ptr();
@@ -637,11 +637,94 @@ cmake_minimum_required(VERSION 2.8 FATAL_ERROR)
 project(taylor)
 find_package(pybind11 REQUIRED)
 include_directories(src)
-set(SOURCE_FILES src/taylor_series.cpp src/py11tts.cpp)
-pybind11_add_module(tts ${SOURCE_FILES})
+set(SOURCE_FILES src/taylor_series.cpp src/py11taylor.cpp)
+pybind11_add_module(taylor ${SOURCE_FILES})
 ```
 
 ```shell
+(pybind11-example) [lynx@src]$ ls
+py11taylor.cpp  taylor_series.cpp  taylor_series.h
+(pybind11-example) [lynx@src]$ cd ..
+(pybind11-example) [lynx@pybind11]$ vi CMakeLists.txt
+(pybind11-example) [lynx@pybind11]$ ls
+CMakeLists.txt  src
+(pybind11-example) [lynx@pybind11]$ mkdir build
+(pybind11-example) [lynx@pybind11]$ cd build
+(pybind11-example) [lynx@build]$ cmake ..
+-- The C compiler identification is GNU 4.8.5
+-- The CXX compiler identification is GNU 4.8.5
+-- Check for working C compiler: /usr/bin/cc
+-- Check for working C compiler: /usr/bin/cc -- works
+-- Detecting C compiler ABI info
+-- Detecting C compiler ABI info - done
+-- Check for working CXX compiler: /usr/bin/c++
+-- Check for working CXX compiler: /usr/bin/c++ -- works
+-- Detecting CXX compiler ABI info
+-- Detecting CXX compiler ABI info - done
+-- Found PythonInterp: /home/lynx/anaconda2/envs/pybind11-example/bin/python (found version "2.7.13") 
+-- Found PythonLibs: /home/lynx/anaconda2/envs/pybind11-example/lib/libpython2.7.so
+-- Performing Test HAS_CPP14_FLAG
+-- Performing Test HAS_CPP14_FLAG - Failed
+-- Performing Test HAS_CPP11_FLAG
+-- Performing Test HAS_CPP11_FLAG - Success
+-- Performing Test HAS_FLTO
+-- Performing Test HAS_FLTO - Success
+-- LTO enabled
+-- Configuring done
+-- Generating done
+-- Build files have been written to: /home/lynx/tmp/pybind11/build
+(pybind11-example) [lynx@build]$ make
+Scanning dependencies of target taylor
+[ 50%] Building CXX object CMakeFiles/taylor.dir/src/taylor_series.cpp.o
+[100%] Building CXX object CMakeFiles/taylor.dir/src/py11taylor.cpp.o
+Linking CXX shared module taylor.so
+[100%] Built target taylor
+(pybind11-example) [lynx@build]$ python
+Python 2.7.13 |Continuum Analytics, Inc.| (default, Dec 20 2016, 23:09:15) 
+[GCC 4.4.7 20120313 (Red Hat 4.4.7-1)] on linux2
+Type "help", "copyright", "credits" or "license" for more information.
+Anaconda is brought to you by Continuum Analytics.
+Please check out: http://continuum.io/thanks and https://anaconda.org
+>>> import taylor
+>>> taylor.sin(3.141592653/3,14)
+0.8660254036861398
+>>> 
+
+
+
+
+
+
+(pybind11-example) [lynx@pybind11]$ cd build
+(pybind11-example) [lynx@build]$ cmake ..
+-- The C compiler identification is GNU 4.8.5
+-- The CXX compiler identification is GNU 4.8.5
+-- Check for working C compiler: /usr/bin/cc
+-- Check for working C compiler: /usr/bin/cc -- works
+-- Detecting C compiler ABI info
+-- Detecting C compiler ABI info - done
+-- Check for working CXX compiler: /usr/bin/c++
+-- Check for working CXX compiler: /usr/bin/c++ -- works
+-- Detecting CXX compiler ABI info
+-- Detecting CXX compiler ABI info - done
+-- Found PythonInterp: /home/lynx/anaconda2/envs/pybind11-example/bin/python (found version "2.7.13") 
+-- Found PythonLibs: /home/lynx/anaconda2/envs/pybind11-example/lib/libpython2.7.so
+-- Performing Test HAS_CPP14_FLAG
+-- Performing Test HAS_CPP14_FLAG - Failed
+-- Performing Test HAS_CPP11_FLAG
+-- Performing Test HAS_CPP11_FLAG - Success
+-- Performing Test HAS_FLTO
+-- Performing Test HAS_FLTO - Success
+-- LTO enabled
+-- Configuring done
+-- Generating done
+-- Build files have been written to: /home/lynx/src/c++/numcom/taylor_series/pybind11/build
+```
+We have now generated a makefile for building the taylor shared library:
+```shell
+(pybind11-example) [lynx@build]$ make
+(pybind11-example) [lynx@build]$ python
+
 ```
 
 ``` shell
