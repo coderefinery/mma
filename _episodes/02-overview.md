@@ -20,10 +20,10 @@ There exist several technologies which make this possible:
 * Pybind11
 * Cython
 
-Simplified Wrapper and Interface Generator (SWIG) is a tool that simplies the
+Simplified Wrapper and Interface Generator (SWIG) is a tool that simplifies the
 two step process of making a wrapper and generating a interface which makes the
 wrapper callable from the interpreter. According to the SWIG documentation,
-"SWIG was orignally designed to make it extremely easy for scientist and
+"SWIG was originally designed to make it extremely easy for scientist and
 engineers to build extensible scientific software without having a degree in
 software engineering". So SWIG should really be the only thing we need, right?
 Could be, but before giving a motivation for the other tools, it is worth

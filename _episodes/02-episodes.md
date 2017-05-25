@@ -12,6 +12,7 @@ keypoints:
 ---
 
 ## Section
+
 There exist several technologies which make this possible:
 
 * SWIG
@@ -21,18 +22,18 @@ There exist several technologies which make this possible:
 * Cython
 
 
-Simplified Wrapper and Interface Generator (SWIG) is a tool that simplies the
+Simplified Wrapper and Interface Generator (SWIG) is a tool that simplifies the
 two step process of making a wrapper and generating a interface which makes the
 wrapper callable from the interpreter. According to the SWIG documentation,
-"SWIG was orignally designed to make it extremely easy for scientist and
+"SWIG was originally designed to make it extremely easy for scientist and
 engineers to build extensible scientific software without having a degree in
 software engineering". So SWIG should really be the only thing we need, right?
 Could be, but before giving a motivation for the other tools, it is worth
 mentioning that SWIG support a range of interpreting languages, not only
 Python.
 
-F2PY is a tool for interfacing Fortan and Python. According to "Python
-Scripting for Computational Science" transfering Numpy arrays between Python
+F2PY is a tool for interfacing Fortran and Python. According to "Python
+Scripting for Computational Science" transferring Numpy arrays between Python
 and compiled Fortran code is easier with F2PY than SWIG.
 
 Boost is a huge C++-library which works with almost any C++-compiler. The
@@ -47,17 +48,18 @@ https://pybind11.readthedocs.io/en/stable/intro.html. The point it is
 lightweight and targeting the combination of Python and C++11compliant
 compilers. Consequently, the interface code becomes more straight forward.
 
-Cython:"All of this makes Cython the ideal language for wrapping external C
+Cython: "All of this makes Cython the ideal language for wrapping external C
 libraries, embedding CPython into existing applications, and for fast C modules
 that speed up the execution of Python code.", see webpage http://cython.org
 
 
 ### SWIG
+
 Our source code contains three functions, Taylor series of sin(), cos() and a
 helper function factorial(). We will make these functions available in our
 Python interpreter with the use of SWIG
->>>>>>> gh-pages
-Start out with at empty subdirectory, your C++ compiler and the Anaconda2 enviroment
+
+Start out with at empty subdirectory, your C++ compiler and the Anaconda2 environment
 available in your path. Activate the swig-example environment:
 ```shell
 [lynx@~]$mkdir swig
