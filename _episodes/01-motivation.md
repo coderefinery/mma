@@ -55,7 +55,7 @@ scripting environment has been extended with functions from a C++ code base.
 ## How does a scripting language to talk to C/C++?
 
 Here we have a simple virtual class Employee:
-```C++
+```cpp
 class Employee {
  public:
   Employee(const std::string&, const std::string&, const std::string&);
@@ -78,7 +78,6 @@ class Employee {
   std::string lastName;
   std::string socialSecurityNumber;
 };
-
 ```
 ![C/C++-class hierarchy]({{ site.baseurl }}/img/classhierarchy.png "Class hierarchy. Licences CC BY 3.0"){:class="img-repsonsive"}
 
@@ -89,7 +88,7 @@ according to the C++-standard.
 From Python we would like to make use of these classes and their methods in a
 way like this:
 
-```Python
+```python
 >>> t = CommisionEmployee('Molly','Malone', "333-33-3333",19000,.05,)
 >>> u = SalariedEmployee('John','Jones', '111-11-1111', 15000)
 >>> t.earnings()
