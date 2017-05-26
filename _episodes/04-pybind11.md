@@ -25,7 +25,7 @@ Algorithms we want to implement could be [Daitch-Mokotoff Soundex](https://en.wi
  Here is source code for a Phonetic Algorithm  [Soundex](https://en.wikipedia.org/wiki/Soundex) . We want to make use of Soundex in Python with help of Pybind11
 
 
-```C++
+```cpp
 #ifndef SOUNDEX_H
 #define SOUNDEX_H
 #include <string>
@@ -115,7 +115,6 @@ private:
 };
 
 #endif //SOUNDEX_H
-
 ```
 The source code implements the [Soundex alorithm](https://en.wikipedia.org/wiki/Soundex) which according to Wikipedia maps a name or word to its' first letter
 followed by three numerical digits. Outlined the algorithm goes like:
@@ -164,7 +163,7 @@ or your favorite editor.
 ```
 The contents of Py11Soundex.cpp:
 
-```C++
+```cpp
 // File: Py11Soundex.cpp
 #include <pybind11/pybind11.h>
 #include "Soundex.h"
@@ -181,6 +180,7 @@ PYBIND11_PLUGIN(soundex) {
 
 ``` 
 Create the Py11Soundex.cpp file in the *src* subdirectory:
+
 ```shell
 (pybind11-example) [lynx@lille-login2src]$ cat > Py11Soundex.cpp
 Cat the contents of Py11Soundex.cpp to Py11Soundex.cpp or use
@@ -189,10 +189,12 @@ an editor
 ```
 Create also the CMakeLists.txt file in the *src* subdirectory.
 Here is the CMakeLists.txt file, just one line:
-```CMake
+
+```cmake
 pybind11_add_module(soundex Py11Soundex.cpp)
 ```
 Change to the directory above after you have made the file:
+
 ```shell
 (pybind11-example) [lynx@lille-login2src]$ cat > CMakeLists.txt
 pybind11_add_module(soundex Py11soundex.cpp)
@@ -204,7 +206,7 @@ pybind11_add_module(soundex Py11soundex.cpp)
 
 Create the top level CMakeLists.txt in this directory. Here is the contents:
 
-```CMake
+```cmake
 cmake_minimum_required(VERSION 2.8 FATAL_ERROR)
 project(soundex)
 
@@ -229,6 +231,7 @@ Paste the contents of the CMakeLists.txt and press <Ctrl>-d
 
 ```
 After the make, we cd into the lib subdirectory and load the soundex library:
+
 ```shell
 (pybind11-example) [lynx@lille-login2 build]$ cmake ..
 -- The C compiler identification is GNU 6.3.0
@@ -270,5 +273,4 @@ Please check out: http://continuum.io/thanks and https://anaconda.org
 >>> p.encode('Allison')
 u'A425'
 >>> 
-
 ```
