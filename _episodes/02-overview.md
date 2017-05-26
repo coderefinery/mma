@@ -20,10 +20,10 @@ There exist several technologies which make this possible:
 * Pybind11
 * Cython
 
-Simplified Wrapper and Interface Generator (SWIG) is a tool that simplies the
+Simplified Wrapper and Interface Generator (SWIG) is a tool that simplifies the
 two step process of making a wrapper and generating a interface which makes the
 wrapper callable from the interpreter. According to the SWIG documentation,
-"SWIG was orignally designed to make it extremely easy for scientist and
+"SWIG was originally designed to make it extremely easy for scientist and
 engineers to build extensible scientific software without having a degree in
 software engineering". So SWIG should really be the only thing we need, right?
 Could be, but before giving a motivation for the other tools, it is worth
@@ -77,7 +77,7 @@ Now we create a src subdirectory with the source files taylor_series.h and
 taylor_series.h
 
 Here is the contents of the taylor_series.h:
-```C++
+```cpp
 // taylor_series.h
 #ifndef TAYLOR_SERIES_H_
 #define TAYLOR_SERIES_H_
@@ -87,12 +87,11 @@ extern double sin(double x, int N);
 extern double cos(double x,int N);
 
 #endif // TAYLOR_SERIES_H_
-
 ```
 
 The contents of taylor_series.cpp:
 
-```C++
+```cpp
 // taylor_series.cpp
 #include <math.h>
 #include "taylor_series.h"
@@ -132,13 +131,12 @@ double cos(double x,int N) {
   }
   return sum;
 }
-
 ```
 Now we need a interface file which describes how these functions can be called.
 In SWIG nomenclature this is a i-file. Here we define the module name and which
 functions that needs wrappers.
 
-```C++
+```cpp
 // taylor.i
 %module taylor
 %{
@@ -190,7 +188,7 @@ not very likely in C++, as arguments are passed by reference.
 As we want use functions which call by reference, our interface file becomes less intuitive.
 
 Here is our C++-source code of the Taylor Series, the taylor_series.cpp:
-``` C++
+```cpp
 //
 // taylor_series.cpp
 //
@@ -238,7 +236,7 @@ double ts_cos(double& x,int N) {
 ```
 The file tayour_series.h:
 
-```C++
+```cpp
 #ifndef TAYLOR_SERIES_H_
 #define TAYLOR_SERIES_H_
 
@@ -247,13 +245,12 @@ extern double ts_sin(double& x, int N);
 extern double ts_cos(double& x,int N);
 
 #endif // TAYLOR_SERIES_H_
-
 ```
 
 To make these functions available for the Python interpreter with the use of
 SWIG, we need to write a interface file, a %.i file. In our example called
 tss.i:
-```C++
+```cpp
 // file: tss.i
 %module tss
 %{
@@ -277,7 +274,7 @@ Make a new subdirectory with a src subdirectory:
 (boost-example) [lynx@boost]$ cd boost
 ```
 In the src-directory make a file boost_taylor.cpp with following contains:
-```C++
+```cpp
 #include <boost/python/module.hpp>
 #include <boost/python/def.hpp>
 #include <boost/python/tuple.hpp>
@@ -331,7 +328,7 @@ BOOST_PYTHON_MODULE(taylor_boost)
 ```
 Compiling the boost version and start python:
 
-``` shell
+```shell
 g++ --std=c++11 --shared src/boost_taylor.cpp -I${HOME}/anaconda2/envs/boost-example/include `python-config --cflags` -L${HOME}/anaconda2/envs/boost-example/lib/ -lboost_python `python-config --ldflags` -fpic -o taylor_boost.so
 python
 ```
@@ -357,17 +354,17 @@ source deactivate
 ### PyBind11
 Make a subdirectory pybind11 with an additional src subdirectory:
 
-``` shell
+```shell
 mkdir -p pybind11/src
 cd pybind11/src
 ```
 In src subdirectory we will have three files:
-``` shell
+```shell
 (pybind11-example) [lynx@lsrc]$ ls
 py11taylor.cpp  taylor_series.cpp  taylor_series.h
 ```
 The contents of taylor_series.cpp and taylor_series.h will we recognize from the SWIG-example, with a few differences:
-```C++
+```cpp
 // taylor_series.h
 #ifndef TAYLOR_SERIES_H_
 #define TAYLOR_SERIES_H_
@@ -379,7 +376,7 @@ double ts_cos(double& x,int N);
 #endif // TAYLOR_SERIES_H_
 ```
 
-```C++
+```cpp
 // taylor_series.cpp
 #include <math.h>
 #include "taylor_series.h"
@@ -440,7 +437,7 @@ PYBIND11_PLUGIN(taylor) {
 ```
 Create these files with your favorite editor, and leave the subdirectory.
 In the directory above we make CMakeLists.txt with following contents:
-```CMAKE
+```cmake
 cmake_minimum_required(VERSION 2.8 FATAL_ERROR)
 project(taylor)
 find_package(pybind11 REQUIRED)
@@ -499,8 +496,7 @@ Please check out: http://continuum.io/thanks and https://anaconda.org
 >>>
 
 
-``` shell
-
+```shell
 source deactivate
 ```
 

@@ -157,7 +157,7 @@ $ make
 
 This is very similar to the steps taken when building taylor library with
 Pybind11. Here is the CMakeLists.txt from that example:
-```CMAKE
+```cmake
 cmake_minimum_required(VERSION 2.8 FATAL_ERROR)
 project(taylor)
 find_package(pybind11 REQUIRED)
@@ -207,7 +207,7 @@ taylor.i  taylor_series.cpp  taylor_series.h
 [lynx@swigcmake]$
 ```
 Move up one directory. Here we will make a CMakeLists.txt. It will contain:
-```CMake
+```cmake
 cmake_minimum_required(VERSION 2.8 FATAL_ERROR)
 
 SET(CMAKE_LIBRARY_OUTPUT_DIRECTORY
@@ -229,7 +229,7 @@ the python libraries. At the end we add the 'src'-subdirectory. CMake will searc
 this directory for an additional CMakeLists.txt.
 
 In the 'src'-subdirectory we make a CMakeLists.txt containing:
-```CMake
+```cmake
 INCLUDE_DIRECTORIES(${PYTHON_INCLUDE_PATH})
 INCLUDE_DIRECTORIES(${CMAKE_CURRENT_SOURCE_DIR})
 
@@ -240,7 +240,6 @@ SET_SOURCE_FILES_PROPERTIES(taylor.i PROPERTIES SWIG_FLAGS "-includeall")
 
 SWIG_ADD_MODULE(taylor python taylor.i taylor_series.cpp)
 SWIG_LINK_LIBRARIES(taylor ${PYTHON_LIBRARIES})
-
 ```
 Our 'src'-subdirectory contains:
 ```shell
@@ -282,5 +281,4 @@ Please check out: http://continuum.io/thanks and https://anaconda.org
 >>> taylor.sin(3.141592356/3,15)
 0.8660253541861354
 >>>
-
 ```

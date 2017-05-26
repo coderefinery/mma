@@ -13,9 +13,9 @@ keypoints:
 
 ## Why?
 
-We want to combine the strengths of scripting langugage, especially Python with
+We want to combine the strengths of scripting language, especially Python with
 the strengths of a compiled language. A high-level scripting language is more
-efficient for prototyping than a compiled language with its'  compile-debug
+efficient for prototyping than a compiled language with its compile-debug
 development.
 
 We can have legacy code that we want to make use of, but the nature of the code
@@ -23,7 +23,7 @@ base inhibits further development. Hence we want to move forward in high-level
 scripting language, but make use of previous code or work.
 
 Our scripting language code base has performance problems. The time consumed to
-solve certain task is to high. Consequently we want to move certain functions
+solve certain task is too high. Consequently we want to move certain functions
 to a compiled language.
 
 All these motivation point to a situation where we want to extend the ability
@@ -55,7 +55,7 @@ scripting environment has been extended with functions from a C++ code base.
 ## How does a scripting language to talk to C/C++?
 
 Here we have a simple virtual class Employee:
-```C++
+```cpp
 class Employee {
  public:
   Employee(const std::string&, const std::string&, const std::string&);
@@ -78,7 +78,6 @@ class Employee {
   std::string lastName;
   std::string socialSecurityNumber;
 };
-
 ```
 ![C/C++-class hierarchy]({{ site.baseurl }}/img/classhierarchy.png "Class hierarchy. Licences CC BY 3.0"){:class="img-repsonsive"}
 
@@ -89,7 +88,7 @@ according to the C++-standard.
 From Python we would like to make use of these classes and their methods in a
 way like this:
 
-```Python
+```python
 >>> t = CommisionEmployee('Molly','Malone', "333-33-3333",19000,.05,)
 >>> u = SalariedEmployee('John','Jones', '111-11-1111', 15000)
 >>> t.earnings()
@@ -107,7 +106,6 @@ C/C++function and the Python interpreter. The Python interpreter also needs to
 known how to call the wrapper (the name,arguments. We could do this by
 following the reference manual, but here we will show how this can be done with
 different tools.
-
 
 Inspired by the SWIG-3.0 documentation, http://www.swig.org/Doc3.0/
 Reference to book
