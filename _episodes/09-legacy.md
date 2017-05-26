@@ -100,7 +100,8 @@ This will expose dependencies.
 
 ### 10) Minimize dependencies
 
-The less dependencies the better.
+- The less dependencies the better.
+- All dependencies should be documented - this in fact is part of the API.
 
 
 ### 11) Maximize cohesion
