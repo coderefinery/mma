@@ -13,7 +13,14 @@ keypoints:
 
 ## Section
 
-unit testing and prototyping of C++ code
+Assume we are starting a ("Research?") project on  Phonetic Algorithms.
+We have received source code for the Soundex algorithm (actually from
+ [Jeff Langr's](http://langrsoft.com/about/) book [Modern C++ Programming with Test-Driven Development](http://pragprog.com/book/lotdd/modern-c-programming-with-test-driven-development) Let us say our ambition is to implement
+a Phonetic Algorithm class where Soundex is one Phonetic encoding. Other Phonetic
+Algorithms we want to implement could be [Daitch-Mokotoff Soundex](https://en.wikipedia.org/wiki/Daitch–Mokotoff_Soundex),
+[Cologne phonetics](https://en.wikipedia.org/wiki/Cologne_phonetics) or [NYIIS](https://en.wikipedia.org/wiki/New_York_State_Identification_and_Intelligence_System)
+ Here is source code for a Phonetic Algorithm  [Soundex](https://en.wikipedia.org/wiki/Soundex) . We want to make use of Soundex in Python.
+
 
 ```C++
 #ifndef SOUNDEX_SOUNDEX_H
@@ -107,3 +114,20 @@ private:
 #endif //SOUNDEX_SOUNDEX_H
 
 ```
+The source code implements the [Soundex alorithm](https://en.wikipedia.org/wiki/Soundex) which according to Wikipedia maps a name or word to its' first letter
+followed by three numerical digits. Outlined the algorithm goes like:
+ 1. Retain the first letter of the name and drop all other occurences of a,e,i,o,u,y,h,w
+ 2. Replace consonants with digits as follows (after the firste letter)
+    * b,f,p,v -> 1
+    * c,g,j,k,q,s,x,z, -> 2
+    * d,t -> 3
+    * m,n -> 5
+    * r -> 6
+
+ 3. If two or more letters with the same number are adjacent in the original name
+ (before step 1), only retain the first letter; also two letters with the same
+ number separated by 'h' or 'w' are coded as a single number, whereas such letters
+ separated by a vowel are coded twice. This rule also applies to the first letter.
+ 4. If you have too few letters in your word that you can't assign three numbers,
+ append with zeros until there are three numbers. If you have more than 3 letters,
+ just retain the first 3 numbers.
