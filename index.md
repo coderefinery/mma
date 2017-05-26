@@ -5,6 +5,13 @@ permalink: /
 
 # Mixed Martial Arts: Interfacing Fortran, C, C++, and Python for Great Good!
 
+## Status
+
+This lesson is currently under construction - feedback and suggestions are most welcome.
+
+
+## Learning goals
+
 Write me ...
 
 
