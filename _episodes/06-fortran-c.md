@@ -23,7 +23,7 @@ keypoints:
 
 - Have you ever tried to call C functions from Fortran or vice versa?
 - What were the problems?
-- What is name mangling?
+- What is name mangling? Related question: How does [GitHub](https://github.com) avoid name collisions between projects?
 - How have you worked around the problem of name mangling?
 
 ---
