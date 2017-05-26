@@ -26,7 +26,8 @@ throwing darts:
 
 Discuss briefly how you can approximate pi from such an experiment and how you would program it.
 
-We will implement this example in 3 different languages (C++, Fortran, Python) and
-demonstrate how to call this functionality across languages.
+In this workshop we will implement this example in 3 different languages (C++,
+Fortran, Python) and demonstrate how to call this functionality across
+languages.
 
 Later we will combine these 3 implementations in an example Python package.
