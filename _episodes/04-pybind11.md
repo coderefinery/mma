@@ -26,8 +26,8 @@ Algorithms we want to implement could be [Daitch-Mokotoff Soundex](https://en.wi
 
 
 ```C++
-#ifndef SOUNDEX_SOUNDEX_H
-#define SOUNDEX_SOUNDEX_H
+#ifndef SOUNDEX_H
+#define SOUNDEX_H
 #include <string>
 #include <unordered_map>
 class Soundex {
@@ -114,7 +114,7 @@ private:
     }
 };
 
-#endif //SOUNDEX_SOUNDEX_H
+#endif //SOUNDEX_H
 
 ```
 The source code implements the [Soundex alorithm](https://en.wikipedia.org/wiki/Soundex) which according to Wikipedia maps a name or word to its' first letter
@@ -167,7 +167,7 @@ The contents of Py11Soundex.cpp:
 ```C++
 // File: Py11Soundex.cpp
 #include <pybind11/pybind11.h>
-#include "soundex.h"
+#include "Soundex.h"
 
 namespace py = pybind11;
 
@@ -180,17 +180,86 @@ PYBIND11_PLUGIN(soundex) {
 }
 
 ``` 
+Create the Py11Soundex.cpp file in the *src* subdirectory:
+```shell
+(pybind11-example) [lynx@lille-login2src]$ cat > Py11Soundex.cpp
+Cat the contents of Py11Soundex.cpp to Py11Soundex.cpp or use
+an editor
+
+```
+Create also the CMakeLists.txt file in the *src* subdirectory.
+Here is the CMakeLists.txt file, just one line:
+```CMake
+pybind11_add_module(soundex Py11Soundex.cpp)
+```
+Change to the directory above after you have made the file:
+```shell
+(pybind11-example) [lynx@lille-login2src]$ cat > CMakeLists.txt
+pybind11_add_module(soundex Py11soundex.cpp)
+<Ctrl>-d
+(pybind11-example) [lynx@lille-login2src]$ cd ..
+(pybind11-example) [lynx@lille-login2py11bind]$ 
+
+```
+
+Create the top level CMakeLists.txt in this directory. Here is the contents:
+
+```CMake
+cmake_minimum_required(VERSION 2.8 FATAL_ERROR)
+project(soundex)
+
+set(CMAKE_LIBRARY_OUTPUT_DIRECTORY
+  ${CMAKE_BINARY_DIR}/lib
+  )
+
+find_package(pybind11 REQUIRED )
+
+add_subdirectory(src)
+```
+After you have made the CMakeLists.txt, make a build subdirectory, *cd* into it
+generate the build files by running cmake, and execute make
 
 ```shell
+(pybind11-example) [lynx@lille-login2src]$ cat > CMakeLists.txt
+Paste the contents of the CMakeLists.txt and press <Ctrl>-d
+(pybind11-example) [lynx@lille-login2src]$ mkdir build
+(pybind11-example) [lynx@lille-login2src]$ cd build
+(pybind11-example) [lynx@lille-login2build]$  cmake ..
+(pybind11-example) [lynx@lille-login2build]$  make
+
 ```
+After the make, we cd into the lib subdirectory and load the soundex library:
 ```shell
-pybind11-example) [bjornlin@lille-login2 build]$ make
+(pybind11-example) [lynx@lille-login2 build]$ cmake ..
+-- The C compiler identification is GNU 6.3.0
+-- The CXX compiler identification is GNU 6.3.0
+-- Check for working C compiler: /share/apps/modulessoftware/Core/gcc/6.3.0/bin/gcc
+-- Check for working C compiler: /share/apps/modulessoftware/Core/gcc/6.3.0/bin/gcc -- works
+-- Detecting C compiler ABI info
+-- Detecting C compiler ABI info - done
+-- Check for working CXX compiler: /share/apps/modulessoftware/Core/gcc/6.3.0/bin/g++
+-- Check for working CXX compiler: /share/apps/modulessoftware/Core/gcc/6.3.0/bin/g++ -- works
+-- Detecting CXX compiler ABI info
+-- Detecting CXX compiler ABI info - done
+-- Found PythonInterp: /home/lynx/anaconda2/envs/pybind11-example/bin/python (found version "2.7.13") 
+-- Found PythonLibs: /home/lynx/anaconda2/envs/pybind11-example/lib/libpython2.7.so
+-- Performing Test HAS_CPP14_FLAG
+-- Performing Test HAS_CPP14_FLAG - Success
+-- Performing Test HAS_CPP11_FLAG
+-- Performing Test HAS_CPP11_FLAG - Success
+-- Performing Test HAS_FLTO
+-- Performing Test HAS_FLTO - Success
+-- LTO enabled
+-- Configuring done
+-- Generating done
+-- Build files have been written to: /home/lynx/src/c++/encodings/soundex/pybind11/build
+(pybind11-example) [lynx@lille-login2 build]$ make
 Scanning dependencies of target soundex
-[100%] Building CXX object src/CMakeFiles/soundex.dir/Py11soundex.cpp.o
+[100%] Building CXX object src/CMakeFiles/soundex.dir/Py11Soundex.cpp.o
 Linking CXX shared module ../lib/soundex.so
 [100%] Built target soundex
-(pybind11-example) [bjornlin@lille-login2 build]$ cd lib
-(pybind11-example) [bjornlin@lille-login2 lib]$ python
+(pybind11-example) [lynx@lille-login2 build]$ cd lib
+(pybind11-example) [lynxy@lille-login2 lib]$ python
 Python 2.7.13 |Continuum Analytics, Inc.| (default, Dec 20 2016, 23:09:15) 
 [GCC 4.4.7 20120313 (Red Hat 4.4.7-1)] on linux2
 Type "help", "copyright", "credits" or "license" for more information.
