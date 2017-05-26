@@ -4,11 +4,14 @@ title: Roadmap for migrating and modularizing legacy code
 teaching: 10
 exercises: 0
 questions:
-  - Write me.
+  - Big untested legacy monolith code in front of you - what now?
 objectives:
-  - Write me.
+  - Offer a step-by-step recipe for migrating and modularizing legacy code.
 keypoints:
-  - Write me.
+  - Introduce testing early as a safeguard.
+  - Use code coverage analysis tools.
+  - Cut the code at important interfaces.
+  - Build and test modules separately to identify hidden dependencies.
 ---
 
 ## Section
