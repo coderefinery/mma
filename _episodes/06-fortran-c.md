@@ -5,6 +5,8 @@ teaching: 10
 exercises: 10
 questions:
   - How can we couple Fortran with C/C++?
+  - What is name mangling?
+  - How can we avoid worrying about it?
 objectives:
   - Learn how to glue Fortran and C/C++ with iso_c_binding.
   - Learn how to build mixed-language projects with CMake.
