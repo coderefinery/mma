@@ -5,10 +5,15 @@ permalink: /
 
 # Mixed Martial Arts: Interfacing Fortran, C, C++, and Python for Great Good!
 
-## Status
-
-This lesson is currently under construction - feedback and suggestions are most
-welcome.
+<div class="panel panel-danger">
+  <div class="panel-heading">
+    <h3 class="panel-title">Status</h3>
+  </div>
+  <div class="panel-body">
+    This lesson is currently under construction - feedback and suggestions are most
+    welcome.
+  </div>
+</div>
 
 
 ## Learning goals
