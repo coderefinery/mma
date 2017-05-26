@@ -90,7 +90,10 @@ def approximate_pi(num_points):
     return 4.0*num_inside/float(num_points)
 ```
 
-Does it converge to the right number?
+### Questions
+
+- Does it converge to the right number?
+- Why is there no `math.sqrt` in the code?
 
 ---
 
