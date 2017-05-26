@@ -10,3 +10,4 @@ questions:
 
 - Grab a coffee or tea
 - Get some fresh air
+- Talk to other people and find out what projects they are working on
