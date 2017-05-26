@@ -13,11 +13,15 @@ keypoints:
 
 ## Section
 
-Assume we are starting a ("Research?") project on  Phonetic Algorithms.
-We have received source code for the Soundex algorithm (actually from
- [Jeff Langr's](http://langrsoft.com/about/) book [Modern C++ Programming with Test-Driven Development](http://pragprog.com/book/lotdd/modern-c-programming-with-test-driven-development) Let us say our ambition is to implement
-a Phonetic Algorithm class where Soundex is one Phonetic encoding. Other Phonetic
-Algorithms we want to implement could be [Daitch-Mokotoff Soundex](https://en.wikipedia.org/wiki/Daitch–Mokotoff_Soundex),
+Assume we are starting a project on  Phonetic Algorithms. We have received
+source code for the Soundex algorithm which is one Phonetic Algorithm
+(The code used here is from  [Jeff Langr's](http://langrsoft.com/about/) book
+[Modern C++ Programming with Test-Driven Development](http://pragprog.com/book/lotdd/modern-c-programming-with-test-driven-development)
+
+Our ambition is to implement a Phonetic Algorithm class where Soundex is one
+several encoding algorithm
+
+Other Phonetic Algorithms are [Daitch-Mokotoff Soundex](https://en.wikipedia.org/wiki/Daitch–Mokotoff_Soundex),
 [Cologne phonetics](https://en.wikipedia.org/wiki/Cologne_phonetics) or [NYIIS](https://en.wikipedia.org/wiki/New_York_State_Identification_and_Intelligence_System)
 
 ## The Soundex Source code
