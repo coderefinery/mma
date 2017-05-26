@@ -19,7 +19,10 @@ We have received source code for the Soundex algorithm (actually from
 a Phonetic Algorithm class where Soundex is one Phonetic encoding. Other Phonetic
 Algorithms we want to implement could be [Daitch-Mokotoff Soundex](https://en.wikipedia.org/wiki/Daitch–Mokotoff_Soundex),
 [Cologne phonetics](https://en.wikipedia.org/wiki/Cologne_phonetics) or [NYIIS](https://en.wikipedia.org/wiki/New_York_State_Identification_and_Intelligence_System)
- Here is source code for a Phonetic Algorithm  [Soundex](https://en.wikipedia.org/wiki/Soundex) . We want to make use of Soundex in Python.
+
+## The Soundex Source code
+
+ Here is source code for a Phonetic Algorithm  [Soundex](https://en.wikipedia.org/wiki/Soundex) . We want to make use of Soundex in Python with help of Pybind11
 
 
 ```C++
@@ -131,3 +134,72 @@ followed by three numerical digits. Outlined the algorithm goes like:
  4. If you have too few letters in your word that you can't assign three numbers,
  append with zeros until there are three numbers. If you have more than 3 letters,
  just retain the first 3 numbers.
+
+
+### Building the library using CMake
+We will make a subdirectory pybind11 with at src subdirectory where put the source code
+In addition there will be a CMakeLists.txt file under pybind11 and a CMakeLists.txt
+under src:
+
+```shell
+pybind11 | -  CMakeLists.txt
+         |
+	 |
+	 | -  src | -  CMakeLists.txt 
+	          |
+	          | -  Soundex.h
+	          |
+	          | -  Py11Soundex.cpp
+
+```
+
+Let us create the subdirectory setup and the files:
+
+```shell
+(pybind11-example) [lynx@lille-login2~]$ **mkdir -p pybind11/src**
+(pybind11-example) [lynx@lille-login2~]$ **cd pybind11/src**
+(pybind11-example) [lynx@lille-login2~]$ **cat > Soundex.h**
+Create the Soundex.h file by pasting in the source code either by using cat
+or your favorite editor.
+```
+The contents of Py11Soundex.cpp:
+
+```C++
+// File: Py11Soundex.cpp
+#include <pybind11/pybind11.h>
+#include "soundex.h"
+
+namespace py = pybind11;
+
+PYBIND11_PLUGIN(soundex) {
+  py::module m("soundex", "pybind11 soundex plugin");
+
+  py::class_<Soundex>(m,"soundex")
+    .def(py::init<>())
+    .def("encode", &Soundex::encode);
+}
+
+``` 
+
+```shell
+```
+```shell
+pybind11-example) [bjornlin@lille-login2 build]$ make
+Scanning dependencies of target soundex
+[100%] Building CXX object src/CMakeFiles/soundex.dir/Py11soundex.cpp.o
+Linking CXX shared module ../lib/soundex.so
+[100%] Built target soundex
+(pybind11-example) [bjornlin@lille-login2 build]$ cd lib
+(pybind11-example) [bjornlin@lille-login2 lib]$ python
+Python 2.7.13 |Continuum Analytics, Inc.| (default, Dec 20 2016, 23:09:15) 
+[GCC 4.4.7 20120313 (Red Hat 4.4.7-1)] on linux2
+Type "help", "copyright", "credits" or "license" for more information.
+Anaconda is brought to you by Continuum Analytics.
+Please check out: http://continuum.io/thanks and https://anaconda.org
+>>> import soundex
+>>> p = soundex.soundex()
+>>> p.encode('Allison')
+u'A425'
+>>> 
+
+```
