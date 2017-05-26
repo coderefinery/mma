@@ -15,7 +15,7 @@ keypoints:
 
 We will stay with the same pi example but please picture your project instead.
 
-Image one of two situations:
+Imagine one of two situations:
 
 - Either you have a Python code and want to create a C/Fortran back-end.
 - You have a (possibly legacy) C/C++/Fortran code and wish to create a Python front-end.
@@ -49,9 +49,3 @@ Image one of two situations:
 - Encourages dynamic library (good)
 - You can write and prototype tests without recompiling/relinking the library (good)
 - Allows you to use the wonderfully lightweight [pytest](http://pytest.org) (no more excuses for the Fortran crowd)
-
----
-
-## Section
-
-Hands-on example for testing a Fortran code with Pytest and deploying the test to Travis CI
