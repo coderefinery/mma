@@ -122,7 +122,7 @@ $ make
 ```
 
 - Test the binaries built under `build/bin/`.
-- Also have a look at `CMakeLists.txt` and see if you can make sense of it.
+- Also have a look at [CMakeLists.txt](https://github.com/bast/python-cffi-demo/blob/exercise/cxx-fortran/CMakeLists.txt) and see if you can make sense of it.
 
 ---
 
