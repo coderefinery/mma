@@ -18,7 +18,7 @@ keypoints:
 
 ### Strong coupling
 
-![]({{ site.baseurl }}/img/strong-coupling.svg)
+![]({{ site.baseurl }}/img/api/strong-coupling.svg)
 
 
 ### Loose coupling
@@ -26,7 +26,7 @@ keypoints:
 - Easier to reassemble
 - Easier to understand
 
-![]({{ site.baseurl }}/img/loose-coupling.svg)
+![]({{ site.baseurl }}/img/api/loose-coupling.svg)
 
 ---
 
@@ -38,7 +38,7 @@ keypoints:
 - Non-cohesive code has unnecessary dependencies
 - Swiss army knife modules
 
-![]({{ site.baseurl }}/img/low-cohesion.svg)
+![]({{ site.baseurl }}/img/api/low-cohesion.svg)
 
 
 ### High cohesion
@@ -49,7 +49,7 @@ keypoints:
 - Power of the Unix command line is a set of highly cohesive tools
 - Microservices
 
-![]({{ site.baseurl }}/img/high-cohesion.svg)
+![]({{ site.baseurl }}/img/api/high-cohesion.svg)
 
 ---
 
