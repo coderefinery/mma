@@ -19,6 +19,15 @@ keypoints:
 
 ---
 
+## Questions
+
+- Have you ever tried to call C functions from Fortran or vice versa?
+- What were the problems?
+- What is name mangling?
+- How have you worked around the problem of name mangling?
+
+---
+
 ## Example
 
 Imagine you are on a desert island and wish to compute pi.
