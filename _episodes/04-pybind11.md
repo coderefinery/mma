@@ -137,7 +137,7 @@ followed by three numerical digits. Outlined the algorithm goes like:
 
 
 ### Building the library using CMake
-We will make a subdirectory pybind11 with at src subdirectory where put the source code
+We will make a subdirectory pybind11 with a *src* subdirectory where put the source code
 In addition there will be a CMakeLists.txt file under pybind11 and a CMakeLists.txt
 under src:
 
@@ -156,9 +156,9 @@ pybind11 | -  CMakeLists.txt
 Let us create the subdirectory setup and the files:
 
 ```shell
-(pybind11-example) [lynx@lille-login2~]$ **mkdir -p pybind11/src**
-(pybind11-example) [lynx@lille-login2~]$ **cd pybind11/src**
-(pybind11-example) [lynx@lille-login2~]$ **cat > Soundex.h**
+(pybind11-example) [lynx@lille-login2~]$ mkdir -p pybind11/src
+(pybind11-example) [lynx@lille-login2~]$ cd pybind11/src
+(pybind11-example) [lynx@lille-login2~]$ cat > Soundex.h
 Create the Soundex.h file by pasting in the source code either by using cat
 or your favorite editor.
 ```
