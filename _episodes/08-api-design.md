@@ -4,11 +4,14 @@ title: API design
 teaching: 20
 exercises: 0
 questions:
-  - Write me.
+  - How can we create composable code units?
+  - How can we improve the API to make it easier to understand and use?
 objectives:
-  - Write me.
+  - Discuss few guiding principles for API design.
 keypoints:
-  - Write me.
+  - Encapsulate.
+  - Take some time to design an API.
+  - Document and version your API.
 ---
 
 ## Coupling
@@ -50,21 +53,24 @@ keypoints:
 
 ---
 
-## Library guidelines (Ole Martin Bjørndalen)
+## Library guidelines (thanks to [Ole Martin Bjørndalen](https://github.com/olemb))
 
-- let me focus on my code, not figuring out what the library wants from me
-- clear delienation between library and my code so it doesn't take
-  over my program. (The library should be a tool or service I use, not
+A good API:
+
+- Lets me focus on my code, not figuring out what the library wants from me.
+- Clear separation between library and my code so it doesn't take
+  over my program. The library should be a tool or service I use, not
   one who comes over and lives at my house eats my food and never cleans
-  up after itself.)
-- makes common things easy and less common things possible
-- hides all the cruft behind a simple API
-- not require you to think about more than one thing at a time (or very few)
-- uses familiar data structures and concepts where possible
-- doesn't expose inner plumbing that's irrelevant to you
-- has good deafults - you shouldn't have to pass lots of options that
-  are the same nearly every time
-- follow the principle of least surprise
+  up after itself.
+- Makes common things easy and less common things possible.
+- Hides all the cruft behind a simple API.
+- Not require you to think about more than one thing at a time (or very few).
+- Uses familiar data structures and concepts where possible.
+- Does not expose inner plumbing that is irrelevant to you.
+- Has good defaults - you shouldn't have to pass lots of options that
+  are the same nearly every time.
+- Follow the principle of least surprise.
+
 
 ### Other guidelines
 
@@ -72,7 +78,7 @@ keypoints:
 - Tested on its own
 - Built on its own
 - Own development history (own Git repository)
-- Compiled languages: C Interface
+- Compiled languages: provide C Interface
 - Encapsulation
   - Hide internals
   - Interface exposed in a separate file
@@ -85,9 +91,7 @@ keypoints:
 
 ---
 
-## API
-
-### We will discuss three API examples
+## We will discuss three API examples
 
 - Stateless API
 - API with state: new/compute/delete
@@ -97,23 +101,23 @@ keypoints:
 
 ## Stateless API
 
-### Example: BLAS
+### Example: [BLAS](https://en.wikipedia.org/wiki/Basic_Linear_Algebra_Subprograms)
 
 ```fortran
 f = ddot(1000, vector_a, 1, vector_b, 1)
 ```
 
-- From the client perspective there is no state
-- Sometimes libraries with "stateless" API have internal state (caching, memoization)
+- From the client perspective there is no state.
+- Sometimes libraries with "stateless" API have internal state (caching, memoization).
 
 ### Advantage
 
-- We only need to consider this one call to understand and predict what will happen
+- We only need to consider this one call to understand and predict what will happen.
 
 ### Disadvantages
 
-- The library may need to recompute expensive intermediates at every call
-- Typically many arguments
+- The library may need to recompute expensive intermediates at every call.
+- Often many arguments.
 
 ---
 
@@ -126,23 +130,23 @@ f = ddot(1000, vector_a, 1, vector_b, 1)
 
 ### Example
 
-- MPI
+- [MPI](https://en.wikipedia.org/wiki/Message_Passing_Interface)
 
 ### Advantage
 
-- We can avoid possibly costly initialization at each compute call
+- We can avoid possibly costly initialization at each compute call.
 
 ### Disadvantages
 
-- Order matters
-- We have to remember to clean up memory
-- Only one context at a time
+- Order matters.
+- We have to remember to clean up memory.
+- Only one context at a time.
 
 ---
 
 ## API with state
 
-### Another example: we program our own bank
+Another example: we program our own bank:
 
 ```python
 bank_new()
@@ -157,13 +161,9 @@ my_balance = bank_get_balance()
 bank_free()
 ```
 
-- Problem: We have to close the account before opening a new one
+Problem: We have to close the account before opening a new one.
 
----
-
-## API with state
-
-### It would be great to have more contexts
+It would be great to have more contexts:
 
 ```python
 account1 = bank_new()
@@ -185,12 +185,6 @@ bank_free(account1)
 bank_free(account2)
 ```
 
----
-
-## API with context
-
-- Allows multiple contexts open at the same time
-
 ### Example: FFTW
 
 ```c
@@ -204,28 +198,34 @@ fftw_one(p, in, out);
 fftw_destroy_plan(p);
 ```
 
+Discuss with the group other examples
+
 ---
 
-## Context-aware API in different languages
+## [Context-aware API in different languages](https://github.com/bast/context-api-example)
 
 - Shows how to implement and use context-aware APIs in C++, Fortran, and Python
-  with a C interface: https://github.com/bast/context-api-example
 - Inspired by Armin Ronacher's
   ["Beautiful Native Libraries"](http://lucumr.pocoo.org/2013/8/18/beautiful-native-libraries/)
 
 ```
 .
+|-- CMakeLists.txt
+|-- LICENSE
+|-- README.md
 |-- api
-|   |-- example.h   (C interface)
-|   `-- example.py  (Python interface)
+|   |-- cffi_helpers.py  (CFFI boilerplate code)
+|   |-- example.h        (C interface)
+|   `-- example.py       (Python interface)
+|-- requirements.txt
 |-- src
-|   |-- bank.cpp    (C++ library)
-|   |-- bank.f90    (Fortran library)
-|   `-- bank.h      (C++ library)
+|   |-- bank.cpp         (C++ library)
+|   |-- bank.f90         (Fortran library)
+|   `-- bank.h           (C++ library)
 `-- test
-    |-- test.cpp    (C++ client)
-    |-- test.f90    (Fortran client)
-    `-- test.py     (Python client; automatically tested)
+    |-- test.cpp         (C++ client)
+    |-- test.f90         (Fortran client)
+    `-- test.py          (Python client)
 ```
 
 ---
