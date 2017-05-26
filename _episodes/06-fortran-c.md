@@ -1,14 +1,15 @@
 ---
 layout: episode
 title: Fortran, C and C++ talking to each other
-teaching: 20
-exercises: 0
+teaching: 10
+exercises: 10
 questions:
-  - Write me.
+  - How can we couple Fortran with C/C++?
 objectives:
-  - Write me.
+  - Learn how to glue Fortran and C/C++ with iso_c_binding.
+  - Learn how to build mixed-language projects with CMake.
 keypoints:
-  - Write me.
+  - iso_c_binding is the standard and recommended way to glue Fortran and C/C++ in a portable way.
 ---
 
 ## Learning goals
@@ -51,7 +52,9 @@ Later we will combine these 3 implementations in an example Python package.
 
 ---
 
-## Exercise 1
+## Exercise 1: testing the algorithm
+
+Before you continue, create a fresh directory for this session.
 
 Test the following Python code:
 
@@ -79,3 +82,63 @@ def approximate_pi(num_points):
 ```
 
 Does it converge to the right number?
+
+---
+
+## Exercise 2: testing the isolated C++ and Fortran implementations
+
+Let us now fetch an example from the web:
+
+```shell
+$ git clone --branch exercise/cxx-fortran https://github.com/bast/python-cffi-demo.git cxx-fortran
+```
+
+Let us inspect the file structure:
+
+```shell
+$ cd cxx-fortran
+```
+
+We see the following files:
+
+```
+.
+|-- CMakeLists.txt
+`-- pi
+    |-- main.cpp
+    |-- main.f90
+    |-- pi.cpp
+    |-- pi.f90
+    `-- pi.h
+```
+
+Your task is to configure and build the code with:
+
+```shell
+$ mkdir build
+$ cd build
+$ cmake ..
+$ make
+```
+
+- Test the binaries built under `build/bin/`.
+- Also have a look at `CMakeLists.txt` and see if you can make sense of it.
+
+---
+
+## Exercise 3: C++ and Fortran talking to each other
+
+Your task now is to let C++ also call the Fortran implementation and to let
+Fortran also call the C++ implementation.
+
+For this first uncomment the two following lines:
+
+- [pi/main.f90](https://github.com/bast/python-cffi-demo/blob/exercise/cxx-fortran/pi/main.f90#L17)
+- [pi/main.cpp](https://github.com/bast/python-cffi-demo/blob/exercise/cxx-fortran/pi/main.cpp#L8)
+
+Then try to recompile - you will observe that the code has unmet dependencies.
+Try to fix these (use out-commented code for hints).
+
+Finally, verify that the binaries work and that they indeed call both implementations.
+
+Discuss with the group how it works.
