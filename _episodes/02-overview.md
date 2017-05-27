@@ -21,6 +21,9 @@ There exist several technologies which make it possible to couple Python and com
 - Cython
 - Pybind11
 
+In this episode we will briefly highlight the pros and cons of the first four and then
+spend some more time with Pybind11 in the next section.
+
 Simplified Wrapper and Interface Generator (SWIG) is a tool that simplifies the
 two step process of making a wrapper and generating a interface which makes the
 wrapper callable from the interpreter. According to the SWIG documentation,
