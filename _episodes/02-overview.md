@@ -34,14 +34,18 @@ Could be, but before giving a motivation for the other tools, it is worth
 mentioning that SWIG support a range of interpreting languages (C#,Common Lisp,
 Go,R, Lua ...), not only Python.
 
-F2PY is a tool for interfacing Fortan and Python. According to "Python
-Scripting for Computational Science" transfering Numpy arrays between Python
-and compiled Fortran code is easier with F2PY than SWIG.
-
 Boost is a huge C++-library which works with almost any C++-compiler. The
 Python interface tool was added to the Boost library around 2002 by David
 Abrahams. Hence, if you a have special C++-compiler, Boost.Python could be your
 most suitable tool for integrating Python and C++.
+
+F2PY is a tool for interfacing Fortan and Python. According to "Python
+Scripting for Computational Science" transfering Numpy arrays between Python
+and compiled Fortran code is easier with F2PY than SWIG.
+
+Cython: "All of this makes Cython the ideal language for wrapping external C
+libraries, embedding CPython into existing applications, and for fast C modules
+that speed up the execution of Python code.", see webpage http://cython.org
 
 "Pybind11 is a lightweight-header only library that exposes C++-types in Python
 and vice versa, mainly to create Python bindings of existing C++ code.",
@@ -49,10 +53,6 @@ according to the Pybind11 web page,
 https://pybind11.readthedocs.io/en/stable/intro.html. The point it is
 lightweight and targeting the combination of Python and C++11compliant
 compilers. Consequently, the interface code becomes more straight forward.
-
-Cython:"All of this makes Cython the ideal language for wrapping external C
-libraries, embedding CPython into existing applications, and for fast C modules
-that speed up the execution of Python code.", see webpage http://cython.org
 
 
 ### SWIG
@@ -504,7 +504,7 @@ Please check out: http://continuum.io/thanks and https://anaconda.org
 source deactivate
 ```
 
-##F2PY
+## F2PY
 
-##Cython
+## Cython
 
