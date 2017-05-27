@@ -159,10 +159,15 @@ This is very similar to the steps taken when building taylor library with
 Pybind11. Here is the CMakeLists.txt from that example:
 ```cmake
 cmake_minimum_required(VERSION 2.8 FATAL_ERROR)
+
 project(taylor)
+
 find_package(pybind11 REQUIRED)
+
 include_directories(src)
+
 set(SOURCE_FILES src/taylor_series.cpp src/py11taylor.cpp)
+
 pybind11_add_module(taylor ${SOURCE_FILES})
 ```
 Here we require that Pybind11 exists if not the generation will stop. We add
