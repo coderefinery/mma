@@ -40,7 +40,7 @@ Abrahams. Hence, if you a have special C++-compiler, Boost.Python could be your
 most suitable tool for integrating Python and C++.
 
 **F2PY** is a tool for interfacing Fortan and Python. According to "Python
-Scripting for Computational Science" transfering Numpy arrays between Python
+Scripting for Computational Science" transferring Numpy arrays between Python
 and compiled Fortran code is easier with F2PY than SWIG.
 
 **Cython**: "All of this makes Cython the ideal language for wrapping external C
@@ -62,7 +62,7 @@ helper function factorial(). We will make sin() and cos() available in our
 Python interpreter with the use of SWIG
 
 Start out with at empty subdirectory, your C++ compiler and the Anaconda2
-enviroment available in your path. Activate the swig-example environment:
+environment available in your path. Activate the swig-example environment:
 ```shell
 [lynx@~]$mkdir swig
 [lynx@swig]$ type conda
