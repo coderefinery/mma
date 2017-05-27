@@ -4,11 +4,12 @@ title: Building mixed-language projects with CMake
 teaching: 30
 exercises: 0
 questions:
-  - Write me.
+  - Why is CMake a popular tools to configure mix-language projects?
 objectives:
-  - Write me.
+  - Motivate CMake.
+  - Demonstrate a CMake configuration and build step.
 keypoints:
-  - Write me.
+  - Configure mix-language projects with CMake.
 ---
 
 ## Introducing [CMake](https://cmake.org)
