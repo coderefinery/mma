@@ -11,8 +11,7 @@ keypoints:
   - Write me.
 ---
 
-## Introducing CMake
-## About [CMake](https://cmake.org)
+## Introducing [CMake](https://cmake.org)
 
 - Cross-platform
 - Open-source
@@ -27,36 +26,38 @@ keypoints:
 
 ## Why CMake?
 
-Separation of source and build path:
+### Separation of source and build path
 
 - Out-of-source compilation (possibility to compile several builds with the same source)
 
-Portability:
+### Portability
 
 - Really cross-platform (Linux, Mac, Windows, AIX, iOS, Android)
 - CMake defines portable variables about the system
 - Cross-platform system- and library-discovery
 
-Language support:
+### Language support
 
 - Excellent support for Fortran, C, C++, and Java, as well as mixed-language projects
 - CMake understands Fortran 90 dependencies very well; no need to program a dependency scanner
 - Excellent support for multi-component and multi-library projects
 
-Supports modular code development:
+### Supports modular code development
 
 - Makes it possible and relatively easy to download, configure, build, install, and link external modules
 
-Provides tools:
+### Provides tools
 
 - Generates user interface (command-line or text-UI or GUI)
 - Full-fledged testing and packaging framework with CTest and CPack
 - CTest uses a Makefile (possible to run sequential tests concurrently)
 
-Popular:
+### Popular
 
 - CMake is used by many prominent projects:
   MySQL, Boost, VTK, Blender, KDE, LyX, Mendeley, MikTeX, Compiz, Google Test, ParaView, Second Life, Avogadro, and many more ...
+
+---
 
 ## Hello-world example
 
