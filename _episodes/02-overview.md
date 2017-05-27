@@ -4,14 +4,14 @@ title: Overview over different approaches
 teaching: 10
 exercises: 0
 questions:
-  - Write me.
+  - Which tools are out there?
 objectives:
-  - Write me.
+  - Get a birds-eye overview of existing technologies.
 keypoints:
-  - Write me.
+  - Many tools exist with different scope, expressiveness, and complexity.
 ---
 
-## Section
+## Overview
 
 There exist several technologies which make it possible to couple Python and compiled libraries:
 
