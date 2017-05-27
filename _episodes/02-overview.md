@@ -12,13 +12,14 @@ keypoints:
 ---
 
 ## Section
-There exist several technologies which make this possible:
 
-* SWIG
-* F2PY
-* Boost
-* Pybind11
-* Cython
+There exist several technologies which make it possible to couple Python and compiled libraries:
+
+- SWIG
+- Boost
+- F2PY
+- Cython
+- Pybind11
 
 Simplified Wrapper and Interface Generator (SWIG) is a tool that simplifies the
 two step process of making a wrapper and generating a interface which makes the
