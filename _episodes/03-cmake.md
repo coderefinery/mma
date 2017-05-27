@@ -185,7 +185,8 @@ SWIG can also use CMake as generator for the building process. This time we
 make use of the same source code as in the Pybind11 example, we pass the
 arguments by reference, as we would expect of C++ code. This requires some
 changes to our interface file:
-```swig
+
+```
 //
 // file: taylor.i
 // SWIG - interface file
@@ -199,9 +200,10 @@ changes to our interface file:
 %include "typemaps.i"
 %apply double *INPUT {double& x }
 %include "taylor_series.h"
-
 ```
+
 We put the interface file in a src subdirectory together with the source files:
+
 ```shell
 [lynx@~]$mkdir -p swigcmake/src
 [lynx@~]$cd swigcmake/src
@@ -214,6 +216,7 @@ taylor.i  taylor_series.cpp  taylor_series.h
 [lynx@swigcmake]$
 ```
 Move up one directory. Here we will make a CMakeLists.txt. It will contain:
+
 ```cmake
 cmake_minimum_required(VERSION 2.8 FATAL_ERROR)
 
@@ -228,6 +231,7 @@ FIND_PACKAGE(PythonLibs)
 
 ADD_SUBDIRECTORY(src)
 ```
+
 Here we state that the library we will make will be output to a lib subdirectory.
 The SWIG library is necessary. The SWIG package will set the ${SWIG_USE_FILE}
 environment variable. The variable points to CMake file which will be loaded and
@@ -236,6 +240,7 @@ the python libraries. At the end we add the 'src'-subdirectory. CMake will searc
 this directory for an additional CMakeLists.txt.
 
 In the 'src'-subdirectory we make a CMakeLists.txt containing:
+
 ```cmake
 INCLUDE_DIRECTORIES(${PYTHON_INCLUDE_PATH})
 INCLUDE_DIRECTORIES(${CMAKE_CURRENT_SOURCE_DIR})
@@ -248,7 +253,9 @@ SET_SOURCE_FILES_PROPERTIES(taylor.i PROPERTIES SWIG_FLAGS "-includeall")
 SWIG_ADD_MODULE(taylor python taylor.i taylor_series.cpp)
 SWIG_LINK_LIBRARIES(taylor ${PYTHON_LIBRARIES})
 ```
+
 Our 'src'-subdirectory contains:
+
 ```shell
 (swig-example) [lynx@src]$ ls
 CMakeLists.txt  CMakeLists.txt~  taylor.i  taylor_series.cpp  taylor_series.h
