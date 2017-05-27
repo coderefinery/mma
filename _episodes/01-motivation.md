@@ -4,11 +4,11 @@ title: Motivation
 teaching: 10
 exercises: 0
 questions:
-  - Write me.
+  - Why is one programming language often not enough?
 objectives:
-  - Write me.
+  - Motivate why it can be benefitial to combine scripted and compiled languages.
 keypoints:
-  - Write me.
+  - Use the right tool for the right task and leverage tools.
 ---
 
 ## Why?
