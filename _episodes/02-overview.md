@@ -24,7 +24,7 @@ There exist several technologies which make it possible to couple Python and com
 In this episode we will briefly highlight the pros and cons of the first four and then
 spend some more time with Pybind11 in the next section.
 
-Simplified Wrapper and Interface Generator (SWIG) is a tool that simplifies the
+Simplified Wrapper and Interface Generator (**SWIG**) is a tool that simplifies the
 two step process of making a wrapper and generating a interface which makes the
 wrapper callable from the interpreter. According to the SWIG documentation,
 "SWIG was originally designed to make it extremely easy for scientist and
@@ -34,20 +34,20 @@ Could be, but before giving a motivation for the other tools, it is worth
 mentioning that SWIG support a range of interpreting languages (C#,Common Lisp,
 Go,R, Lua ...), not only Python.
 
-Boost is a huge C++-library which works with almost any C++-compiler. The
+**Boost** is a huge C++-library which works with almost any C++-compiler. The
 Python interface tool was added to the Boost library around 2002 by David
 Abrahams. Hence, if you a have special C++-compiler, Boost.Python could be your
 most suitable tool for integrating Python and C++.
 
-F2PY is a tool for interfacing Fortan and Python. According to "Python
+**F2PY** is a tool for interfacing Fortan and Python. According to "Python
 Scripting for Computational Science" transfering Numpy arrays between Python
 and compiled Fortran code is easier with F2PY than SWIG.
 
-Cython: "All of this makes Cython the ideal language for wrapping external C
+**Cython**: "All of this makes Cython the ideal language for wrapping external C
 libraries, embedding CPython into existing applications, and for fast C modules
 that speed up the execution of Python code.", see webpage http://cython.org
 
-"Pybind11 is a lightweight-header only library that exposes C++-types in Python
+"**Pybind11** is a lightweight-header only library that exposes C++-types in Python
 and vice versa, mainly to create Python bindings of existing C++ code.",
 according to the Pybind11 web page,
 https://pybind11.readthedocs.io/en/stable/intro.html. The point it is
