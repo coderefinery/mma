@@ -54,7 +54,42 @@ FIXME: add batman figure.
 
 ## Exercise 4: adding a Python interface
 
-Under construction ...
+First make sure that the C++ and Fortran libraries from the previous session are compiled.
+
+- FIXME SHOW COMPILATION
+
+- FIXME FETCH cffi_helpers.py
+
+The function `get_lib_handle` tells CFFI where to find the header file and the
+dynamic library and from this CFFI will create a Python interface.
+
+We have places this function into a separate file so that you can reuse it for
+different libraries.
+
+- FIXME FETCH __init__.py
+
+This is the package interface file which exposes 3 functions:
+
+```python
+__all__ = [
+    'approximate_pi_python',
+    'approximate_pi_c',
+    'approximate_pi_fortran',
+]
+```
+
+With these two files we have created a Python interface!
+
+Let us first test it:
+
+FIXME
+
+Why do we need to set `PI_BUILD_DIR` when importing our `pi` package?
+
+FIXME fetch and run timing
+
+
+After testing the interface, take the time to study the files and discuss the code.
 
 ---
 
