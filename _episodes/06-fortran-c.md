@@ -51,7 +51,7 @@ In this workshop we will implement this example in 3 different languages (C++,
 Fortran, Python) and demonstrate how to call this functionality across
 languages.
 
-Later we will combine these 3 implementations in an example Python package.
+Later we will combine these 3 implementations in a Python package and learn few useful tricks.
 
 ---
 
