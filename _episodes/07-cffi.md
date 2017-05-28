@@ -28,7 +28,8 @@ Imagine one of two situations:
 
 ## Learning goals
 
-FIXME: add batman figure.
+- [Wrap with Python](https://twitter.com/ThePracticalDev/status/823305296521154563)
+
 
 ### Specific goals
 

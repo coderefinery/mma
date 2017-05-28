@@ -46,7 +46,7 @@ keypoints:
 - Again, this is an iterative process.
 
 
-### 5) Isolate modules behind interfaces
+### 5) [Isolate modules behind interfaces](https://twitter.com/jxxf/status/855486978837446656)
 
 - Make interface functions publicly accessible and make all other functions publicly inaccessible.
 - This is a painful step since you will identify many dependencies.
