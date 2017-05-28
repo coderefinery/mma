@@ -31,7 +31,6 @@ Imagine one of two situations:
 
 ### Specific goals
 
-- Approximate pi using the Monte Carlo method
 - Calling Fortran/C(++) libraries from Python using [Python CFFI](https://cffi.readthedocs.io)
 - Automatically testing Fortran/C(++) libraries on Linux and Mac OS X using
   [pytest](https://docs.pytest.org) and [Travis CI](https://travis-ci.org)
@@ -49,8 +48,9 @@ Imagine one of two situations:
 
 ## Why [Python CFFI](https://cffi.readthedocs.io)?
 
-- General: works with any language that exposes a C API.
-- Simple: the interface layer is thin.
+- **General**: probably works with any language that exposes a C API.
+- **Simple**: the interface layer is thin.
+- **Separation of concerns**: the compiled code does not need to know about Python and vice versa.
 
 ---
 
@@ -80,6 +80,18 @@ Scanning dependencies of target pi_fortran.x
 [100%] Built target pi_fortran.x
 ```
 
+If you got stuck in the previous exercise, you can also fetch a directory which
+contains everything we need up to this point:
+
+```shell
+$ git clone --branch exercise/cxx-fortran-mix https://github.com/bast/python-cffi-demo.git cxx-fortran-mix
+$ cd cxx-fortran-mix
+$ mkdir build
+$ cd build
+$ cmake ..
+$ make
+```
+
 After that we go one level up and enter the `pi` directory:
 
 ```shell
@@ -103,8 +115,8 @@ $ wget https://raw.githubusercontent.com/bast/python-cffi-demo/master/pi/cffi_he
 $ wget https://raw.githubusercontent.com/bast/python-cffi-demo/master/pi/__init__.py
 ```
 
-The first file contains a function `get_lib_handle` tells CFFI where to find the header file and the
-dynamic library and from this CFFI will create a Python interface.
+The first file contains a function `get_lib_handle` which tells CFFI where to find the header file and the
+dynamic library from which CFFI creates a Python interface.
 
 We have places this function into a separate file so that you can reuse it for
 different libraries.
@@ -125,6 +137,7 @@ With these two files we have created a Python interface!
 Let us first test it (at this point you need the `cffi` package activated):
 
 ```shell
+$ cd ..
 $ PI_BUILD_DIR=build python
 
 Python 3.6.1 (default, Mar 27 2017, 00:27:06)
@@ -219,7 +232,7 @@ If you use [GitHub](https://github.com), you can go one step further:
 -  Put this project on GitHub.
 -  Log into [Travis CI](https://travis-ci.org) with your GitHub account.
 -  Enable testing for this project.
--  Add a [.travis.yml](https://github.com/bast/python-cffi-demo/blob/master/.travis.yml) file.
+-  Add a [.travis.yml](https://github.com/bast/python-cffi-demo/blob/master/.travis.yml) file to this project.
 
 Then each commit gets automatically tested and you get a [build and test
 history](https://travis-ci.org/bast/python-cffi-demo/builds) for your project.
