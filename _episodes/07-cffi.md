@@ -8,7 +8,7 @@ questions:
 objectives:
   - Write me.
 keypoints:
-  - Write me.
+  - Allocate API arrays client-side.
 ---
 
 ## Setting the stage
@@ -71,3 +71,30 @@ Imagine one of two situations:
 - Encourages dynamic library (good)
 - You can write and prototype tests without recompiling/relinking the library (good)
 - Allows you to use the wonderfully lightweight [pytest](http://pytest.org) (no more excuses for the Fortran crowd)
+
+---
+
+## Memory allocation for arrays that pass the API
+
+### Library side
+
+Advantage:
+
+- Caller does not need to know the array sizes *a priori*.
+
+Disadvantage:
+
+- Risk of a memory leak.
+
+
+### Client side (recommended)
+
+Advantages:
+
+- Let the caller decide how memory is allocated.
+- Reduced risk of a memory leak.
+
+Disadvantage:
+
+- You need to know array sizes.
+- Requires extra layer on the Python side.
