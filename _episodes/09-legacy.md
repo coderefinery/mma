@@ -19,10 +19,11 @@ keypoints:
 
 ### 1) Add end-to-end test
 
-This means feeding the code with input, waiting for the result, and compare the result against a reference.
-
+- This means feeding the code with input, waiting for the result, and compare the result against a reference.
 - This should be scripted.
 - Do not touch the code before you have a test as safeguard.
+- Try introducing some bugs and verify that the test catches them - if not,
+  spend some more time on the testing, it will pay off.
 
 
 ### 2) If possible, add unit tests
@@ -36,23 +37,24 @@ This means feeding the code with input, waiting for the result, and compare the 
 - Use tools like [gcov](https://gcc.gnu.org/onlinedocs/gcc/Gcov.html).
 - Use platforms like [Coveralls](https://coveralls.io).
 - Identify untested code and dead wood.
+- Iterate with step 1) and 2).
 
 
 ### 4) Define interfaces
 
-Identify important entry points between modules/sections. This is an iterative process.
+- Identify important entry points between modules/sections.
+- Again, this is an iterative process.
 
 
 ### 5) Isolate modules behind interfaces
 
-Make interface functions publicly accessible and make all other functions publicly inaccessible.
-
-This is a painful step since you will identify many dependencies.
+- Make interface functions publicly accessible and make all other functions publicly inaccessible.
+- This is a painful step since you will identify many dependencies.
 
 
 ### 6) Refine interfaces
 
-Iterate steps 4 to 6.
+- Iterate steps 4 to 6.
 
 
 ### 7) Localize global data
@@ -87,9 +89,12 @@ def function2(my_parameter, ...):
     return ...
 ```
 
+Discuss where the state is located in the two above examples.
+
+
 ### 8) Build modules separately into libraries
 
-This will expose dependencies.
+- This will expose dependencies.
 
 
 ### 9) Test modules separately
@@ -128,7 +133,7 @@ def does_b(...):
 
 - It is often unrealistic to document all functions.
 - Interfaces need to be [versioned](http://semver.org) and documented.
-- Interfaces hopefully do not change often, inner functions do.
+- While inner functions may change, interfaces hopefully do not change often.
 
 
 ### 13) Outsource modules into own repositories
