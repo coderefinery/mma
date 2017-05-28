@@ -54,28 +54,27 @@ FIXME: add batman figure.
 
 ## Exercise 4: adding a Python interface
 
-
-
-
-
-
-
-
-
-
-
-
-
+Under construction ...
 
 ---
 
-## Motivations for testing your C/C++/Fortran code with Python
+## Exercise 5: adding automated testing
+
+### Motivations for testing your C/C++/Fortran code with Python
 
 - Forces you to create a clean interface (good)
 - Nice byproduct: you have a Python interface (good)
 - Encourages dynamic library (good)
 - You can write and prototype tests without recompiling/relinking the library (good)
 - Allows you to use the wonderfully lightweight [pytest](http://pytest.org) (no more excuses for the Fortran crowd)
+
+Under construction ...
+
+---
+
+## Exercise 6: adding a setup script
+
+Under construction ...
 
 ---
 
