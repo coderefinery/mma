@@ -36,7 +36,7 @@ keypoints:
 
 - Difficult to maintain, test, reuse, or even understand
 - Non-cohesive code has unnecessary dependencies
-- Swiss army knife modules
+- Swiss army knife modules (one tool that can do many things)
 
 ![]({{ site.baseurl }}/img/api/low-cohesion.svg)
 
