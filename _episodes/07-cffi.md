@@ -98,20 +98,21 @@ total 32
 -rw------- 1 bast users 452 May 28 00:51 pi.py
 ```
 
+And we fetch two files from the web:
 
+```shell
+$ wget https://raw.githubusercontent.com/bast/python-cffi-demo/master/pi/cffi_helpers.py
+$ wget https://raw.githubusercontent.com/bast/python-cffi-demo/master/pi/__init__.py
+```
 
-
-- FIXME FETCH cffi_helpers.py
-
-The function `get_lib_handle` tells CFFI where to find the header file and the
+The first file contains a function `get_lib_handle` tells CFFI where to find the header file and the
 dynamic library and from this CFFI will create a Python interface.
 
 We have places this function into a separate file so that you can reuse it for
 different libraries.
 
-- FIXME FETCH __init__.py
-
-This is the package interface file which exposes 3 functions:
+The second file, `__init__.py` is the package interface file which exposes 3
+functions:
 
 ```python
 __all__ = [
@@ -123,14 +124,53 @@ __all__ = [
 
 With these two files we have created a Python interface!
 
-Let us first test it:
+Let us first test it (at this point you need the `cffi` package activated):
 
-FIXME
+```shell
+$ PI_BUILD_DIR=build python
+
+Python 3.6.1 (default, Mar 27 2017, 00:27:06)
+[GCC 6.3.1 20170306] on linux
+Type "help", "copyright", "credits" or "license" for more information.
+>>> import pi
+>>> print(pi.approximate_pi_c(100))
+3.12
+>>>
+```
 
 Why do we need to set `PI_BUILD_DIR` when importing our `pi` package?
 
-FIXME fetch and run timing
+Now we can run some timings - create a file called `test.py` which contains:
 
+```python
+import time
+import pi
+
+num_points = 2000000
+
+def print_timings():
+    print('num points: {0}'.format(num_points))
+
+    for (lang, function) in [('python', pi.approximate_pi_python),
+                             ('c', pi.approximate_pi_c),
+                             ('fortran', pi.approximate_pi_fortran)]:
+        t0 = time.clock()
+        result = function(num_points)
+        time_spent = time.clock() - t0
+
+        print('{0:7s} pi={1:.5f} time spent: {2:.3f} sec'.format(lang, result, time_spent))
+
+if __name__ == '__main__':
+    print_timings()
+```
+
+Try it out:
+
+```shell
+$ PI_BUILD_DIR=build python test.py
+```
+
+Experiment with varying number of points.
 
 After testing the interface, take the time to study the files and discuss the code.
 
