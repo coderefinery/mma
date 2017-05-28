@@ -60,7 +60,46 @@ Imagine one of two situations:
 
 First make sure that the C++ and Fortran libraries from the previous session are compiled.
 
-- FIXME SHOW COMPILATION
+```shell
+$ cd build
+$ make
+
+Scanning dependencies of target pi_fortran
+[ 12%] Building Fortran object CMakeFiles/pi_fortran.dir/pi/pi.f90.o
+[ 25%] Linking Fortran shared library lib/libpi_fortran.so
+[ 25%] Built target pi_fortran
+Scanning dependencies of target pi_cpp
+[ 37%] Building CXX object CMakeFiles/pi_cpp.dir/pi/pi.cpp.o
+[ 50%] Linking CXX shared library lib/libpi_cpp.so
+[ 50%] Built target pi_cpp
+Scanning dependencies of target pi_cpp.x
+[ 62%] Building CXX object CMakeFiles/pi_cpp.x.dir/pi/main.cpp.o
+[ 75%] Linking CXX executable bin/pi_cpp.x
+[ 75%] Built target pi_cpp.x
+Scanning dependencies of target pi_fortran.x
+[ 87%] Building Fortran object CMakeFiles/pi_fortran.x.dir/pi/main.f90.o
+[100%] Linking Fortran executable bin/pi_fortran.x
+[100%] Built target pi_fortran.x
+```
+
+After that we go one level up and enter the `pi` directory:
+
+```shell
+$ cd ..
+$ cd pi
+$ ls -l
+
+total 32
+-rw------- 1 bast users 211 May 28 00:51 main.cpp
+-rw------- 1 bast users 542 May 28 00:51 main.f90
+-rw------- 1 bast users 579 May 28 00:51 pi.cpp
+-rw------- 1 bast users 985 May 28 00:51 pi.f90
+-rw------- 1 bast users 387 May 28 00:51 pi.h
+-rw------- 1 bast users 452 May 28 00:51 pi.py
+```
+
+
+
 
 - FIXME FETCH cffi_helpers.py
 
@@ -113,7 +152,55 @@ Under construction ...
 
 ## Exercise 6: adding a setup script
 
-Under construction ...
+Finally we want to put a cherry on top of our project and make it possible to
+install with `pip` and even upload to [PyPI - the Python Package Index](https://pypi.python.org/pypi).
+
+For this go to the root directory of your project (one level above the `pi`
+directory) and fetch a setup script which we have already prepared for you:
+
+```shell
+$ wget https://raw.githubusercontent.com/bast/python-cffi-demo/master/setup.py
+```
+
+We will inspect it in a minute but let us first try it out:
+
+- Open a new terminal.
+- Activate a new virtual environment:
+
+```shell
+$ cd /tmp
+$ virtualenv venv
+$ source venv/bin/activate
+$ pip install /path/to/the/project
+```
+
+Here is how it looks on my machine:
+
+```shell
+$ pip install /home/bast/python-cffi-demo
+
+Processing /home/bast/python-cffi-demo
+Collecting cffi (from pi==0.0.0)
+  Using cached cffi-1.10.0-cp36-cp36m-manylinux1_x86_64.whl
+Collecting pycparser (from cffi->pi==0.0.0)
+Building wheels for collected packages: pi
+  Running setup.py bdist_wheel for pi ... done
+Successfully built pi
+Installing collected packages: pycparser, cffi, pi
+Successfully installed cffi-1.10.0 pi-0.0.0 pycparser-2.17
+```
+
+In the setup script we subclass the `install` and `build` methods and call
+CMake under the hood which configures, builds, and installs the libraries in
+the right place.
+
+If you are not ready for [PyPI](https://pypi.python.org/pypi)
+yet, you can also install directly from GitHub:
+
+```shell
+$ pip install git+https://github.com/bast/python-cffi-demo.git
+$ python -c 'import pi; print(pi.approximate_pi_c(100))'
+```
 
 ---
 
