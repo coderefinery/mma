@@ -7,6 +7,7 @@ questions:
   - How can we couple Fortran with C/C++?
   - What is name mangling?
   - How can we avoid worrying about it?
+  - How can we safely pass data types across languages?
 objectives:
   - Learn how to glue Fortran and C/C++ with iso_c_binding.
   - Learn how to build mixed-language projects with CMake.
@@ -18,15 +19,6 @@ keypoints:
 
 - Calling Fortran libraries from C(++)
 - Calling C(++) libraries from Fortran
-
----
-
-## Questions
-
-- Have you ever tried to call C functions from Fortran or vice versa?
-- What were the problems?
-- What is name mangling? Related question: How does [GitHub](https://github.com) avoid name collisions between projects?
-- How have you worked around the problem of name mangling?
 
 ---
 
@@ -60,6 +52,21 @@ Fortran, Python) and demonstrate how to call this functionality across
 languages.
 
 Later we will combine these 3 implementations in an example Python package.
+
+---
+
+## Questions
+
+- Have you ever tried to call C functions from Fortran or vice versa?
+- What were the problems?
+- What is name mangling? Related question: How does [GitHub](https://github.com) avoid name collisions between projects?
+- How have you worked around the problem of name mangling?
+
+
+### Problems before `iso_c_binding` arrived
+
+- Codes needed to work around name mangling
+- Codes needed to figure out bit representations of data types
 
 ---
 
