@@ -4,12 +4,15 @@ title: Using the C Foreign Function Interface for Python
 teaching: 20
 exercises: 20
 questions:
-  - Write me.
+  - Is there a non-intrusive way to couple C/C++/Fortran and Python?
+  - Can I test my Fortran code with Python?
 objectives:
-  - Write me.
+  - Learn the tools to create a Python interface to almost any C API.
+  - Obtain a recipe for testing compiled libraries with Python.
 keypoints:
   - Allocate API arrays client-side.
   - Write a thin Python layer around them.
+  - Big advantage of CFFI is that the two sides do not need to adapt to each other.
 ---
 
 ## Setting the stage
