@@ -17,7 +17,7 @@ We will stay with the same pi example but please picture your project instead.
 
 Imagine one of two situations:
 
-- Either you have a Python code and want to create a C/Fortran back-end.
+- Either you have a Python code and want to create a C/C++/Fortran back-end.
 - You have a (possibly legacy) C/C++/Fortran code and wish to create a Python front-end.
 
 ---
@@ -39,6 +39,28 @@ Imagine one of two situations:
 - Write tests without recompiling the code
 - Speed up your Python code
 - Provide a Python API to your compiled library and leverage Python tools
+
+---
+
+## Why [Python CFFI](https://cffi.readthedocs.io)?
+
+- General: works with any language that exposes a C API.
+- Simple: the interface layer is thin.
+
+---
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 ---
 
