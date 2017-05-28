@@ -186,7 +186,45 @@ After testing the interface, take the time to study the files and discuss the co
 - You can write and prototype tests without recompiling/relinking the library (good)
 - Allows you to use the wonderfully lightweight [pytest](http://pytest.org) (no more excuses for the Fortran crowd)
 
-Under construction ...
+
+### How?
+
+We will use [pytest](https://docs.pytest.org) for its simplicity.
+
+For this you can enhance the `test.py` script with few test functions:
+[https://github.com/bast/python-cffi-demo/blob/master/test.py](https://github.com/bast/python-cffi-demo/blob/master/test.py)
+
+Run the test set with:
+
+```shell
+$ PI_BUILD_DIR=build pytest -vv test.py
+```
+
+And you will hopefully see:
+
+```shell
+==================================================== test session starts =====================================================
+platform linux -- Python 3.6.1, pytest-3.1.0, py-1.4.33, pluggy-0.4.0 -- /home/bast/mma/python-cffi-demo/venv/bin/python3
+cachedir: .cache
+rootdir: /home/bast/python-cffi-demo, inifile:
+collected 3 items
+
+test.py::test_pi_python PASSED
+test.py::test_pi_c PASSED
+test.py::test_pi_fortran PASSED
+
+================================================== 3 passed in 5.33 seconds ==================================================
+```
+
+If you use [GitHub](https://github.com), you can go one step further:
+
+-  Put this project on GitHub.
+-  Log into [Travis CI](https://travis-ci.org) with your GitHub account.
+-  Enable testing for this project.
+-  Add a [.travis.yml](https://github.com/bast/python-cffi-demo/blob/master/.travis.yml) file.
+
+Then each commit gets automatically tested and you get a [build and test
+history](https://travis-ci.org/bast/python-cffi-demo/builds) for your project.
 
 ---
 
