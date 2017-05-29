@@ -108,7 +108,8 @@ total 32
 -rw------- 1 bast users 452 May 28 00:51 pi.py
 ```
 
-And we fetch two files from the web:
+And we fetch two files from the web (if the commands below do not work, you can find the files
+[here](https://github.com/bast/python-cffi-demo/tree/master/pi)):
 
 ```shell
 $ wget https://raw.githubusercontent.com/bast/python-cffi-demo/master/pi/cffi_helpers.py
