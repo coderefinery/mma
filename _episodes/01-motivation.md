@@ -16,7 +16,7 @@ keypoints:
 We want to combine the strengths of a scripting language, especially Python, with
 the strengths of a compiled language. A high-level scripting language is more
 efficient for **prototyping** than a compiled language with its compile-debug
-development.
+development cycle.
 
 We can have **legacy code** that we want to make use of, but the nature of the code
 base inhibits further development. Hence we want to move forward in a high-level
@@ -27,10 +27,10 @@ solve certain task is too high. Consequently we want to move certain functions
 to a compiled language.
 
 All these motivation point to a situation where we want to extend the ability
-of our high-level scripting interpreter, our case Python.
+of our high-level scripting interpreter, in our case Python.
 
-We start out with examples expressed in different technologies. We are getting our
-hands dirty with SWIG, Boost, and Pybind11.
+We start out with one source code example and use it it with different tools/libraries.
+We are getting our hands dirty with SWIG, Boost, Cython and Pybind11.
 
 ![Python and C/C++]({{ site.baseurl }}/img/python-c.png "Python and C/C++. Licences CC BY 3.0"){:class="img-repsonsive"}
 
@@ -45,10 +45,10 @@ hands dirty with SWIG, Boost, and Pybind11.
 ```
 
 Here we import the well known [Scipy package](https://www.scipy.org), and call
-the function sin(). We also import the unknown tss_ext library and call a
+the function sin(). We also import the taylor library and call a
 function ts_sin() which returns the approximately same result as scipy.sin().
 
-The tss_ext library is a shared library built from C++ source files, made
+The taylor library is a shared library built from C++ source files, made
 available to the python interpreter with the Boost Library. Here the Python
 scripting environment has been extended with functions from a C++ code base.
 
