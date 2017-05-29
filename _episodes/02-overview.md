@@ -354,6 +354,193 @@ Remember to deactivate the environment:
 source deactivate
 ```
 
+### Cython
+Make a subdirectory cython with an additional `src` subdirectory:
+
+```shell
+mkdir -p cython/src
+cd cython/src
+```
+
+We will make directory structure with these files:
+
+```shell
+.
+├── setup.py
+└── src
+    ├── taylor.pyx
+    ├── taylor_series.cpp
+    └── taylor_series.h
+
+1 directory, 4 files
+```
+
+Let us start in the `src` subdirectory with the source files. cd into src,
+if you have not done so and create `taylor_series.h` and `taylor_series.cpp`:
+
+```cpp
+// file: taylor_series.h
+#ifndef TAYLOR_SERIES_H_
+#define TAYLOR_SERIES_H_
+
+unsigned long long factorial( int n);
+double ts_sin(double& x, int N);
+double ts_cos(double& x, int N);
+
+#endif // TAYLOR_SERIES_H_
+```
+
+```cpp
+// file: taylor_series.cpp
+#include <iostream>
+#include <math.h>
+#include "taylor_series.h"
+
+unsigned long long factorial( int n){
+  unsigned long long result = 1;
+  if ( n != 0)
+     for (int i = 0; i < n; i++)
+       result = result * (i+1);
+  return result;
+};
+
+double ts_sin(double& x, int N){
+  double    sum = 0.0;
+  int par,sign;
+  unsigned long int fac;
+  for (int i = 0; i < N; i++) {
+    par = (1+2*i);
+    fac = factorial(par);
+    sign = pow((-1),i);
+    sum = sum + sign*pow(x,par)/fac;
+
+  }
+
+  return sum;
+}
+
+double ts_cos(double& x,int N) {
+  double sum = 0.0;
+  int par,sign;
+  unsigned long int fac;
+  for (int i = 0; i < N; i++) {
+    par = 2*i;
+    fac = factorial(par);
+    sign = pow((-1),i);
+    sum = sum + sign*pow(x,par)/fac;
+  }
+  return sum;
+}
+```
+
+Cat the contents to the files, or create them in an editor:
+
+```shell
+(cython-example) [lynx@lille-login2 src]$ cat > taylor_series.h
+Paste contents && press <Ctrl-d>
+(cython-example) [lynx@lille-login2 src]$ cat > taylor_series.cpp
+Paste contents && press <Ctrl-d>
+```
+
+The conents of the `taylor.pyx`:
+```cpp
+cdef extern from "taylor_series.h":
+     double ts_sin(double& x, int N)
+     double ts_cos(double& x, int N)
+
+def sin(double x, int N):
+    return ts_sin(x,N)
+
+def cos(double x, int N):
+    return ts_sin(x,N)
+```
+
+Create the `taylor.pyx` and cd up one level:
+
+```shell
+(cython-example) [lynx@lille-login2 src]$ cat > taylor_series.cpp
+Paste contents && press <Ctrl-d>
+(cython-example) [lynx@lille-login2 src]$ cd ..
+(cython-example) [lynx@lille-login2 cython]$ 
+```
+
+We will make a `setup.py` for building the library. Here is the contents
+of the file:
+
+```python
+from distutils.core import setup, Extension
+from Cython.Build import cythonize
+
+ext = Extension("taylor",
+                sources=["src/taylor.pyx","src/taylor_series.cpp"],
+                language="c++")
+
+setup(
+	name = "taylor_series",
+	ext_modules = cythonize([ext])
+    )
+```
+
+After we have created `setup.py`, we are ready to build the library:
+
+```shell
+(cython-example) [lynx@lille-login2 cython]$ cat > setup.py
+Paste contents && press <Ctrl-d>
+(cython-example) [lynx@lille-login2 cython]$ python setup.py build_ext -i
+Compiling src/taylor.pyx because it changed.
+[1/1] Cythonizing src/taylor.pyx
+running build_ext
+building 'taylor' extension
+creating build
+creating build/temp.linux-x86_64-2.7
+creating build/temp.linux-x86_64-2.7/src
+gcc -pthread -fno-strict-aliasing -g -O2 -DNDEBUG -g -fwrapv -O3 -Wall -Wstrict-prototypes -fPIC -I/home/lynx/anaconda2/envs/cython-example/include/python2.7 -c src/taylor.cpp -o build/temp.linux-x86_64-2.7/src/taylor.o
+cc1plus: warning: command line option ‘-Wstrict-prototypes’ is valid for C/ObjC but not for C++ [enabled by default]
+gcc -pthread -fno-strict-aliasing -g -O2 -DNDEBUG -g -fwrapv -O3 -Wall -Wstrict-prototypes -fPIC -I/home/lynx/anaconda2/envs/cython-example/include/python2.7 -c src/taylor_series.cpp -o build/temp.linux-x86_64-2.7/src/taylor_series.o
+cc1plus: warning: command line option ‘-Wstrict-prototypes’ is valid for C/ObjC but not for C++ [enabled by default]
+g++ -pthread -shared -L/home/lynx/anaconda2/envs/cython-example/lib -Wl,-rpath=/home/lynx/anaconda2/envs/cython-example/lib,--no-as-needed build/temp.linux-x86_64-2.7/src/taylor.o build/temp.linux-x86_64-2.7/src/taylor_series.o -L/home/lynx/anaconda2/envs/cython-example/lib -lpython2.7 -o /home/lynx/src/c++/numcom/taylor_series/cython/taylor.so
+(cython-example) [lynx@lille-login2 cython]$ ls
+build  setup.py  src  taylor.so
+```
+
+The library `taylor.so` has been built. In addtion the build process has genenrated
+a `src/taylor.cpp` and a subdirectory `build`:
+
+```shell
+.
+├── build
+│   └── temp.linux-x86_64-2.7
+│       └── src
+│           ├── taylor.o
+│           └── taylor_series.o
+├── setup.py
+├── src
+│   ├── taylor.cpp
+│   ├── taylor.pyx
+│   ├── taylor_series.cpp
+│   └── taylor_series.h
+└── taylor.so
+
+4 directories, 8 files
+```
+
+We can now test our library in python:
+
+```python
+Python 2.7.13 |Continuum Analytics, Inc.| (default, Dec 20 2016, 23:09:15) 
+[GCC 4.4.7 20120313 (Red Hat 4.4.7-1)] on linux2
+Type "help", "copyright", "credits" or "license" for more information.
+Anaconda is brought to you by Continuum Analytics.
+Please check out: http://continuum.io/thanks and https://anaconda.org
+>>> import taylor.so
+Traceback (most recent call last):
+  File "<stdin>", line 1, in <module>
+ImportError: No module named so
+>>> import taylor
+>>> taylor.sin(3.141592653/3,15)
+0.8660254036861398
+>>> 
+```
 
 ### PyBind11
 Make a subdirectory pybind11 with an additional src subdirectory:
@@ -504,7 +691,6 @@ Please check out: http://continuum.io/thanks and https://anaconda.org
 source deactivate
 ```
 
-## F2PY
 
-## Cython
+
 

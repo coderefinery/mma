@@ -5,11 +5,14 @@ teaching: 30
 exercises: 0
 questions:
   - Why is CMake a popular tools to configure mix-language projects?
+  - How to to deal with all this complexity?
 objectives:
   - Motivate CMake.
   - Demonstrate a CMake configuration and build step.
 keypoints:
   - Configure mix-language projects with CMake.
+  - CMake reduces the complexity in the building process.
+  - By using CMake you reduce complexity in the building process, and experience a faster turn around time. You will have more time available for doing the valuable stuff, combining a scripting and a compiled language.
 ---
 
 ## Introducing [CMake](https://cmake.org)
