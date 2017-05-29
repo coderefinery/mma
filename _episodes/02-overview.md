@@ -159,10 +159,10 @@ _taylor.so.
 
 ```shell
 (swig-example) [lynx@swig]$ swig -python taylor.i
-(swig-example) [lynx@swig]$ g++ -c -fpic -Isrc `python-config --cflags` src/taylor_series_bv.cpp taylor_wrap.c
-(swig-example) [lynx@swig]$ g++ -shared `python-config --ldflags` taylor_wrap.o taylor_series_bv.o -o _taylor.so
+(swig-example) [lynx@swig]$ g++ -c -fpic -Isrc `python-config --cflags` src/taylor_series.cpp taylor_wrap.c
+(swig-example) [lynx@swig]$ g++ -shared `python-config --ldflags` taylor_wrap.o taylor_series.o -o _taylor.so
 (swig-example) [lynx@swig]$ ls
-src       taylor.py   taylor_series_bv.o  taylor_wrap.c
+src       taylor.py   taylor_seriesv.o  taylor_wrap.c
 taylor.i  taylor.pyc  _taylor.so          taylor_wrap.o
 (swig-example) [lynx@swig]$ python
 ```
@@ -452,7 +452,7 @@ def sin(double x, int N):
     return ts_sin(x,N)
 
 def cos(double x, int N):
-    return ts_sin(x,N)
+    return ts_cos(x,N)
 ```
 
 Create the `taylor.pyx` and cd up one level:
