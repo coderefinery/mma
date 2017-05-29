@@ -436,9 +436,9 @@ double ts_cos(double& x,int N) {
 Cat the contents to the files, or create them in an editor:
 
 ```shell
-(cython-example) [bjornlin@lille-login2 src]$ cat > taylor_series.h
+(cython-example) [lynx@lille-login2 src]$ cat > taylor_series.h
 Paste contents && press <Ctrl-d>
-(cython-example) [bjornlin@lille-login2 src]$ cat > taylor_series.cpp
+(cython-example) [lynx@lille-login2 src]$ cat > taylor_series.cpp
 Paste contents && press <Ctrl-d>
 ```
 
@@ -458,10 +458,10 @@ def cos(double x, int N):
 Create the `taylor.pyx` and cd up one level:
 
 ```shell
-(cython-example) [bjornlin@lille-login2 src]$ cat > taylor_series.cpp
+(cython-example) [lynx@lille-login2 src]$ cat > taylor_series.cpp
 Paste contents && press <Ctrl-d>
-(cython-example) [bjornlin@lille-login2 src]$ cd ..
-(cython-example) [bjornlin@lille-login2 cython]$ 
+(cython-example) [lynx@lille-login2 src]$ cd ..
+(cython-example) [lynx@lille-login2 cython]$ 
 ```
 
 We will make a `setup.py` for building the library. Here is the contents
@@ -484,9 +484,9 @@ setup(
 After we have created `setup.py`, we are ready to build the library:
 
 ```shell
-(cython-example) [bjornlin@lille-login2 cython]$ cat > setup.py
+(cython-example) [lynx@lille-login2 cython]$ cat > setup.py
 Paste contents && press <Ctrl-d>
-(cython-example) [bjornlin@lille-login2 cython]$ python setup.py build_ext -i
+(cython-example) [lynx@lille-login2 cython]$ python setup.py build_ext -i
 Compiling src/taylor.pyx because it changed.
 [1/1] Cythonizing src/taylor.pyx
 running build_ext
@@ -494,12 +494,12 @@ building 'taylor' extension
 creating build
 creating build/temp.linux-x86_64-2.7
 creating build/temp.linux-x86_64-2.7/src
-gcc -pthread -fno-strict-aliasing -g -O2 -DNDEBUG -g -fwrapv -O3 -Wall -Wstrict-prototypes -fPIC -I/home/bjornlin/anaconda2/envs/cython-example/include/python2.7 -c src/taylor.cpp -o build/temp.linux-x86_64-2.7/src/taylor.o
+gcc -pthread -fno-strict-aliasing -g -O2 -DNDEBUG -g -fwrapv -O3 -Wall -Wstrict-prototypes -fPIC -I/home/lynx/anaconda2/envs/cython-example/include/python2.7 -c src/taylor.cpp -o build/temp.linux-x86_64-2.7/src/taylor.o
 cc1plus: warning: command line option ‘-Wstrict-prototypes’ is valid for C/ObjC but not for C++ [enabled by default]
-gcc -pthread -fno-strict-aliasing -g -O2 -DNDEBUG -g -fwrapv -O3 -Wall -Wstrict-prototypes -fPIC -I/home/bjornlin/anaconda2/envs/cython-example/include/python2.7 -c src/taylor_series.cpp -o build/temp.linux-x86_64-2.7/src/taylor_series.o
+gcc -pthread -fno-strict-aliasing -g -O2 -DNDEBUG -g -fwrapv -O3 -Wall -Wstrict-prototypes -fPIC -I/home/lynx/anaconda2/envs/cython-example/include/python2.7 -c src/taylor_series.cpp -o build/temp.linux-x86_64-2.7/src/taylor_series.o
 cc1plus: warning: command line option ‘-Wstrict-prototypes’ is valid for C/ObjC but not for C++ [enabled by default]
-g++ -pthread -shared -L/home/bjornlin/anaconda2/envs/cython-example/lib -Wl,-rpath=/home/bjornlin/anaconda2/envs/cython-example/lib,--no-as-needed build/temp.linux-x86_64-2.7/src/taylor.o build/temp.linux-x86_64-2.7/src/taylor_series.o -L/home/bjornlin/anaconda2/envs/cython-example/lib -lpython2.7 -o /home/bjornlin/src/c++/numcom/taylor_series/cython/taylor.so
-(cython-example) [bjornlin@lille-login2 cython]$ ls
+g++ -pthread -shared -L/home/lynx/anaconda2/envs/cython-example/lib -Wl,-rpath=/home/lynx/anaconda2/envs/cython-example/lib,--no-as-needed build/temp.linux-x86_64-2.7/src/taylor.o build/temp.linux-x86_64-2.7/src/taylor_series.o -L/home/lynx/anaconda2/envs/cython-example/lib -lpython2.7 -o /home/lynx/src/c++/numcom/taylor_series/cython/taylor.so
+(cython-example) [lynx@lille-login2 cython]$ ls
 build  setup.py  src  taylor.so
 ```
 
