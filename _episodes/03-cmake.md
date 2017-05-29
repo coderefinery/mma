@@ -4,11 +4,13 @@ title: Building mixed-language projects with CMake
 teaching: 30
 exercises: 0
 questions:
-  - Write me.
+  - How to to deal with all this complexity?
 objectives:
-  - Write me.
+  - CMake reduces the complexity in the building process
 keypoints:
-  - Write me.
+  - With reduce complexity, and a swifter turn around in the building process
+    combining a scripting language and source code for a compiled
+    language become much efficient.
 ---
 
 ## Introducing CMake
