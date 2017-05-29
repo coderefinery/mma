@@ -8,9 +8,10 @@ questions:
 objectives:
   - CMake reduces the complexity in the building process
 keypoints:
-  - With reduce complexity, and a swifter turn around in the building process
-    combining a scripting language and source code for a compiled
-    language become much efficient.
+  - By using CMake you reduce complexity in the building process, and experience
+   a faster turn around time. You will have more time available for doing the
+   valuable stuff, combining a scripting and a compiled language.
+
 ---
 
 ## Introducing CMake
