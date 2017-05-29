@@ -55,49 +55,27 @@ scripting environment has been extended with functions from a C++ code base.
 
 ## How does a scripting language to talk to C/C++?
 
-Here we have a simple virtual class Employee:
+Here we have a simple virtual class PhoneticAlgorithm:
 ```cpp
-class Employee {
-    public:
-        Employee(const std::string&, const std::string&, const std::string&);
-        virtual ~Employee() = default;  // compiler generates virtual destructor
-
-        void setFirstName(const std::string&);  // set first name
-        std::string getFirstName() const;       // return first name
-
-        void setLastName(const std::string&);   // set last name
-        std::string getLastName() const;        // return last name
-
-        void setSocialSecurityNumber(const std::string&); // set SSN
-        std::string getSocialSecurityNumber() const;      // get SSN
-
-        // pure virtual function makes Employee an abstract base class
-        virtual double earnings() const = 0;  // pure virtual
-        virtual std::string toString() const; // virtual
-    private:
-        std::string firstName;
-        std::string lastName;
-        std::string socialSecurityNumber;
+class PhoneticAlgorithm{
+  virtual std::string encode(const std::string& word);
 };
 ```
-![C/C++-class hierarchy]({{ site.baseurl }}/img/classhierarchy.png "Class hierarchy. Licences CC BY 3.0"){:class="img-repsonsive"}
+![C/C++-class hierarchy]({{ site.baseurl }}/img/classhierarchy2.png "Class hierarchy. Licences CC BY 3.0"){:class="img-repsonsive"}
 
-The figure shows two classes SalariedEmployee and CommisionEmploye which
-inherit Employee. These two classes must implement the virtual functions
-according to the C++-standard.
+The figure shows three classes Soundex, NYSIIS and ReverseSoundex which
+inherit PhoneticAlgorithm. These threeclasses must implement the virtual function
+`encode()` according to the C++-standard.
 
 From Python we would like to make use of these classes and their methods in a
 way like this:
 
 ```python
->>> t = CommisionEmployee('Molly','Malone', "333-33-3333",19000,.05,)
->>> u = SalariedEmployee('John','Jones', '111-11-1111', 15000)
->>> t.earnings()
-20150
->>> u.earnings()
-15000
+>>> t = Soundex.encode('Allison')
+>>> u = NYSIIS.encode('Allison')
+
 ```
-How do we accomplish this, making the Employee class hierarchy available in the
+How do we accomplish this, making the PhoneticAlgorithm class hierarchy available in the
 python interpreter? Python, as most scripting language, has a foreign function
 interface which defines how external functions commands can hook into the
 interpreter, here the C/C++ reference manual https://docs.python.org/2/c-api/.
@@ -109,4 +87,4 @@ following the reference manual, but here we will show how this can be done with
 different tools.
 
 Inspired by the SWIG-3.0 documentation, http://www.swig.org/Doc3.0/
-Reference to book
+
