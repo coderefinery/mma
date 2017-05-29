@@ -61,7 +61,7 @@ class PhoneticAlgorithm{
   virtual std::string encode(const std::string& word);
 };
 ```
-![C/C++-class hierarchy]({{ site.baseurl }}/img/classhierarchy.png "Class hierarchy. Licences CC BY 3.0"){:class="img-repsonsive"}
+![C/C++-class hierarchy]({{ site.baseurl }}/img/classhierarchy2.png "Class hierarchy. Licences CC BY 3.0"){:class="img-repsonsive"}
 
 The figure shows two classes SalariedEmployee and CommisionEmploye which
 inherit Employee. These two classes must implement the virtual functions
