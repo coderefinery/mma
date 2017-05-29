@@ -4,15 +4,15 @@ title: Building mixed-language projects with CMake
 teaching: 30
 exercises: 0
 questions:
-  - Write me.
+  - Why is CMake a popular tools to configure mix-language projects?
 objectives:
-  - Write me.
+  - Motivate CMake.
+  - Demonstrate a CMake configuration and build step.
 keypoints:
-  - Write me.
+  - Configure mix-language projects with CMake.
 ---
 
-## Introducing CMake
-## About [CMake](https://cmake.org)
+## Introducing [CMake](https://cmake.org)
 
 - Cross-platform
 - Open-source
@@ -27,36 +27,38 @@ keypoints:
 
 ## Why CMake?
 
-Separation of source and build path:
+### Separation of source and build path
 
 - Out-of-source compilation (possibility to compile several builds with the same source)
 
-Portability:
+### Portability
 
 - Really cross-platform (Linux, Mac, Windows, AIX, iOS, Android)
 - CMake defines portable variables about the system
 - Cross-platform system- and library-discovery
 
-Language support:
+### Language support
 
 - Excellent support for Fortran, C, C++, and Java, as well as mixed-language projects
 - CMake understands Fortran 90 dependencies very well; no need to program a dependency scanner
 - Excellent support for multi-component and multi-library projects
 
-Supports modular code development:
+### Supports modular code development
 
 - Makes it possible and relatively easy to download, configure, build, install, and link external modules
 
-Provides tools:
+### Provides tools
 
 - Generates user interface (command-line or text-UI or GUI)
 - Full-fledged testing and packaging framework with CTest and CPack
 - CTest uses a Makefile (possible to run sequential tests concurrently)
 
-Popular:
+### Popular
 
 - CMake is used by many prominent projects:
   MySQL, Boost, VTK, Blender, KDE, LyX, Mendeley, MikTeX, Compiz, Google Test, ParaView, Second Life, Avogadro, and many more ...
+
+---
 
 ## Hello-world example
 
@@ -159,10 +161,15 @@ This is very similar to the steps taken when building taylor library with
 Pybind11. Here is the CMakeLists.txt from that example:
 ```cmake
 cmake_minimum_required(VERSION 2.8 FATAL_ERROR)
+
 project(taylor)
+
 find_package(pybind11 REQUIRED)
+
 include_directories(src)
+
 set(SOURCE_FILES src/taylor_series.cpp src/py11taylor.cpp)
+
 pybind11_add_module(taylor ${SOURCE_FILES})
 ```
 Here we require that Pybind11 exists if not the generation will stop. We add
@@ -178,7 +185,8 @@ SWIG can also use CMake as generator for the building process. This time we
 make use of the same source code as in the Pybind11 example, we pass the
 arguments by reference, as we would expect of C++ code. This requires some
 changes to our interface file:
-```swig
+
+```
 //
 // file: taylor.i
 // SWIG - interface file
@@ -192,9 +200,10 @@ changes to our interface file:
 %include "typemaps.i"
 %apply double *INPUT {double& x }
 %include "taylor_series.h"
-
 ```
+
 We put the interface file in a src subdirectory together with the source files:
+
 ```shell
 [lynx@~]$mkdir -p swigcmake/src
 [lynx@~]$cd swigcmake/src
@@ -207,6 +216,7 @@ taylor.i  taylor_series.cpp  taylor_series.h
 [lynx@swigcmake]$
 ```
 Move up one directory. Here we will make a CMakeLists.txt. It will contain:
+
 ```cmake
 cmake_minimum_required(VERSION 2.8 FATAL_ERROR)
 
@@ -221,6 +231,7 @@ FIND_PACKAGE(PythonLibs)
 
 ADD_SUBDIRECTORY(src)
 ```
+
 Here we state that the library we will make will be output to a lib subdirectory.
 The SWIG library is necessary. The SWIG package will set the ${SWIG_USE_FILE}
 environment variable. The variable points to CMake file which will be loaded and
@@ -229,6 +240,7 @@ the python libraries. At the end we add the 'src'-subdirectory. CMake will searc
 this directory for an additional CMakeLists.txt.
 
 In the 'src'-subdirectory we make a CMakeLists.txt containing:
+
 ```cmake
 INCLUDE_DIRECTORIES(${PYTHON_INCLUDE_PATH})
 INCLUDE_DIRECTORIES(${CMAKE_CURRENT_SOURCE_DIR})
@@ -241,7 +253,9 @@ SET_SOURCE_FILES_PROPERTIES(taylor.i PROPERTIES SWIG_FLAGS "-includeall")
 SWIG_ADD_MODULE(taylor python taylor.i taylor_series.cpp)
 SWIG_LINK_LIBRARIES(taylor ${PYTHON_LIBRARIES})
 ```
+
 Our 'src'-subdirectory contains:
+
 ```shell
 (swig-example) [lynx@src]$ ls
 CMakeLists.txt  CMakeLists.txt~  taylor.i  taylor_series.cpp  taylor_series.h
