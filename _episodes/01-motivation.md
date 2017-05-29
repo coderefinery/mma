@@ -63,22 +63,19 @@ class PhoneticAlgorithm{
 ```
 ![C/C++-class hierarchy]({{ site.baseurl }}/img/classhierarchy2.png "Class hierarchy. Licences CC BY 3.0"){:class="img-repsonsive"}
 
-The figure shows two classes SalariedEmployee and CommisionEmploye which
-inherit Employee. These two classes must implement the virtual functions
-according to the C++-standard.
+The figure shows three classes Soundex, NYSIIS and ReverseSoundex which
+inherit PhoneticAlgorithm. These threeclasses must implement the virtual function
+`encode()` according to the C++-standard.
 
 From Python we would like to make use of these classes and their methods in a
 way like this:
 
 ```python
->>> t = CommisionEmployee('Molly','Malone', "333-33-3333",19000,.05,)
->>> u = SalariedEmployee('John','Jones', '111-11-1111', 15000)
->>> t.earnings()
-20150
->>> u.earnings()
-15000
+>>> t = Soundex.encode('Allison')
+>>> u = NYSIIS.encode('Allison')
+
 ```
-How do we accomplish this, making the Employee class hierarchy available in the
+How do we accomplish this, making the PhoneticAlgorithm class hierarchy available in the
 python interpreter? Python, as most scripting language, has a foreign function
 interface which defines how external functions commands can hook into the
 interpreter, here the C/C++ reference manual https://docs.python.org/2/c-api/.
