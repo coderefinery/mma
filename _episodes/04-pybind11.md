@@ -291,7 +291,6 @@ the following files (before we again run CMake and Make):
     ├── PhoneticAlgorithm.h
     ├── Py11PhoneAlg.cpp
     └── Soundex.h
-
 ```
 
 The contents of the top level CMakeLists.txt. It is only the project name
@@ -309,7 +308,6 @@ find_package(pybind11 REQUIRED )
 
 add_subdirectory(src)
 
-
 ```
 
 The contents of the CMakeLists.txt in the *src*-directory:
@@ -326,7 +324,6 @@ find_package(pybind11 REQUIRED )
 
 add_subdirectory(src)
 
-
 ```
 
 The contents of the CMakeLists.txt in the *src*-directory. Here the library
@@ -334,7 +331,6 @@ is given a new name and it is a new source file:
 
 ```cmake
 pybind11_add_module(phonetic Py11PhoneAlg.cpp)
-
 ```
 
 The contents of file PhoneticAlgorithms.h:
@@ -354,7 +350,6 @@ class PhoneticAlgorithm{
 };
 
 #endif //PHONETICALGORITHMS_H
-
 ```
 
 Contents of Soundex.h. It includes PhoneticAlgorithms.h and states that
@@ -456,7 +451,6 @@ private:
 };
 
 #endif //SOUNDEX_SOUNDEX_H
-
 ```
 
 The Pybind11-cpp file Py11PhoneAlg.cpp is a new:
@@ -483,7 +477,6 @@ PYBIND11_PLUGIN(phonetic) {
   return m.ptr();
 
 }
-
 ```
 
 We generate the builds files in a subdirectory. Run make and load the library
@@ -525,7 +518,6 @@ Python 2.7.13 |Continuum Analytics, Inc.| (default, Dec 20 2016, 23:09:15)
 Type "help", "copyright", "credits" or "license" for more information.
 Anaconda is brought to you by Continuum Analytics.
 Please check out: http://continuum.io/thanks and https://anaconda.org
-
 ```
 In python we import the library and try it out:
 
@@ -540,7 +532,6 @@ u'Allison do not encode\n'
 >>> t.encode('Allison')
 u'A425'
 >>> 
-
 ```
 
 ### Extending the class by prototyping
@@ -561,7 +552,6 @@ class ReverseSoundex : public PhoneticAlgorithm {
 
 };
 #endif  // REVERSESOUNDEX
-
 ```
 
 The Py11PhoneAlg.cpp is changed to:
@@ -592,8 +582,6 @@ PYBIND11_PLUGIN(phonetic) {
   return m.ptr();
 
 }
-
-
 ```
 
 We are now starting to implement a new class, but we have not implemented any
@@ -611,13 +599,12 @@ methods or attributes. When have we done the cmake/make build, we can start
 {}
 >>> r.__dict__
 {}
-
 ```
+
 The subclass has inherited the dynamic feature from the parent class Phonetic Algorithm.
 Let us prototype the encode method for ReverseSoundex classL
 
 ``` python
-
 >>> def rencode(word):
 ...   x = s.encode(word)
 ...   return x[1:]+word[:1]
@@ -628,7 +615,6 @@ Let us prototype the encode method for ReverseSoundex classL
 >>> r.encode('Allison')
 u'425A'
 >>> 
-
 ```
 
 LocalWords:  Soundex Pybind11
