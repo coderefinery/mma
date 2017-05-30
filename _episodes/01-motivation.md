@@ -39,21 +39,21 @@ We are getting our hands dirty with SWIG, Boost, Cython and Pybind11.
 >>> import taylor
 >>> scipy.sin(3.141592653/3)
 0.86602540368613978
->>> taylor.sin(3.141592653/3,15)
+>>> taylor.ts_sin(3.141592653/3,15)
 0.8660254036861398
 >>>
 ```
 
 Here we import the well known [Scipy package](https://www.scipy.org), and call
-the function sin(). We also import the taylor library and call a
-function ts_sin() which returns the approximately same result as scipy.sin().
+the function ts_sin(). We also import the taylor library and call a
+function taylor.sin() which returns the approximately same result as scipy.sin().
 
 The taylor library is a shared library built from C++ source files, made
 available to the python interpreter with the Boost Library. Here the Python
 scripting environment has been extended with functions from a C++ code base.
 
 
-## How does a scripting language to talk to C/C++?
+## How does a scripting language talk to C/C++?
 
 Here we have a simple virtual class PhoneticAlgorithm:
 ```cpp
@@ -64,7 +64,7 @@ class PhoneticAlgorithm{
 ![C/C++-class hierarchy]({{ site.baseurl }}/img/classhierarchy2.png "Class hierarchy. Licences CC BY 3.0"){:class="img-repsonsive"}
 
 The figure shows three classes Soundex, NYSIIS and ReverseSoundex which
-inherit PhoneticAlgorithm. These threeclasses must implement the virtual function
+inherit PhoneticAlgorithm. These three classes must implement the virtual function
 `encode()` according to the C++-standard.
 
 From Python we would like to make use of these classes and their methods in a
