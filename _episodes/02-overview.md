@@ -159,10 +159,10 @@ _taylor.so.
 
 ```shell
 (swig-example) [lynx@swig]$ swig -python taylor.i
-(swig-example) [lynx@swig]$ g++ -c -fpic -Isrc `python-config --cflags` src/taylor_series.cpp taylor_wrap.c
+(swig-example) [lynx@swig]$ g++ -c -fpic -I. `python-config --cflags` src/taylor_series.cpp taylor_wrap.c
 (swig-example) [lynx@swig]$ g++ -shared `python-config --ldflags` taylor_wrap.o taylor_series.o -o _taylor.so
 (swig-example) [lynx@swig]$ ls
-src       taylor.py   taylor_seriesv.o  taylor_wrap.c
+src       taylor.py   taylor_series.o  taylor_wrap.c
 taylor.i  taylor.pyc  _taylor.so          taylor_wrap.o
 (swig-example) [lynx@swig]$ python
 ```
@@ -189,7 +189,7 @@ this example. For instance, the functions arguments are passed by value, which
 not very likely in C++, as arguments are passed by reference.
 
 ### Arguments passed by reference
-As we want use functions which call by reference, our interface file becomes less intuitive.
+As we want to use functions which call by reference, our interface file becomes less intuitive.
 
 Here is our C++-source code of the Taylor Series, the taylor_series.cpp:
 ```cpp
@@ -503,7 +503,7 @@ g++ -pthread -shared -L/home/lynx/anaconda2/envs/cython-example/lib -Wl,-rpath=/
 build  setup.py  src  taylor.so
 ```
 
-The library `taylor.so` has been built. In addtion the build process has genenrated
+The library `taylor.so` has been built. In addtion the build process has generated
 a `src/taylor.cpp` and a subdirectory `build`:
 
 ```shell
@@ -532,10 +532,6 @@ Python 2.7.13 |Continuum Analytics, Inc.| (default, Dec 20 2016, 23:09:15)
 Type "help", "copyright", "credits" or "license" for more information.
 Anaconda is brought to you by Continuum Analytics.
 Please check out: http://continuum.io/thanks and https://anaconda.org
->>> import taylor.so
-Traceback (most recent call last):
-  File "<stdin>", line 1, in <module>
-ImportError: No module named so
 >>> import taylor
 >>> taylor.sin(3.141592653/3,15)
 0.8660254036861398
