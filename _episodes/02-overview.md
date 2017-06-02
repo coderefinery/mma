@@ -452,7 +452,7 @@ def sin(double x, int N):
     return ts_sin(x,N)
 
 def cos(double x, int N):
-    return ts_sin(x,N)
+    return ts_cos(x,N)
 ```
 
 Create the `taylor.pyx` and cd up one level:
