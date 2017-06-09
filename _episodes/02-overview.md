@@ -181,7 +181,7 @@ Cython provides the glue between Python and C++. It will wrap our source code
 in way such that it is callable from Python. However, we will need to state
 how we will call the C++-functions. This is the purpose of the `taylor.pyx`.
 
-Next, write how it will be build with help of CMake
+The `CMakeLists.txt` describes the building process
 
 ```cmake
 cmake_minimum_required(VERSION 2.8 FATAL_ERROR)
@@ -280,53 +280,27 @@ Please check out: http://continuum.io/thanks and https://anaconda.org
 >>> 
 ```
 
+#### Building the library using `distutils`
 
-
-
-
-
-
-
-
-
------------ old overview part  -----
-Let us start in the `src` subdirectory with the source files. cd into src,
-if you have not done so and create `taylor_series.h` and `taylor_series.cpp`:
-
-
-Cat the contents to the files, or create them in an editor:
-
-```shell
-(cython-example) [lynx@lille-login2 src]$ cat > taylor_series.h
-Paste contents && press <Ctrl-d>
-(cython-example) [lynx@lille-login2 src]$ cat > taylor_series.cpp
-Paste contents && press <Ctrl-d>
+```bash
+$ cd ../../../distutils-demo/
 ```
+This chapter shows how we can use `distutils` to build the taylor library.
+Change to the distutils-demo subdirectory. This subdirectory looks like this:
 
-The conents of the `taylor.pyx`:
-```python
-cdef extern from "taylor_series.h":
-     double ts_sin(double& x, int N)
-     double ts_cos(double& x, int N)
+```bash
+.
+├── setup.py
+└── src
+    ├── taylor.pyx
+    ├── taylor_series.cpp
+    └── taylor_series.h
 
-def sin(double x, int N):
-    return ts_sin(x,N)
-
-def cos(double x, int N):
-    return ts_cos(x,N)
+1 directory, 4 files
 ```
-
-Create the `taylor.pyx` and cd up one level:
-
-```shell
-(cython-example) [lynx@lille-login2 src]$ cat > taylor_series.cpp
-Paste contents && press <Ctrl-d>
-(cython-example) [lynx@lille-login2 src]$ cd ..
-(cython-example) [lynx@lille-login2 cython]$ 
-```
-
-We will make a `setup.py` for building the library. Here is the contents
-of the file:
+The contents of the files in the `src` subdirectory are equal to the CMake example.
+Instead of the CMake files, we find a `setup.py`. Here is the contents
+of the `setup.py`:
 
 ```python
 from distutils.core import setup, Extension
@@ -342,14 +316,23 @@ setup(
     )
 ```
 
-After we have created `setup.py`, we are ready to build the library:
+We name the library `taylor` and state that the library depends on two source
+files. C++ is the compile language which will be used.
 
-```shell
-(cython-example) [lynx@lille-login2 cython]$ cat > setup.py
-Paste contents && press <Ctrl-d>
-(cython-example) [lynx@lille-login2 cython]$ python setup.py build_ext -i
-Compiling src/taylor.pyx because it changed.
-[1/1] Cythonizing src/taylor.pyx
+To build and load the library we execute python:
+
+```bash
+$ python setup.py build_ext -i
+$ python
+>>> import taylor
+>>> taylor.cos(3.1415926535/3,15)
+
+```
+
+Here is output from the building process on a Linux system:
+
+```bash
+(cython-example) [lynx@lille-login2 distutils-demo]$ python setup.py build_ext -i
 running build_ext
 building 'taylor' extension
 creating build
@@ -359,43 +342,16 @@ gcc -pthread -fno-strict-aliasing -g -O2 -DNDEBUG -g -fwrapv -O3 -Wall -Wstrict-
 cc1plus: warning: command line option ‘-Wstrict-prototypes’ is valid for C/ObjC but not for C++ [enabled by default]
 gcc -pthread -fno-strict-aliasing -g -O2 -DNDEBUG -g -fwrapv -O3 -Wall -Wstrict-prototypes -fPIC -I/home/lynx/anaconda2/envs/cython-example/include/python2.7 -c src/taylor_series.cpp -o build/temp.linux-x86_64-2.7/src/taylor_series.o
 cc1plus: warning: command line option ‘-Wstrict-prototypes’ is valid for C/ObjC but not for C++ [enabled by default]
-g++ -pthread -shared -L/home/lynx/anaconda2/envs/cython-example/lib -Wl,-rpath=/home/lynx/anaconda2/envs/cython-example/lib,--no-as-needed build/temp.linux-x86_64-2.7/src/taylor.o build/temp.linux-x86_64-2.7/src/taylor_series.o -L/home/lynx/anaconda2/envs/cython-example/lib -lpython2.7 -o /home/lynx/src/c++/numcom/taylor_series/cython/taylor.so
-(cython-example) [lynx@lille-login2 cython]$ ls
-build  setup.py  src  taylor.so
-```
-
-The library `taylor.so` has been built. In addtion the build process has generated
-a `src/taylor.cpp` and a subdirectory `build`:
-
-```shell
-.
-├── build
-│   └── temp.linux-x86_64-2.7
-│       └── src
-│           ├── taylor.o
-│           └── taylor_series.o
-├── setup.py
-├── src
-│   ├── taylor.cpp
-│   ├── taylor.pyx
-│   ├── taylor_series.cpp
-│   └── taylor_series.h
-└── taylor.so
-
-4 directories, 8 files
-```
-
-We can now test our library in python:
-
-```python
+g++ -pthread -shared -L/home/lynx/anaconda2/envs/cython-example/lib -Wl,-rpath=/home/lynx/anaconda2/envs/cython-example/lib,--no-as-needed build/temp.linux-x86_64-2.7/src/taylor.o build/temp.linux-x86_64-2.7/src/taylor_series.o -L/home/lynx/anaconda2/envs/cython-example/lib -lpython2.7 -o /home/lynx/tmp/python-ctools-demo/cython-demo/distutils-demo/taylor.so
+(cython-example) [lynx@lille-login2 distutils-demo]$ python
 Python 2.7.13 |Continuum Analytics, Inc.| (default, Dec 20 2016, 23:09:15) 
 [GCC 4.4.7 20120313 (Red Hat 4.4.7-1)] on linux2
 Type "help", "copyright", "credits" or "license" for more information.
 Anaconda is brought to you by Continuum Analytics.
 Please check out: http://continuum.io/thanks and https://anaconda.org
 >>> import taylor
->>> taylor.sin(3.141592653/3,15)
-0.8660254036861398
+>>> taylor.cos(3.1415926535/3,15)
+0.500000000025921
 >>> 
 ```
 
