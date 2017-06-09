@@ -304,7 +304,7 @@ Paste contents && press <Ctrl-d>
 ```
 
 The conents of the `taylor.pyx`:
-```cpp
+```python
 cdef extern from "taylor_series.h":
      double ts_sin(double& x, int N)
      double ts_cos(double& x, int N)
