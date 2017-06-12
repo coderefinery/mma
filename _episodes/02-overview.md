@@ -356,75 +356,23 @@ Please check out: http://continuum.io/thanks and https://anaconda.org
 ```
 
 ### PyBind11
-Make a subdirectory pybind11 with an additional src subdirectory:
+
+In the cloned source tree (`git clone https://github.com/blindij/python-ctools-demo.git`)
+, change to the pybind11-demo subdirectory. Here you find these files:
 
 ```shell
-mkdir -p pybind11/src
-cd pybind11/src
+.
+├── CMakeLists.txt
+└── src
+    ├── CMakeLists.txt
+    ├── py11taylor.cpp
+    ├── taylor_series.cpp
+    └── taylor_series.h
+
+1 directory, 5 files
 ```
-In src subdirectory we will have three files:
-```shell
-(pybind11-example) [lynx@lsrc]$ ls
-py11taylor.cpp  taylor_series.cpp  taylor_series.h
-```
-The contents of taylor_series.cpp and taylor_series.h will we recognize from the SWIG-example, with a few differences:
-```cpp
-// taylor_series.h
-#ifndef TAYLOR_SERIES_H_
-#define TAYLOR_SERIES_H_
-
-unsigned long long factorial( int n);
-double ts_sin(double& x, int N);
-double ts_cos(double& x,int N);
-
-#endif // TAYLOR_SERIES_H_
-```
-
-```cpp
-// taylor_series.cpp
-#include <math.h>
-#include "taylor_series.h"
-
-unsigned long long factorial( int n){
-  unsigned long long result = 1;
-  if ( n != 0)
-     for (int i = 0; i < n; i++)
-       result = result * (i+1);
-  return result;
-};
-
-double ts_sin(double& x, int N){
-  long double numerator,denomi;
-  double    sum = 0.0;
-  int par,sign;
-  unsigned long int fac;
-  for (int i = 0; i < N; i++) {
-    par = (1+2*i);
-    fac = factorial(par);
-    sign = pow((-1),i);
-    sum = sum + sign*pow(x,par)/fac;
-
-  }
-
-  return sum;
-}
-
-double ts_cos(double& x,int N) {
-  long double numerator,denomi;
-  double sum = 0.0;
-  int par,sign;
-  unsigned long int fac;
-  for (int i = 0; i < N; i++) {
-    par = 2*i;
-    fac = factorial(par);
-    sign = pow((-1),i);
-    sum = sum + sign*pow(x,par)/fac;
-  }
-  return sum;
-}
-```
-
 The Pybind11 file:
+
 ```C++
 // py11taylor.cpp
 #include <pybind11/pybind11.h>
@@ -439,27 +387,51 @@ PYBIND11_PLUGIN(taylor) {
   return t.ptr();
 }
 ```
-Create these files with your favorite editor, and leave the subdirectory.
-In the directory above we make CMakeLists.txt with following contents:
+
+This is how the CMake files looks like:
+
 ```cmake
 cmake_minimum_required(VERSION 2.8 FATAL_ERROR)
 project(taylor)
+
+SET(CMAKE_LIBRARY_OUTPUT_DIRECTORY
+   ${CMAKE_BINARY_DIR}/lib
+   )
+ 
+# Detect and activate pybind11. Stop if not is not found
 find_package(pybind11 REQUIRED)
-include_directories(src)
-set(SOURCE_FILES src/taylor_series.cpp src/py11taylor.cpp)
-pybind11_add_module(taylor ${SOURCE_FILES})
+
+add_subdirectory(src)
 ```
 
-```shell
-(pybind11-example) [lynx@src]$ ls
-py11taylor.cpp  taylor_series.cpp  taylor_series.h
-(pybind11-example) [lynx@src]$ cd ..
-(pybind11-example) [lynx@pybind11]$ vi CMakeLists.txt
-(pybind11-example) [lynx@pybind11]$ ls
-CMakeLists.txt  src
-(pybind11-example) [lynx@pybind11]$ mkdir build
-(pybind11-example) [lynx@pybind11]$ cd build
-(pybind11-example) [lynx@build]$ cmake ..
+`src`-subdirectory:
+ 
+```cmake
+#include the current directory in search for include files
+include_directories(${CMAKE_CURRENT_SOURCE_DIR})
+
+# Adds and compiles Cython into an extension module
+pybind11_add_module(taylor py11taylor.cpp taylor_series.cpp)
+```
+
+To build:
+
+```bash
+$ mkdir build
+$ cd build
+$ cmake ..
+$ cd lib
+$ python
+>>> import taylor
+>>> taylor.cos(3.141592653/3,15)
+```
+
+Output from building on Linux with Anaconda2 extended with Pybind11:
+
+```bash
+(pybind11-example) [lynx@lille-login2 pybind11-demo]$ mkdir build
+(pybind11-example) [lynx@lille-login2 pybind11-demo]$ cd build
+(pybind11-example) [lynx@lille-login2 build]$ cmake ..
 -- The C compiler identification is GNU 4.8.5
 -- The CXX compiler identification is GNU 4.8.5
 -- Check for working C compiler: /usr/bin/cc
@@ -470,7 +442,7 @@ CMakeLists.txt  src
 -- Check for working CXX compiler: /usr/bin/c++ -- works
 -- Detecting CXX compiler ABI info
 -- Detecting CXX compiler ABI info - done
--- Found PythonInterp: /home/lynx/anaconda2/envs/pybind11-example/bin/python (found version "2.7.13")
+-- Found PythonInterp: /home/lynx/anaconda2/envs/pybind11-example/bin/python (found version "2.7.13") 
 -- Found PythonLibs: /home/lynx/anaconda2/envs/pybind11-example/lib/libpython2.7.so
 -- Performing Test HAS_CPP14_FLAG
 -- Performing Test HAS_CPP14_FLAG - Failed
@@ -481,27 +453,24 @@ CMakeLists.txt  src
 -- LTO enabled
 -- Configuring done
 -- Generating done
--- Build files have been written to: /home/lynx/tmp/pybind11/build
-(pybind11-example) [lynx@build]$ make
+-- Build files have been written to: /home/lynx/tmp/python-ctools-demo/pybind11-demo/build
+(pybind11-example) [lynx@lille-login2 build]$ make
 Scanning dependencies of target taylor
-[ 50%] Building CXX object CMakeFiles/taylor.dir/src/taylor_series.cpp.o
-[100%] Building CXX object CMakeFiles/taylor.dir/src/py11taylor.cpp.o
-Linking CXX shared module taylor.so
+[ 50%] Building CXX object src/CMakeFiles/taylor.dir/py11taylor.cpp.o
+[100%] Building CXX object src/CMakeFiles/taylor.dir/taylor_series.cpp.o
+Linking CXX shared module ../lib/taylor.so
 [100%] Built target taylor
-(pybind11-example) [lynx@build]$ python
-Python 2.7.13 |Continuum Analytics, Inc.| (default, Dec 20 2016, 23:09:15)
+(pybind11-example) [lynx@lille-login2 build]$ cd lib
+(pybind11-example) [lynx@lille-login2 lib]$ python
+Python 2.7.13 |Continuum Analytics, Inc.| (default, Dec 20 2016, 23:09:15) 
 [GCC 4.4.7 20120313 (Red Hat 4.4.7-1)] on linux2
 Type "help", "copyright", "credits" or "license" for more information.
 Anaconda is brought to you by Continuum Analytics.
 Please check out: http://continuum.io/thanks and https://anaconda.org
 >>> import taylor
->>> taylor.sin(3.141592653/3,14)
-0.8660254036861398
->>>
-
-
-```shell
-source deactivate
+>>> taylor.cos(3.141592653/3,15)
+0.5000000001702586
+>>> 
 ```
 
 ### SWIG
