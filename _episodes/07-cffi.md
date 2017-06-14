@@ -121,7 +121,7 @@ OR
 $ curl -O https://raw.githubusercontent.com/bast/python-cffi-demo/master/pi/cffi_helpers.py
 $ curl -O https://raw.githubusercontent.com/bast/python-cffi-demo/master/pi/__init__.py
 ```
-(if the commands below do not work, you can find the files
+(if the commands above did not work, you can find the files
 [here](https://github.com/bast/python-cffi-demo/tree/master/pi)):
 
 
