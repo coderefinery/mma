@@ -108,13 +108,22 @@ total 32
 -rw------- 1 bast users 452 May 28 00:51 pi.py
 ```
 
-And we fetch two files from the web (if the commands below do not work, you can find the files
-[here](https://github.com/bast/python-cffi-demo/tree/master/pi)):
+And we fetch two files from the web use either wget or curl to get these files
 
-```shell
+```shell using wget
 $ wget https://raw.githubusercontent.com/bast/python-cffi-demo/master/pi/cffi_helpers.py
 $ wget https://raw.githubusercontent.com/bast/python-cffi-demo/master/pi/__init__.py
 ```
+
+OR 
+
+```shell using curl
+$ curl -O https://raw.githubusercontent.com/bast/python-cffi-demo/master/pi/cffi_helpers.py
+$ curl -O https://raw.githubusercontent.com/bast/python-cffi-demo/master/pi/__init__.py
+```
+(if the commands below do not work, you can find the files
+[here](https://github.com/bast/python-cffi-demo/tree/master/pi)):
+
 
 The first file contains a function `get_lib_handle` which tells CFFI where to find the header file and the
 dynamic library from which CFFI creates a Python interface.
