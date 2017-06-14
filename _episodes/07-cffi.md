@@ -115,7 +115,7 @@ $ wget https://raw.githubusercontent.com/bast/python-cffi-demo/master/pi/cffi_he
 $ wget https://raw.githubusercontent.com/bast/python-cffi-demo/master/pi/__init__.py
 ```
 
-OR 
+Or
 
 ```shell using curl
 $ curl -O https://raw.githubusercontent.com/bast/python-cffi-demo/master/pi/cffi_helpers.py
@@ -257,8 +257,13 @@ install with `pip` and even upload to [PyPI - the Python Package Index](https://
 For this go to the root directory of your project (one level above the `pi`
 directory) and fetch a setup script which we have already prepared for you:
 
-```shell
+```shell using wget
 $ wget https://raw.githubusercontent.com/bast/python-cffi-demo/master/setup.py
+```
+Or
+
+```shell using curl
+$ curl https://raw.githubusercontent.com/bast/python-cffi-demo/master/setup.py
 ```
 
 We will inspect it in a minute but let us first try it out:
