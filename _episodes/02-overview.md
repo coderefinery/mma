@@ -22,46 +22,57 @@ There exist several technologies which make it possible to couple Python and com
 - F2PY
 - CFFI
 
-In this episode we will briefly highlight the pros and cons of the Cython, and show how the same source code can be used SWIG and Boost. In the next section we
-will go more in detail on how to use Pybind11.
-
-
-**Cython**: "All of this makes Cython the ideal language for wrapping external C
-libraries, embedding CPython into existing applications, and for fast C modules
-that speed up the execution of Python code.", see webpage http://cython.org
+**Cython**: "Cython’s power comes from the way it combines Python and C: 
+it feels like Python while providing easy access to C. Cython is situated 
+between high-level Python and low-level C; one might call it a creole 
+programming language." [Cython](http://shop.oreilly.com/product/0636920033431.do) by Kurt Smith
 
 "**Pybind11** is a lightweight-header only library that exposes C++-types in Python
 and vice versa, mainly to create Python bindings of existing C++ code.",
-according to the Pybind11 web page,
-https://pybind11.readthedocs.io/en/stable/intro.html. The point it is
-lightweight and targeting the combination of Python and C++11compliant
-compilers. Consequently, the interface code becomes more straight forward.
+according to the Pybind11 [web page](https://pybind11.readthedocs.io/en/stable/intro.html).
+The point it is lightweight and targeting the combination of Python and C++11
+compliant compilers. Consequently, the interface code becomes more straight
+forward.
 
 **SWIG** (Simplified Wrapper and Interface Generator) is a tool that simplifies the
 two step process of making a wrapper and generating a interface which makes the
 wrapper callable from the interpreter. According to the SWIG documentation,
 "SWIG was originally designed to make it extremely easy for scientist and
 engineers to build extensible scientific software without having a degree in
-software engineering". So SWIG should really be the only thing we need, right?
-Could be, but before giving a motivation for the other tools, it is worth
-mentioning that SWIG support a range of interpreting languages (C#,Common Lisp,
-Go,R, Lua ...), not only Python.
+software engineering". SWIG support a range of interpreting languages
+(C#,Common Lisp, Go,R, Lua ...), not only Python.
 
 **Boost** is a huge C++-library which works with almost any C++-compiler. The
 Python interface tool was added to the Boost library around 2002 by David
 Abrahams. Hence, if you a have special C++-compiler, Boost.Python could be your
 most suitable tool for integrating Python and C++.
 
-**F2PY** is a tool for interfacing Fortan and Python. According to "Python
+**F2PY** is a tool for interfacing Fortran and Python. According to "Python
 Scripting for Computational Science" transferring Numpy arrays between Python
 and compiled Fortran code is easier with F2PY than SWIG.
 
-In the following we will show how to C++-functions can be enabled for use with
-Python by using Cython and Pybind11. The text also demonstrates how the same
-source code can be Python enabled by using SWIG or Boost. You may read these
-parts after the Coderefinery workshop.
+**CFFI** C Foreign Function Inteface for Python requires only knowledge of C
+and Python. There is no need to gain knowledge of a domain specific language.
 
-### The source code
+### How too choose the most suitable tool?
+Here are our rule of thumb:
+
+If you need to interface C/C++, four of the mentioned tools/libraries are
+available to you. Are you most experienced with python and python is your
+preferred language, choose Cython. If your competence are mainly in C++,
+but you need to provide a python library, choose Pybind11.
+
+If python is not your choice, but you need to bind another scripting language
+with compiled code, then go with SWIG.
+
+If C or Fortran is your preferred compiled language, then consider CFFI.
+
+### Combining a C++-code with Cython or Pybind11
+
+In the following we will show how C++-functions can be enabled for use with
+Python by using Cython and Pybind11.
+
+#### The source code
 
 Below is the source code we will use, `taylor_series.h` and `taylor_series.cpp`:
 
@@ -133,14 +144,13 @@ renamed as `sin()` and `cos()`, taking two arguments.
 
 There is several ways to a library with the use of Cython. We will demonstrate
 how to do it with CMake. The other prefered way would be with the use of
-distutils, which is also described, but we will not demonstrate it as part of
-the workshop.
+distutils. How to build with `distutils` is shown also be low.
 
 You will need to clone a git repository for having all the necessary files
 for the demonstratino
 
 ```bash
-$ git clone https://github.com/blindij/python-ctools-demo.git
+$ git clone https://github.com/blindij/python-ctools-demo.git --recursive
 $ cd python-ctools-demo/cmake-demo
 ```
 
@@ -363,6 +373,11 @@ In the cloned source tree (`git clone https://github.com/blindij/python-ctools-d
 ```shell
 .
 ├── CMakeLists.txt
+├── pybind11
+│   ├── CMakeLists.txt
+
+....
+
 └── src
     ├── CMakeLists.txt
     ├── py11taylor.cpp
@@ -472,3 +487,4 @@ Please check out: http://continuum.io/thanks and https://anaconda.org
 0.5000000001702586
 >>> 
 ```
+## Git submodules
