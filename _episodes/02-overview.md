@@ -494,4 +494,50 @@ Please check out: http://continuum.io/thanks and https://anaconda.org
 0.5000000001702586
 >>> 
 ```
-## Git submodules
+## Git submodule
+In the pybind11 example we are depending upon the Pybind11 git repository.
+It is cloned as part of a recursive clone. The pybind11 repo is marked as a
+submodule. Pybind11 was added to the `python-ctools-demo` repository in the
+following way (the current directory being `python-ctools-demo`):
+
+```bash
+$ git submodule add  https://github.com/pybind/pybind11.git
+$ git commit -am "Added Pybind11 module"
+```
+
+When a repository contains one or several submodules, you will need to add
+`--recursive` as an argument to `git clone`. Otherwise the submodule will
+not be cloned, and the submodule will just be an empty directory.
+
+An alternative is to initialize and update the submodule, specifically.
+
+```bash
+$ git clone https://github.com/blindij/python-ctools-demo.git
+$ cd python-ctools-demo/
+$ git submodule init
+$ git submodule update
+```
+
+Here is the output from a Linux session:
+
+```bash
+[lynx@lille-login2 tmp]$ git clone https://github.com/blindij/python-ctools-demo.git
+Cloning into 'python-ctools-demo'...
+remote: Counting objects: 81, done.
+remote: Compressing objects: 100% (67/67), done.
+remote: Total 81 (delta 18), reused 73 (delta 10), pack-reused 0
+Unpacking objects: 100% (81/81), done.
+[lynx@lille-login2 tmp]$ cd python-ctools-demo/
+[lynx@lille-login2 python-ctools-demo]$ git submodule init
+Submodule 'phoneticA/pybind11' (https://github.com/pybind/pybind11.git) registered for path 'phoneticA/pybind11'
+Submodule 'pybind11-demo/pybind11' (https://github.com/pybind/pybind11.git) registered for path 'pybind11-demo/pybind11'
+[lynx@lille-login2 python-ctools-demo]$ git submodule update
+Cloning into 'pybind11-demo/pybind11'...
+remote: Counting objects: 8182, done.
+remote: Compressing objects: 100% (17/17), done.
+remote: Total 8182 (delta 4), reused 11 (delta 3), pack-reused 8161
+Receiving objects: 100% (8182/8182), 2.85 MiB | 1.12 MiB/s, done.
+Resolving deltas: 100% (5444/5444), done.
+Submodule path 'pybind11-demo/pybind11': checked out '13d8cd2cc7566de34d724f428ea7a6b6448d6a0c'
+
+```
