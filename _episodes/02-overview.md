@@ -134,20 +134,19 @@ double ts_cos(double& x,int N) {
 The source code implements three functions `factorial()`, `ts_sin()` and
 `ts_cos()`. `factorial()` returns the factorial of an integer N.
 N is given as an argument to the function. `ts_sin()` and `ts_cos()` are
-approximations of trigonometric functions sine and cosine implemented
+approximations of the trigonometric functions sine and cosine implemented
 as taylor series. Their arguments are the angle and the number of terms in
 the taylor series. In the example only `ts_sin()` and `ts_cos()` will be
 callable from the python interpreter. Though, these functions will be
-renamed as `sin()` and `cos()`, taking two arguments.
+renamed on the Python side as `sin()` and `cos()`, taking two arguments.
 
 ### Cython
 
-There is several ways to a library with the use of Cython. We will demonstrate
-how to do it with CMake. The other prefered way would be with the use of
-distutils. How to build with `distutils` is shown also be low.
+There is several ways to build a library with the use of Cython. We will
+demonstrate how to do it with CMake. The other preferred way would be with the
+use of `distutils`. How to build with `distutils` is also shown be low.
 
-You will need to clone a git repository for having all the necessary files
-for the demonstratino
+You will need to clone a git repository:
 
 ```bash
 $ git clone https://github.com/blindij/python-ctools-demo.git --recursive
@@ -173,7 +172,8 @@ In the cmake-demo subdirectory you will find these files:
 
 2 directories, 8 files
 ```
-Firste we will look at the `taylor.pyx`. The expressions in this file are very
+
+First we will look at the `taylor.pyx`. The expressions in this file are very
 python-like:
 
 ```python
@@ -496,8 +496,8 @@ Please check out: http://continuum.io/thanks and https://anaconda.org
 ```
 ## Git submodule
 In the pybind11 example we are depending upon the Pybind11 git repository.
-It is cloned as part of a recursive clone. The pybind11 repo is marked as a
-submodule. Pybind11 was added to the `python-ctools-demo` repository in the
+It is cloned as part of a recursive clone. The pybind11 repository is marked as
+a submodule. Pybind11 was added to the `python-ctools-demo` repository in the
 following way (the current directory being `python-ctools-demo`):
 
 ```bash
