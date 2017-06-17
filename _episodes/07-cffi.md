@@ -108,19 +108,22 @@ total 32
 -rw------- 1 bast users 452 May 28 00:51 pi.py
 ```
 
-And we fetch two files from the web use either wget or curl to get these files
+And we fetch two files from the web either using `wget` or `curl`.
 
-```shell using wget
+Using `wget`:
+
+```shell
 $ wget https://raw.githubusercontent.com/bast/python-cffi-demo/master/pi/cffi_helpers.py
 $ wget https://raw.githubusercontent.com/bast/python-cffi-demo/master/pi/__init__.py
 ```
 
-Or
+If the above did not work, try `curl`:
 
-```shell using curl
+```shell
 $ curl -O https://raw.githubusercontent.com/bast/python-cffi-demo/master/pi/cffi_helpers.py
 $ curl -O https://raw.githubusercontent.com/bast/python-cffi-demo/master/pi/__init__.py
 ```
+
 (if the commands above did not work, you can find the files
 [here](https://github.com/bast/python-cffi-demo/tree/master/pi)):
 
@@ -257,12 +260,13 @@ install with `pip` and even upload to [PyPI - the Python Package Index](https://
 For this go to the root directory of your project (one level above the `pi`
 directory) and fetch a setup script which we have already prepared for you:
 
-```shell using wget
+```shell
 $ wget https://raw.githubusercontent.com/bast/python-cffi-demo/master/setup.py
 ```
-Or
 
-```shell using curl
+If the above did not work, try `curl`:
+
+```shell
 $ curl https://raw.githubusercontent.com/bast/python-cffi-demo/master/setup.py
 ```
 
