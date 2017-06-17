@@ -65,8 +65,8 @@ Later we will combine these 3 implementations in a Python package and learn few 
 
 ### Problems before `iso_c_binding` arrived
 
-- Codes needed to work around name mangling
-- Codes needed to figure out bit representations of data types
+- Codes needed to work around name mangling.
+- Codes needed to figure out bit representations of data types.
 
 ---
 
@@ -74,7 +74,7 @@ Later we will combine these 3 implementations in a Python package and learn few 
 
 Before you continue, create a fresh directory for this session.
 
-Test the following Python code:
+Test the following Python code (Python newcomers please sit next to an experienced Python developer):
 
 ```python
 import random
@@ -125,7 +125,7 @@ We see the following files:
 ```
 .
 |-- CMakeLists.txt
-`-- pi
+`-- island
     |-- main.cpp
     |-- main.f90
     |-- pi.cpp
@@ -155,12 +155,17 @@ Fortran also call the C++ implementation.
 
 For this first uncomment the two following lines:
 
-- [pi/main.f90](https://github.com/bast/python-cffi-demo/blob/exercise/cxx-fortran/pi/main.f90#L17)
-- [pi/main.cpp](https://github.com/bast/python-cffi-demo/blob/exercise/cxx-fortran/pi/main.cpp#L8)
+- [island/main.f90](https://github.com/bast/python-cffi-demo/blob/exercise/cxx-fortran/island/main.f90#L17)
+- [island/main.cpp](https://github.com/bast/python-cffi-demo/blob/exercise/cxx-fortran/island/main.cpp#L8)
 
 Then try to recompile - you will observe that the code has unmet dependencies.
 Try to fix these (use out-commented code for hints).
-
 Finally, verify that the binaries work and that they indeed call both implementations.
 
 Discuss with the group how it works.
+
+
+### Questions
+
+- Why did we need to do more work on the Fortran side?
+- How does C++ know the type information?

@@ -92,11 +92,11 @@ $ cmake ..
 $ make
 ```
 
-After that we go one level up and enter the `pi` directory:
+After that we go one level up and enter the `island` directory:
 
 ```shell
 $ cd ..
-$ cd pi
+$ cd island
 $ ls -l
 
 total 32
@@ -113,20 +113,19 @@ And we fetch two files from the web either using `wget` or `curl`.
 Using `wget`:
 
 ```shell
-$ wget https://raw.githubusercontent.com/bast/python-cffi-demo/master/pi/cffi_helpers.py
-$ wget https://raw.githubusercontent.com/bast/python-cffi-demo/master/pi/__init__.py
+$ wget https://raw.githubusercontent.com/bast/python-cffi-demo/master/island/cffi_helpers.py
+$ wget https://raw.githubusercontent.com/bast/python-cffi-demo/master/island/__init__.py
 ```
 
 If the above did not work, try `curl`:
 
 ```shell
-$ curl -O https://raw.githubusercontent.com/bast/python-cffi-demo/master/pi/cffi_helpers.py
-$ curl -O https://raw.githubusercontent.com/bast/python-cffi-demo/master/pi/__init__.py
+$ curl -O https://raw.githubusercontent.com/bast/python-cffi-demo/master/island/cffi_helpers.py
+$ curl -O https://raw.githubusercontent.com/bast/python-cffi-demo/master/island/__init__.py
 ```
 
-(if the commands above did not work, you can find the files
-[here](https://github.com/bast/python-cffi-demo/tree/master/pi)):
-
+If the commands above did not work, you can find the files
+[here](https://github.com/bast/python-cffi-demo/tree/master/island).
 
 The first file contains a function `get_lib_handle` which tells CFFI where to find the header file and the
 dynamic library from which CFFI creates a Python interface.
@@ -156,28 +155,28 @@ $ PI_BUILD_DIR=build python
 Python 3.6.1 (default, Mar 27 2017, 00:27:06)
 [GCC 6.3.1 20170306] on linux
 Type "help", "copyright", "credits" or "license" for more information.
->>> import pi
->>> print(pi.approximate_pi_c(100))
+>>> import island
+>>> print(island.approximate_pi_c(100))
 3.12
 >>>
 ```
 
-Why do we need to set `PI_BUILD_DIR` when importing our `pi` package?
+Why do we need to set `PI_BUILD_DIR` when importing our `island` package?
 
 Now we can run some timings - create a file called `test.py` which contains:
 
 ```python
 import time
-import pi
+import island
 
 num_points = 2000000
 
 def print_timings():
     print('num points: {0}'.format(num_points))
 
-    for (lang, function) in [('python', pi.approximate_pi_python),
-                             ('c', pi.approximate_pi_c),
-                             ('fortran', pi.approximate_pi_fortran)]:
+    for (lang, function) in [('python', island.approximate_pi_python),
+                             ('c', island.approximate_pi_c),
+                             ('fortran', island.approximate_pi_fortran)]:
         t0 = time.clock()
         result = function(num_points)
         time_spent = time.clock() - t0
@@ -257,7 +256,7 @@ history](https://travis-ci.org/bast/python-cffi-demo/builds) for your project.
 Finally we want to put a cherry on top of our project and make it possible to
 install with `pip` and even upload to [PyPI - the Python Package Index](https://pypi.python.org/pypi).
 
-For this go to the root directory of your project (one level above the `pi`
+For this go to the root directory of your project (one level above the `island`
 directory) and fetch a setup script which we have already prepared for you:
 
 ```shell
@@ -285,17 +284,17 @@ $ pip install /path/to/the/project
 Here is how it looks on my machine:
 
 ```shell
-$ pip install /home/bast/python-cffi-demo
+$ pip install /home/bast/exercise/cxx-fortran
 
-Processing /home/bast/python-cffi-demo
-Collecting cffi (from pi==0.0.0)
+Processing /home/bast/exercise/cxx-fortran
+Collecting cffi (from island==0.0.0)
   Using cached cffi-1.10.0-cp36-cp36m-manylinux1_x86_64.whl
-Collecting pycparser (from cffi->pi==0.0.0)
-Building wheels for collected packages: pi
-  Running setup.py bdist_wheel for pi ... done
-Successfully built pi
-Installing collected packages: pycparser, cffi, pi
-Successfully installed cffi-1.10.0 pi-0.0.0 pycparser-2.17
+Collecting pycparser (from cffi->island==0.0.0)
+Building wheels for collected packages: island
+  Running setup.py bdist_wheel for island ... done
+Successfully built island
+Installing collected packages: pycparser, cffi, island
+Successfully installed cffi-1.10.0 island-0.0.0 pycparser-2.17
 ```
 
 In the setup script we subclass the `install` and `build` methods and call
@@ -307,5 +306,5 @@ yet, you can also install directly from GitHub:
 
 ```shell
 $ pip install git+https://github.com/bast/python-cffi-demo.git
-$ python -c 'import pi; print(pi.approximate_pi_c(100))'
+$ python -c 'import island; print(island.approximate_pi_c(100))'
 ```
