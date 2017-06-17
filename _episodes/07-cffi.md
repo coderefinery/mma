@@ -267,7 +267,7 @@ $ wget https://raw.githubusercontent.com/bast/python-cffi-demo/master/setup.py
 If the above did not work, try `curl`:
 
 ```shell
-$ curl https://raw.githubusercontent.com/bast/python-cffi-demo/master/setup.py
+$ curl -O https://raw.githubusercontent.com/bast/python-cffi-demo/master/setup.py
 ```
 
 We will inspect it in a minute but let us first try it out:
