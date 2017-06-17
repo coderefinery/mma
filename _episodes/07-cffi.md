@@ -15,7 +15,7 @@ keypoints:
 
 ## Setting the stage
 
-We will stay with the same pi example but please picture your project instead.
+We will stay with the same $\pi$ example but please picture your project instead.
 
 Imagine one of two situations:
 
