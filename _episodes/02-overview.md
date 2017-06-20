@@ -149,7 +149,7 @@ use of `distutils`. How to build with `distutils` is also shown be low.
 You will need to clone a git repository:
 
 ```bash
-$ git clone https://github.com/blindij/python-ctools-demo.git --recursive
+$ git clone https://github.com/coderefinery/python-ctools-demo.git --recursive
 $ cd python-ctools-demo/cmake-demo
 ```
 
