@@ -357,12 +357,12 @@ The function calls to `call_encode()` above shows polymorphism in play.
 The polyphorism is "imported" from the C++ side, but we make use of it on the
 python side.
 
-### Extending the class dynamically
+### Extending the classes dynamically
 
 In Python you can add new attributes to a class dynamically. As the Phonetic/Algorithm
 and Soundex class are implemented, they can not get new attributes dynamically.
 
-This feature we add to the parent (PhoneticAlgorithm).
+Though, we can add this feature to the PhoneticAlgorithm. The subclasses will inherit it.
 
 The Py11PhoneAlg.cpp is changed to:
 
