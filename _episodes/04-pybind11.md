@@ -159,9 +159,9 @@ pybind11 | -  CMakeLists.txt
 Let us create the subdirectory setup and the files:
 
 ```shell
-(pybind11-example) [lynx@lille-login2~]$ mkdir -p pybind11/src
-(pybind11-example) [lynx@lille-login2~]$ cd pybind11/src
-(pybind11-example) [lynx@lille-login2~]$ cat > Soundex.h
+$ mkdir -p pybind11/src
+$ cd pybind11/src
+$ cat > Soundex.h
 Create the Soundex.h file by pasting in the source code either by using cat
 or your favorite editor.
 ```
@@ -186,7 +186,7 @@ PYBIND11_PLUGIN(soundex) {
 Create the Py11Soundex.cpp file in the *src* subdirectory:
 
 ```shell
-(pybind11-example) [lynx@lille-login2src]$ cat > Py11Soundex.cpp
+$ cat > Py11Soundex.cpp
 Cat the contents of Py11Soundex.cpp to Py11Soundex.cpp or use
 an editor
 
@@ -200,12 +200,10 @@ pybind11_add_module(soundex Py11Soundex.cpp)
 Change to the directory above after you have made the file:
 
 ```shell
-(pybind11-example) [lynx@lille-login2src]$ cat > CMakeLists.txt
+$ cat > CMakeLists.txt
 pybind11_add_module(soundex Py11soundex.cpp)
 <Ctrl>-d
-(pybind11-example) [lynx@lille-login2src]$ cd ..
-(pybind11-example) [lynx@lille-login2py11bind]$ 
-
+$ cd ..
 ```
 
 Create the top level CMakeLists.txt in this directory. Here is the contents:
@@ -226,18 +224,19 @@ After you have made the CMakeLists.txt, make a build subdirectory, *cd* into it
 generate the build files by running cmake, and execute make
 
 ```shell
-(pybind11-example) [lynx@lille-login2src]$ cat > CMakeLists.txt
+$ cat > CMakeLists.txt
 Paste the contents of the CMakeLists.txt and press <Ctrl>-d
-(pybind11-example) [lynx@lille-login2src]$ mkdir build
-(pybind11-example) [lynx@lille-login2src]$ cd build
-(pybind11-example) [lynx@lille-login2build]$  cmake ..
-(pybind11-example) [lynx@lille-login2build]$  make
 
+$ mkdir build
+$ cd build
+$ cmake ..
+$ make
 ```
 After the make, we cd into the lib subdirectory and load the soundex library:
 
 ```shell
-(pybind11-example) [lynx@lille-login2 build]$ cmake ..
+$ cmake ..
+
 -- The C compiler identification is GNU 6.3.0
 -- The CXX compiler identification is GNU 6.3.0
 -- Check for working C compiler: /share/apps/modulessoftware/Core/gcc/6.3.0/bin/gcc
@@ -260,13 +259,17 @@ After the make, we cd into the lib subdirectory and load the soundex library:
 -- Configuring done
 -- Generating done
 -- Build files have been written to: /home/lynx/src/c++/encodings/soundex/pybind11/build
-(pybind11-example) [lynx@lille-login2 build]$ make
+
+$ make
+
 Scanning dependencies of target soundex
 [100%] Building CXX object src/CMakeFiles/soundex.dir/Py11Soundex.cpp.o
 Linking CXX shared module ../lib/soundex.so
 [100%] Built target soundex
-(pybind11-example) [lynx@lille-login2 build]$ cd lib
-(pybind11-example) [lynxy@lille-login2 lib]$ python
+
+$ cd lib
+$ python
+
 Python 2.7.13 |Continuum Analytics, Inc.| (default, Dec 20 2016, 23:09:15) 
 [GCC 4.4.7 20120313 (Red Hat 4.4.7-1)] on linux2
 Type "help", "copyright", "credits" or "license" for more information.
@@ -483,7 +486,8 @@ We generate the builds files in a subdirectory. Run make and load the library
 into our python interpreter:
 
 ```shell
-(pybind11-example) [bjornlin@lille-login2 build]$ cmake ..
+$ cmake ..
+
 -- The C compiler identification is GNU 6.3.0
 -- The CXX compiler identification is GNU 6.3.0
 -- Check for working C compiler: /share/apps/modulessoftware/Core/gcc/6.3.0/bin/gcc
@@ -506,13 +510,17 @@ into our python interpreter:
 -- Configuring done
 -- Generating done
 -- Build files have been written to: /home/bjornlin/src/c++/encodings/phoneticA/build
-(pybind11-example) [bjornlin@lille-login2 build]$ make
+
+$ make
+
 Scanning dependencies of target phonetic
 [100%] Building CXX object src/CMakeFiles/phonetic.dir/Py11PhoneAlg.cpp.o
 Linking CXX shared module ../lib/phonetic.so
 [100%] Built target phonetic
-(pybind11-example) [bjornlin@lille-login2 build]$ cd lib
-(pybind11-example) [bjornlin@lille-login2 lib]$ python
+
+$ cd lib
+$ python
+
 Python 2.7.13 |Continuum Analytics, Inc.| (default, Dec 20 2016, 23:09:15) 
 [GCC 4.4.7 20120313 (Red Hat 4.4.7-1)] on linux2
 Type "help", "copyright", "credits" or "license" for more information.

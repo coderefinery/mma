@@ -251,9 +251,10 @@ $ python
 
 Here is the output from a Linux build and the following python session:
 ```shell
-(cython-example) [lynx@lille-login2 cmake-demo]$ mkdir build
-(cython-example) [lynx@lille-login2 cmake-demo]$ cd build
-(cython-example) [lynx@lille-login2 build]$ cmake ..
+$ mkdir build
+$ cd build
+$ cmake ..
+
 -- The C compiler identification is GNU 4.8.5
 -- The CXX compiler identification is GNU 4.8.5
 -- Check for working C compiler: /usr/bin/cc
@@ -270,15 +271,19 @@ Here is the output from a Linux build and the following python session:
 -- Configuring done
 -- Generating done
 -- Build files have been written to: /home/lynx/tmp/python-ctools-demo/cython-demo/cmake-demo/build
-(cython-example) [lynx@lille-login2 build]$ make
+
+$ make
+
 [ 33%] Compiling Cython CXX source for taylor...
 Scanning dependencies of target taylor
 [ 66%] Building CXX object src/CMakeFiles/taylor.dir/taylor.cxx.o
 [100%] Building CXX object src/CMakeFiles/taylor.dir/taylor_series.cpp.o
 Linking CXX shared module ../lib/taylor.so
 [100%] Built target taylor
-(cython-example) [lynx@lille-login2 build]$ cd lib
-(cython-example) [lynx@lille-login2 lib]$ python
+
+$ cd lib
+$ python
+
 Python 2.7.13 |Continuum Analytics, Inc.| (default, Dec 20 2016, 23:09:15) 
 [GCC 4.4.7 20120313 (Red Hat 4.4.7-1)] on linux2
 Type "help", "copyright", "credits" or "license" for more information.
@@ -334,6 +339,7 @@ To build and load the library we execute python:
 ```bash
 $ python setup.py build_ext -i
 $ python
+
 >>> import taylor
 >>> taylor.cos(3.1415926535/3,15)
 
@@ -342,7 +348,8 @@ $ python
 Here is output from the building process on a Linux system:
 
 ```bash
-(cython-example) [lynx@lille-login2 distutils-demo]$ python setup.py build_ext -i
+$ python setup.py build_ext -i
+
 running build_ext
 building 'taylor' extension
 creating build
@@ -353,7 +360,8 @@ cc1plus: warning: command line option ‘-Wstrict-prototypes’ is valid for C/O
 gcc -pthread -fno-strict-aliasing -g -O2 -DNDEBUG -g -fwrapv -O3 -Wall -Wstrict-prototypes -fPIC -I/home/lynx/anaconda2/envs/cython-example/include/python2.7 -c src/taylor_series.cpp -o build/temp.linux-x86_64-2.7/src/taylor_series.o
 cc1plus: warning: command line option ‘-Wstrict-prototypes’ is valid for C/ObjC but not for C++ [enabled by default]
 g++ -pthread -shared -L/home/lynx/anaconda2/envs/cython-example/lib -Wl,-rpath=/home/lynx/anaconda2/envs/cython-example/lib,--no-as-needed build/temp.linux-x86_64-2.7/src/taylor.o build/temp.linux-x86_64-2.7/src/taylor_series.o -L/home/lynx/anaconda2/envs/cython-example/lib -lpython2.7 -o /home/lynx/tmp/python-ctools-demo/cython-demo/distutils-demo/taylor.so
-(cython-example) [lynx@lille-login2 distutils-demo]$ python
+
+$ python
 Python 2.7.13 |Continuum Analytics, Inc.| (default, Dec 20 2016, 23:09:15) 
 [GCC 4.4.7 20120313 (Red Hat 4.4.7-1)] on linux2
 Type "help", "copyright", "credits" or "license" for more information.
@@ -451,9 +459,10 @@ $ python
 Output from building on Linux with Anaconda2 extended with Pybind11:
 
 ```bash
-(pybind11-example) [lynx@lille-login2 pybind11-demo]$ mkdir build
-(pybind11-example) [lynx@lille-login2 pybind11-demo]$ cd build
-(pybind11-example) [lynx@lille-login2 build]$ cmake ..
+$ mkdir build
+$ cd build
+$ cmake ..
+
 -- The C compiler identification is GNU 4.8.5
 -- The CXX compiler identification is GNU 4.8.5
 -- Check for working C compiler: /usr/bin/cc
@@ -476,14 +485,18 @@ Output from building on Linux with Anaconda2 extended with Pybind11:
 -- Configuring done
 -- Generating done
 -- Build files have been written to: /home/lynx/tmp/python-ctools-demo/pybind11-demo/build
-(pybind11-example) [lynx@lille-login2 build]$ make
+
+$ make
+
 Scanning dependencies of target taylor
 [ 50%] Building CXX object src/CMakeFiles/taylor.dir/py11taylor.cpp.o
 [100%] Building CXX object src/CMakeFiles/taylor.dir/taylor_series.cpp.o
 Linking CXX shared module ../lib/taylor.so
 [100%] Built target taylor
-(pybind11-example) [lynx@lille-login2 build]$ cd lib
-(pybind11-example) [lynx@lille-login2 lib]$ python
+
+$ cd lib
+$ python
+
 Python 2.7.13 |Continuum Analytics, Inc.| (default, Dec 20 2016, 23:09:15) 
 [GCC 4.4.7 20120313 (Red Hat 4.4.7-1)] on linux2
 Type "help", "copyright", "credits" or "license" for more information.
@@ -521,17 +534,22 @@ $ git submodule update
 Here is the output from a Linux session:
 
 ```bash
-[lynx@lille-login2 tmp]$ git clone https://github.com/blindij/python-ctools-demo.git
+$ git clone https://github.com/blindij/python-ctools-demo.git
+
 Cloning into 'python-ctools-demo'...
 remote: Counting objects: 81, done.
 remote: Compressing objects: 100% (67/67), done.
 remote: Total 81 (delta 18), reused 73 (delta 10), pack-reused 0
 Unpacking objects: 100% (81/81), done.
-[lynx@lille-login2 tmp]$ cd python-ctools-demo/
-[lynx@lille-login2 python-ctools-demo]$ git submodule init
+
+$ cd python-ctools-demo/
+$ git submodule init
+
 Submodule 'phoneticA/pybind11' (https://github.com/pybind/pybind11.git) registered for path 'phoneticA/pybind11'
 Submodule 'pybind11-demo/pybind11' (https://github.com/pybind/pybind11.git) registered for path 'pybind11-demo/pybind11'
-[lynx@lille-login2 python-ctools-demo]$ git submodule update
+
+$ git submodule update
+
 Cloning into 'pybind11-demo/pybind11'...
 remote: Counting objects: 8182, done.
 remote: Compressing objects: 100% (17/17), done.
