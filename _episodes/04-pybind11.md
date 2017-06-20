@@ -319,342 +319,136 @@ u'R163'
 >>> 
 ```
 
-### Inheritance
-Let us take introduce inheritance by creating a parent class PhoneticAlgorithms.
-The Soundex class will inherit this class. The Pybind11 directory will contain
-the following files (before we again run CMake and Make):
+### Prototyping a new class - Match Rating Approach(MRA)
 
-```
-├── CMakeLists.txt
-└── src
-    ├── CMakeLists.txt
-    ├── PhoneticAlgorithm.h
-    ├── Py11PhoneAlg.cpp
-    └── Soundex.h
-```
+[The Match Rating Approach](https://en.wikipedia.org/wiki/Match_rating_approach) goes like:
+ 1. Delete all vowels unless the vowel begins the word
+ 2. Remove the second constant of any double consontants present
+ 3. Reduce codex to 6 letters by joining the first and last 3 letters only
 
-The contents of the top level CMakeLists.txt. It is only the project name
-which has changed:
-
-```cmake
-cmake_minimum_required(VERSION 2.8 FATAL_ERROR)
-project(phonetic)
-
-set(CMAKE_LIBRARY_OUTPUT_DIRECTORY
-  ${CMAKE_BINARY_DIR}/lib
-  )
-
-find_package(pybind11 REQUIRED )
-
-add_subdirectory(src)
-
-```
-
-The contents of the CMakeLists.txt in the *src*-directory:
-
-```cmake
-cmake_minimum_required(VERSION 2.8 FATAL_ERROR)
-project(phonetic)
-
-set(CMAKE_LIBRARY_OUTPUT_DIRECTORY
-  ${CMAKE_BINARY_DIR}/lib
-  )
-
-find_package(pybind11 REQUIRED )
-
-add_subdirectory(src)
-
-```
-
-The contents of the CMakeLists.txt in the *src*-directory. Here the library
-is given a new name and it is a new source file:
-
-```cmake
-pybind11_add_module(phonetic Py11PhoneAlg.cpp)
-```
-
-The contents of file PhoneticAlgorithms.h:
-
-```c++
-// file: PhoneticAlgorithms.h
-#ifndef PHONETICALGORITHMS_H
-#define PHONETICALGORITHMS_H
-#include <string>
-class PhoneticAlgorithm{
- public:
-  std::string encode(const std::string& word) {
-    return word + " do not encode\n";
-  };
-
-  
-};
-
-#endif //PHONETICALGORITHMS_H
-```
-
-Contents of Soundex.h. It includes PhoneticAlgorithms.h and states that
-Soundex inherits class PhoneticAlgorithm:
-
-```cpp
-// file: Soundex.h
-#ifndef SOUNDEX_SOUNDEX_H
-#define SOUNDEX_SOUNDEX_H
-#include <string>
-#include <unordered_map>
-
-#include "PhoneticAlgorithm.h"
-
-// Soundex inherit PhoneticAlgorithm
-
-class Soundex : public PhoneticAlgorithm { 
-    static const size_t MaxCodeLength{4};
-public:
-    std::string encode(const std::string& word) const {
-        return zeroPad(upperFront(head(word))+tail(encodedDigits(word)));
-    }
-
-    std::string encodedDigit(char letter) const {
-        const std::unordered_map<char,std::string> encodings{
-                {'b',"1"},{'f',"1"},{'p',"1"},{'v',"1"},
-                {'c',"2"},{'g',"2"},{'j',"2"},{'k',"2"},{'q',"2"},{'s',"2"},{'x',"2"},{'z',"2"},
-                {'d',"3"},{'t',"3"},
-                {'l',"4"},
-                {'m',"5"},{'n',"5"},
-                {'r',"6"}
-
-        };
-        auto it = encodings.find(lower(letter));
-        return it == encodings.end() ? NotADigit: it->second;
-    }
-
-private:
-    const std::string NotADigit{"*"};
-
-    char lower(char c) const {
-        return std::tolower(static_cast<unsigned char>(c));
-    }
-
-    std::string head(const std::string& word) const {
-        return word.substr(0,1);
-    }
-
-    std::string tail(const std::string& word) const {
-        return word.substr(1);
-    }
-
-    std::string encodedDigits(const std::string& word) const{
-        std::string encoding;
-        encodeHead(encoding, word);
-        encodeTail(encoding,word);
-        return encoding;
-    }
-
-    void encodeHead(std::string& encoding, const std::string& word) const {
-        encoding += encodedDigit(word.front());
-    }
-
-    void encodeTail(std::string& encoding, const std::string& word) const{
-        for (auto i=1u; i < word.length();i++)  {
-            if (!isComplete(encoding))
-                encodeLetter(encoding,word[i],word[i-1]);
-        }
-    }
-
-    void encodeLetter(std::string& encoding, char letter, char lastLetter) const {
-        auto digit = encodedDigit(letter);
-        if ( digit != NotADigit && ( digit != lastDigit(encoding) || isVowel(lastLetter)))
-            encoding += digit;
-    }
-
-    bool isComplete(const std::string& encoding) const{
-        return encoding.length() == MaxCodeLength;
-    }
-
-    std::string zeroPad(const std::string& word) const {
-        auto zerosNeeded = MaxCodeLength - word.length();
-        return word + std::string(zerosNeeded,'0');
-    }
-
-    std::string lastDigit(const std::string& encoding) const {
-        if (encoding.empty()) return NotADigit;
-        return std::string(1,encoding.back());
-
-    }
-
-    std::string upperFront(const std::string& string) const {
-        return std::string(1, std::toupper(static_cast<unsigned char>(string.front())));
-    }
-
-    bool isVowel(char letter) const {
-        return std::string("aeiouy").find(lower(letter)) != std::string::npos;
-    }
-};
-
-#endif //SOUNDEX_SOUNDEX_H
-```
-
-The Pybind11-cpp file Py11PhoneAlg.cpp is a new:
-
-```cpp
-#include <pybind11/pybind11.h>
-#include "PhoneticAlgorithm.h"
-#include "Soundex.h"
-
-namespace py = pybind11;
-
-  
-PYBIND11_PLUGIN(phonetic) {
-  py::module m("phonetic", "pybind11 phonetic plugin");
-
-  py::class_<PhoneticAlgorithm>(m,"PhoneticAlgorithm")
-    .def(py::init<>())
-    .def("encode", &PhoneticAlgorithm::encode);
-
-  py::class_<Soundex,PhoneticAlgorithm /* specify C++ parent */>(m,"soundex")
-    .def(py::init<>())
-    .def("encode", &Soundex::encode);
-
-  return m.ptr();
-
-}
-```
-
-We generate the builds files in a subdirectory. Run make and load the library
-into our python interpreter:
-
-```shell
-(pybind11-example) [lynx@lille-login2 build]$ cmake ..
--- The C compiler identification is GNU 6.3.0
--- The CXX compiler identification is GNU 6.3.0
--- Check for working C compiler: /share/apps/modulessoftware/Core/gcc/6.3.0/bin/gcc
--- Check for working C compiler: /share/apps/modulessoftware/Core/gcc/6.3.0/bin/gcc -- works
--- Detecting C compiler ABI info
--- Detecting C compiler ABI info - done
--- Check for working CXX compiler: /share/apps/modulessoftware/Core/gcc/6.3.0/bin/g++
--- Check for working CXX compiler: /share/apps/modulessoftware/Core/gcc/6.3.0/bin/g++ -- works
--- Detecting CXX compiler ABI info
--- Detecting CXX compiler ABI info - done
--- Found PythonInterp: /home/lynx/anaconda2/envs/pybind11-example/bin/python (found version "2.7.13") 
--- Found PythonLibs: /home/lynx/anaconda2/envs/pybind11-example/lib/libpython2.7.so
--- Performing Test HAS_CPP14_FLAG
--- Performing Test HAS_CPP14_FLAG - Success
--- Performing Test HAS_CPP11_FLAG
--- Performing Test HAS_CPP11_FLAG - Success
--- Performing Test HAS_FLTO
--- Performing Test HAS_FLTO - Success
--- LTO enabled
--- Configuring done
--- Generating done
--- Build files have been written to: /home/lynx/src/c++/encodings/phoneticA/build
-(pybind11-example) [lynx@lille-login2 build]$ make
-Scanning dependencies of target phonetic
-[100%] Building CXX object src/CMakeFiles/phonetic.dir/Py11PhoneAlg.cpp.o
-Linking CXX shared module ../lib/phonetic.so
-[100%] Built target phonetic
-(pybind11-example) [lynx@lille-login2 build]$ cd lib
-(pybind11-example) [lynx@lille-login2 lib]$ python
-Python 2.7.13 |Continuum Analytics, Inc.| (default, Dec 20 2016, 23:09:15) 
-[GCC 4.4.7 20120313 (Red Hat 4.4.7-1)] on linux2
-Type "help", "copyright", "credits" or "license" for more information.
-Anaconda is brought to you by Continuum Analytics.
-Please check out: http://continuum.io/thanks and https://anaconda.org
-```
-In python we import the library and try it out:
+We start implementing a class MRA in Python which inherit PhoneticAlgorithm,
+and encode() do the first rule of MRA.
 
 ```python
->>> import phonetic
->>> help(phonetic)
-
->>> s = phonetic.PhoneticAlgorithm()
->>> s.encode('Allison')
-u'Allison do not encode\n'
->>> t = phonetic.soundex()
->>> t.encode('Allison')
+>>>
+>>> import  phoneticA
+>>> d = phoneticA.sndx()
+>>> import  re
+>>> vwls=re.compile(r'[aeiouy]',re.IGNORECASE)
+>>> re.sub(vwls,"","Robertson")
+'Rbrtsn'
+>>> class MRA(phoneticA.phalgo):
+...     def encode(this, word):
+...             return word[0]+re.sub(vwls,"",word[1:])
+... 
+>>> x = MRA()
+>>> x.encode("Robertson")
+'Rbrtsn'
+>>> x.encode("Anderson")
+'Andrsn'
+>>>
+>>> phoneticA.call_encode(x)
+u'Allsn'
+>>> phoneticA.call_encode(d)
 u'A425'
->>> 
 ```
 
-### Extending the class by prototyping
+The function calls to `call_encode()` above shows polymorphism in play.
+The polyphorism is "imported" from the C++ side, but we make use of it on the
+python side.
+
+### Extending the class dynamically
 
 In Python you can add new attributes to a class dynamically. As the Phonetic/Algorithm
-and Soundex class are now, they can not get new attributes dynamically.
-This feature can be added to the parent (PhoneticAlgorithm), at the same time
-we add a new class we want to implement, the ReverseSoundex.
+and Soundex class are implemented, they can not get new attributes dynamically.
 
-We add the file ReverseSoundex.h with following contens to the *src*-subdirectory:
-
-```cpp
-#ifndef REVERSESOUNDEX_H
-#define REVERSESOUNDEX_H
-#include  "PhoneticAlgorithm.h"
-
-class ReverseSoundex : public PhoneticAlgorithm {
-
-};
-#endif  // REVERSESOUNDEX
-```
+This feature we add to the parent (PhoneticAlgorithm).
 
 The Py11PhoneAlg.cpp is changed to:
 
 ```cpp
+// file: Py11PhoneAlg.cpp
 #include <pybind11/pybind11.h>
 #include "PhoneticAlgorithm.h"
 #include "Soundex.h"
-#include "ReverseSoundex.h"
 
 namespace py = pybind11;
 
-  
-PYBIND11_PLUGIN(phonetic) {
-  py::module m("phonetic", "pybind11 phonetic plugin");
+class PyPhoneticAlg : public PhoneticAlgorithm {
+public:
+  // Inherit the constructors
+  using PhoneticAlgorithm::PhoneticAlgorithm;
+  std::string encode(const std::string& word) const override {
+    PYBIND11_OVERLOAD_PURE (
+			    std::string,      // Return type
+			    PhoneticAlgorithm, // Parent class
+			    encode,            // Name of function in C++
+			    word               // Argument(s)
+			    );
+  }
+};
 
-  py::class_<PhoneticAlgorithm>(m,"PhoneticAlgorithm",py::dynamic_attr())
+std::string call_encode(PhoneticAlgorithm& phxalg) {
+  return phxalg.encode("Allison");
+}
+  
+PYBIND11_MODULE(phoneticA, mod) {
+  mod.doc() = "pybind11 phonetic plugin";
+
+  py::class_<PhoneticAlgorithm, PyPhoneticAlg>(mod,"phalgo",py::dynamic_attr())
     .def(py::init<>())
     .def("encode", &PhoneticAlgorithm::encode);
 
-  py::class_<Soundex,PhoneticAlgorithm /* specify C++ parent */>(m,"soundex")
+  py::class_<Soundex,PhoneticAlgorithm>(mod,"sndx")
     .def(py::init<>())
     .def("encode", &Soundex::encode);
 
-  py::class_<ReverseSoundex,PhoneticAlgorithm /* specify C++ parent */>(m,"reversesoundex")
-    .def(py::init<>());
-
-  return m.ptr();
+  mod.def("call_encode", &call_encode);
 
 }
 ```
 
-We are now starting to implement a new class, but we have not implemented any
-methods or attributes. When have we done the cmake/make build, we can start
- the python interpreter and import the library:
- 
-```python
->>> import phonetic
->>> t = phonetic.PhoneticAlgorithm()
->>> s = phonetic.soundex()
->>> r = phonetic.reversesoundex()
->>> t.__dict__
-{}
->>> s.__dict__
-{}
->>> r.__dict__
-{}
+We add the `py::dynamic_attr` tag to the  `py::class_` constructor. In addition
+we state the inheritance on the "C++"-side of the Soundex() `py::class_` constructor.
+
+
+We build the module once more, assuming we are done in the `src`-directory:
+
+```bash
+$ cd ..
+$ cd build
+$ make
+$ cd lib
+$ python
 ```
 
-The subclass has inherited the dynamic feature from the parent class Phonetic Algorithm.
-Let us prototype the encode method for ReverseSoundex classL
+Import the module into Python again, and let us check out how the classes have changed.
 
-``` python
->>> def rencode(word):
-...   x = s.encode(word)
-...   return x[1:]+word[:1]
+```python
+>>> import phoneticA
+>>> p = phoneticA.sndx()
+>>> p.__dict__
+{}
+>>> p.original="Longhorn"
+>>> p.__dict__
+{'original': 'Longhorn'}
+>>> class reversesoundex(phoneticA.phalgo):
+...     def encode(this, word):
+...             t = phoneticA.sndx()
+...             tmp = t.encode(word)
+...             return tmp[1:]+tmp[0]
 ... 
->>> r.encode=rencode
+>>> r = reversesoundex()
+>>> r.encode('Robertson')
+u'163R'
 >>> r.__dict__
-{'encode': <function rencode at 0x7f25e7e3ca28>}
->>> r.encode('Allison')
-u'425A'
+{}
+>>> r.orginal='Robertson'
+>>> r.__dict__
+{'orginal': 'Robertson'}
 >>> 
 ```
+In this way we can extend the individual classes with attributes or instance
+methods whether or not the classes are implemented in C++ or Python.
 
 LocalWords:  Soundex Pybind11
