@@ -63,7 +63,8 @@ preferred language, choose Cython. If your competence are mainly in C++,
 but you need to provide a python library, choose Pybind11.
 
 If python is not your choice, but you need to bind another scripting language
-with compiled code, then go with SWIG.
+with compiled code, then go with SWIG, but use CMake to hide complexity in the
+building process.
 
 If C or Fortran is your preferred compiled language, then consider CFFI.
 
