@@ -11,18 +11,19 @@ keypoints:
   - Write me.
 ---
 
-## Section
+## Pybind11  - binding to C++11
 
 Assume we are starting a project on  Phonetic Algorithms. We have received
-source code for the Soundex algorithm which is one Phonetic Algorithm
-(The code used here is from  [Jeff Langr's](http://langrsoft.com/about/) book
-[Modern C++ Programming with Test-Driven Development](http://pragprog.com/book/lotdd/modern-c-programming-with-test-driven-development)
+source code for the Soundex algorithm which is one Phonetic Algorithm.
+(The code is from  [Jeff Langr's](http://langrsoft.com/about/) book
+[Modern C++ Programming with Test-Driven Development](http://pragprog.com/book/lotdd/modern-c-programming-with-test-driven-development))
 
 Our ambition is to implement a Phonetic Algorithm class where Soundex is one
-several encoding algorithm
+several encoding algorithm. Here is class diagram of what we want to implement:
+![Class diagram for phoneticA]({{ site.baseurl }}/img/uml-phoneticA.png "Class diagram for phoneticA. Licenses CC BY 3.0"){:class="img-responsive"}
 
-Other Phonetic Algorithms are [Daitch-Mokotoff Soundex](https://en.wikipedia.org/wiki/Daitch–Mokotoff_Soundex),
-[Cologne phonetics](https://en.wikipedia.org/wiki/Cologne_phonetics) or [NYIIS](https://en.wikipedia.org/wiki/New_York_State_Identification_and_Intelligence_System)
+Other Phonetic Algorithms are [Match Rating Approach](https://en.wikipedia.org/wiki/Match_rating_approach),
+[Daitch-Mokotoff Soundex](https://en.wikipedia.org/wiki/Daitch–Mokotoff_Soundex), or [New Your State Identification and Intelligence System (NYIIS)](https://en.wikipedia.org/wiki/New_York_State_Identification_and_Intelligence_System)
 
 ## The Soundex Source code
 
