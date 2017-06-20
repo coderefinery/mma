@@ -25,17 +25,64 @@ several encoding algorithm. Here is class diagram of what we want to implement:
 Other Phonetic Algorithms are [Match Rating Approach](https://en.wikipedia.org/wiki/Match_rating_approach),
 [Daitch-Mokotoff Soundex](https://en.wikipedia.org/wiki/Daitch–Mokotoff_Soundex), or [New Your State Identification and Intelligence System (NYIIS)](https://en.wikipedia.org/wiki/New_York_State_Identification_and_Intelligence_System)
 
-## The Soundex Source code
+### The setup
+Change directory to the `phoneticA` subdirectory:
 
- Here is source code for a Phonetic Algorithm  [Soundex](https://en.wikipedia.org/wiki/Soundex) . We want to make use of Soundex in Python with help of Pybind11
+```bash
+$ pwd
+/Users/lynx/git-repos/python-ctools-demo/pybind11-demo
+$ cd ../phoneticA/
+```
 
+You should have filestructure which is similar, with a lot of files under `pybind11`
+If `pybind11` is empty, do `git submodule init; git submodule update`.
+
+
+```bash
+.
+|-- CMakeLists.txt
+|-- pybind11
+...
+`-- src
+    |-- CMakeLists.txt
+    |-- PhoneticAlgorithm.h
+    |-- Py11PhoneAlg.cpp
+    `-- Soundex.h
+```
+
+### The C++ source code
+Here is source code for the virtual class  PhoneticAlgorithm. The class have
+one pure virtual function. In C++ this means all classes which
+inherit the class PhoneticAlgorithm need to implement this function.
 
 ```cpp
+// file: PhoneticAlgorithm.h
+#ifndef PHONETICALGORITHM_H
+#define PHONETICALGORITHM_H
+
+class PhoneticAlgorithm{
+ public:
+  virtual ~PhoneticAlgorithm(){ }
+  virtual std::string encode(const std::string& word) const = 0;  // pure virtual function
+};
+
+#endif //PHONETICALGORITHM_H
+```
+
+Here is the implementation of the Soundex algorithm.
+
+```cpp
+// file: Soundex.h
 #ifndef SOUNDEX_H
 #define SOUNDEX_H
 #include <string>
 #include <unordered_map>
-class Soundex {
+
+#include "PhoneticAlgorithm.h"
+
+// Soundex inherit PhoneticAlgorithm
+
+class Soundex : public PhoneticAlgorithm { 
     static const size_t MaxCodeLength{4};
 public:
     std::string encode(const std::string& word) const {
@@ -121,7 +168,8 @@ private:
 
 #endif //SOUNDEX_H
 ```
-The source code implements the [Soundex algorithm](https://en.wikipedia.org/wiki/Soundex) which according to Wikipedia maps a name or word to its' first letter
+
+The [Soundex algorithm](https://en.wikipedia.org/wiki/Soundex), according to Wikipedia, maps a name or word to its' first letter
 followed by three numerical digits. Outlined the algorithm goes like:
  1. Retain the first letter of the name and drop all other occurrences of a,e,i,o,u,y,h,w
  2. Replace consonants with digits as follows (after the first letter)
@@ -139,120 +187,113 @@ followed by three numerical digits. Outlined the algorithm goes like:
  append with zeros until there are three numbers. If you have more than 3 letters,
  just retain the first 3 numbers.
 
-
-### Building the library using CMake
-We will make a subdirectory pybind11 with a *src* subdirectory where put the source code
-In addition there will be a CMakeLists.txt file under pybind11 and a CMakeLists.txt
-under src:
-
-```shell
-pybind11 | -  CMakeLists.txt
-         |
-	 |
-	 | -  src | -  CMakeLists.txt 
-	          |
-	          | -  Soundex.h
-	          |
-	          | -  Py11Soundex.cpp
-
-```
-
-Let us create the subdirectory setup and the files:
-
-```shell
-(pybind11-example) [lynx@lille-login2~]$ mkdir -p pybind11/src
-(pybind11-example) [lynx@lille-login2~]$ cd pybind11/src
-(pybind11-example) [lynx@lille-login2~]$ cat > Soundex.h
-Create the Soundex.h file by pasting in the source code either by using cat
-or your favorite editor.
-```
-The contents of Py11Soundex.cpp:
+### The interface file
+The interface for Python needs to be defined. This is done in `Py11PhoneAlg.cpp`.
 
 ```cpp
-// File: Py11Soundex.cpp
+// file: Py11PhoneAlg.cpp
 #include <pybind11/pybind11.h>
+#include "PhoneticAlgorithm.h"
 #include "Soundex.h"
 
 namespace py = pybind11;
 
-PYBIND11_PLUGIN(soundex) {
-  py::module m("soundex", "pybind11 soundex plugin");
+class PyPhoneticAlg : public PhoneticAlgorithm {
+public:
+  // Inherit the constructors
+  using PhoneticAlgorithm::PhoneticAlgorithm;
+  std::string encode(const std::string& word) const override {
+    PYBIND11_OVERLOAD_PURE (
+			    std::string,      // Return type
+			    PhoneticAlgorithm, // Parent class
+			    encode,            // Name of function in C++
+			    word               // Argument(s)
+			    );
+  }
+};
 
-  py::class_<Soundex>(m,"soundex")
+std::string call_encode(PhoneticAlgorithm& phxalg) {
+  return phxalg.encode("Allison");
+}
+  
+PYBIND11_MODULE(phoneticA, mod) {
+  mod.doc() = "pybind11 phonetic plugin";
+
+  py::class_<PhoneticAlgorithm, PyPhoneticAlg> phalgo(mod,"phalgo");
+  phalgo
+    .def(py::init<>())
+    .def("encode", &PhoneticAlgorithm::encode);
+
+  py::class_<Soundex>(mod,"sndx",phalgo)
     .def(py::init<>())
     .def("encode", &Soundex::encode);
+
+  mod.def("call_encode", &call_encode);
+
 }
-
-``` 
-Create the Py11Soundex.cpp file in the *src* subdirectory:
-
-```shell
-(pybind11-example) [lynx@lille-login2src]$ cat > Py11Soundex.cpp
-Cat the contents of Py11Soundex.cpp to Py11Soundex.cpp or use
-an editor
-
-```
-Create also the CMakeLists.txt file in the *src* subdirectory.
-Here is the CMakeLists.txt file, just one line:
-
-```cmake
-pybind11_add_module(soundex Py11Soundex.cpp)
-```
-Change to the directory above after you have made the file:
-
-```shell
-(pybind11-example) [lynx@lille-login2src]$ cat > CMakeLists.txt
-pybind11_add_module(soundex Py11soundex.cpp)
-<Ctrl>-d
-(pybind11-example) [lynx@lille-login2src]$ cd ..
-(pybind11-example) [lynx@lille-login2py11bind]$ 
-
 ```
 
-Create the top level CMakeLists.txt in this directory. Here is the contents:
+### Building the library
+There is three CMakeLists.txt files in the directory. One is part of the `pybind11`
+project. The two others are made for the this project, phoneticA. Here is the top
+level CMake file
 
 ```cmake
 cmake_minimum_required(VERSION 2.8 FATAL_ERROR)
-project(soundex)
+project(phoneticA)
 
-set(CMAKE_LIBRARY_OUTPUT_DIRECTORY
-  ${CMAKE_BINARY_DIR}/lib
-  )
+SET(CMAKE_LIBRARY_OUTPUT_DIRECTORY
+   ${CMAKE_BINARY_DIR}/lib
+   )
 
-find_package(pybind11 REQUIRED )
-
+add_subdirectory(pybind11)
 add_subdirectory(src)
 ```
-After you have made the CMakeLists.txt, make a build subdirectory, *cd* into it
-generate the build files by running cmake, and execute make
 
-```shell
-(pybind11-example) [lynx@lille-login2src]$ cat > CMakeLists.txt
-Paste the contents of the CMakeLists.txt and press <Ctrl>-d
-(pybind11-example) [lynx@lille-login2src]$ mkdir build
-(pybind11-example) [lynx@lille-login2src]$ cd build
-(pybind11-example) [lynx@lille-login2build]$  cmake ..
-(pybind11-example) [lynx@lille-login2build]$  make
+This is the CMake file in the `src` subdirectory:
 
+```cmake
+include_directories(${CMAKE_CURRENT_SOURCE_DIR})
+set(SOURCE_FILES Py11PhoneAlg.cpp)
+pybind11_add_module(phoneticA ${SOURCE_FILES})  
 ```
-After the make, we cd into the lib subdirectory and load the soundex library:
+
+To build this project and load it in Python we do the following at the top level directory:
 
 ```shell
-(pybind11-example) [lynx@lille-login2 build]$ cmake ..
--- The C compiler identification is GNU 6.3.0
--- The CXX compiler identification is GNU 6.3.0
--- Check for working C compiler: /share/apps/modulessoftware/Core/gcc/6.3.0/bin/gcc
--- Check for working C compiler: /share/apps/modulessoftware/Core/gcc/6.3.0/bin/gcc -- works
+$ mkdir build
+$ cd build
+$ cmake ..
+$ make
+$ cd lib
+$ python
+>>> import phoneticA
+>>> d = phoneticA.sndx()
+>>> d.encode("Robertsen")
+```
+
+Here is output from building on a Linux system:
+
+```shell
+[lynx@lille-login2 python-ctools-demo]$ cd phoneticA/
+[lynx@lille-login2 phoneticA]$ mkdir build
+[lynx@lille-login2 phoneticA]$ cd build
+[lynx@lille-login2 build]$ cmake ..
+-- The C compiler identification is GNU 4.8.5
+-- The CXX compiler identification is GNU 4.8.5
+-- Check for working C compiler: /usr/bin/cc
+-- Check for working C compiler: /usr/bin/cc -- works
 -- Detecting C compiler ABI info
 -- Detecting C compiler ABI info - done
--- Check for working CXX compiler: /share/apps/modulessoftware/Core/gcc/6.3.0/bin/g++
--- Check for working CXX compiler: /share/apps/modulessoftware/Core/gcc/6.3.0/bin/g++ -- works
+-- Check for working CXX compiler: /usr/bin/c++
+-- Check for working CXX compiler: /usr/bin/c++ -- works
 -- Detecting CXX compiler ABI info
 -- Detecting CXX compiler ABI info - done
--- Found PythonInterp: /home/lynx/anaconda2/envs/pybind11-example/bin/python (found version "2.7.13") 
--- Found PythonLibs: /home/lynx/anaconda2/envs/pybind11-example/lib/libpython2.7.so
+-- Found PythonInterp: /usr/bin/python (found version "2.7.5") 
+-- Found PythonLibs: /usr/lib64/libpython2.7.so
+-- pybind11 v2.2.dev0
 -- Performing Test HAS_CPP14_FLAG
--- Performing Test HAS_CPP14_FLAG - Success
+-- Performing Test HAS_CPP14_FLAG - Failed
 -- Performing Test HAS_CPP11_FLAG
 -- Performing Test HAS_CPP11_FLAG - Success
 -- Performing Test HAS_FLTO
@@ -260,23 +301,21 @@ After the make, we cd into the lib subdirectory and load the soundex library:
 -- LTO enabled
 -- Configuring done
 -- Generating done
--- Build files have been written to: /home/lynx/src/c++/encodings/soundex/pybind11/build
-(pybind11-example) [lynx@lille-login2 build]$ make
-Scanning dependencies of target soundex
-[100%] Building CXX object src/CMakeFiles/soundex.dir/Py11Soundex.cpp.o
-Linking CXX shared module ../lib/soundex.so
-[100%] Built target soundex
-(pybind11-example) [lynx@lille-login2 build]$ cd lib
-(pybind11-example) [lynxy@lille-login2 lib]$ python
-Python 2.7.13 |Continuum Analytics, Inc.| (default, Dec 20 2016, 23:09:15) 
-[GCC 4.4.7 20120313 (Red Hat 4.4.7-1)] on linux2
+-- Build files have been written to: /home/lynx/tmp/python-ctools-demo/phoneticA/build
+[lynx@lille-login2 build]$ make
+Scanning dependencies of target phoneticA
+[100%] Building CXX object src/CMakeFiles/phoneticA.dir/Py11PhoneAlg.cpp.o
+Linking CXX shared module ../lib/phoneticA.so
+[100%] Built target phoneticA
+[lynx@lille-login2 build]$ cd lib
+[lynx@lille-login2 lib]$ python
+Python 2.7.5 (default, Nov  6 2016, 00:28:07) 
+[GCC 4.8.5 20150623 (Red Hat 4.8.5-11)] on linux2
 Type "help", "copyright", "credits" or "license" for more information.
-Anaconda is brought to you by Continuum Analytics.
-Please check out: http://continuum.io/thanks and https://anaconda.org
->>> import soundex
->>> p = soundex.soundex()
->>> p.encode('Allison')
-u'A425'
+>>> import phoneticA
+>>> d = phoneticA.sndx()
+>>> d.encode("Robertsen")
+u'R163'
 >>> 
 ```
 
@@ -484,7 +523,7 @@ We generate the builds files in a subdirectory. Run make and load the library
 into our python interpreter:
 
 ```shell
-(pybind11-example) [bjornlin@lille-login2 build]$ cmake ..
+(pybind11-example) [lynx@lille-login2 build]$ cmake ..
 -- The C compiler identification is GNU 6.3.0
 -- The CXX compiler identification is GNU 6.3.0
 -- Check for working C compiler: /share/apps/modulessoftware/Core/gcc/6.3.0/bin/gcc
@@ -495,8 +534,8 @@ into our python interpreter:
 -- Check for working CXX compiler: /share/apps/modulessoftware/Core/gcc/6.3.0/bin/g++ -- works
 -- Detecting CXX compiler ABI info
 -- Detecting CXX compiler ABI info - done
--- Found PythonInterp: /home/bjornlin/anaconda2/envs/pybind11-example/bin/python (found version "2.7.13") 
--- Found PythonLibs: /home/bjornlin/anaconda2/envs/pybind11-example/lib/libpython2.7.so
+-- Found PythonInterp: /home/lynx/anaconda2/envs/pybind11-example/bin/python (found version "2.7.13") 
+-- Found PythonLibs: /home/lynx/anaconda2/envs/pybind11-example/lib/libpython2.7.so
 -- Performing Test HAS_CPP14_FLAG
 -- Performing Test HAS_CPP14_FLAG - Success
 -- Performing Test HAS_CPP11_FLAG
@@ -506,14 +545,14 @@ into our python interpreter:
 -- LTO enabled
 -- Configuring done
 -- Generating done
--- Build files have been written to: /home/bjornlin/src/c++/encodings/phoneticA/build
-(pybind11-example) [bjornlin@lille-login2 build]$ make
+-- Build files have been written to: /home/lynx/src/c++/encodings/phoneticA/build
+(pybind11-example) [lynx@lille-login2 build]$ make
 Scanning dependencies of target phonetic
 [100%] Building CXX object src/CMakeFiles/phonetic.dir/Py11PhoneAlg.cpp.o
 Linking CXX shared module ../lib/phonetic.so
 [100%] Built target phonetic
-(pybind11-example) [bjornlin@lille-login2 build]$ cd lib
-(pybind11-example) [bjornlin@lille-login2 lib]$ python
+(pybind11-example) [lynx@lille-login2 build]$ cd lib
+(pybind11-example) [lynx@lille-login2 lib]$ python
 Python 2.7.13 |Continuum Analytics, Inc.| (default, Dec 20 2016, 23:09:15) 
 [GCC 4.4.7 20120313 (Red Hat 4.4.7-1)] on linux2
 Type "help", "copyright", "credits" or "license" for more information.
