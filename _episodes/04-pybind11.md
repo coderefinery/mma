@@ -4,7 +4,7 @@ title: Hands-on example using PyBind11
 teaching: 40
 exercises: 0
 questions:
-  - Write me.
+  - What tool do you recommend to interface Python and C++?
 objectives:
   - Unit testing and prototyping of C++ code.
 keypoints:
