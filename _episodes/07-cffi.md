@@ -308,3 +308,12 @@ yet, you can also install directly from GitHub:
 $ pip install git+https://github.com/bast/python-cffi-demo.git
 $ python -c 'import island; print(island.approximate_pi_c(100))'
 ```
+
+![]({{ site.baseurl }}/img/casa.jpg "House-Studio of Diego Rivera and Frida Kahlo")
+
+*[...] a home made up of two concrete blocks smooth, **independent of one
+another and linked by a narrow bridge that joins the rooftops**. A block is red
+and represents Diego. The other is blue, representing Frida. **The bridge that
+unites them is the bond of love between them**.*
+
+(source: [https://en.wikiarquitectura.com/building/house-studio-museum-of-diego-rivera-and-frida-kahlo/](https://en.wikiarquitectura.com/building/house-studio-museum-of-diego-rivera-and-frida-kahlo/))

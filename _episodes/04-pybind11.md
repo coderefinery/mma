@@ -4,7 +4,7 @@ title: Hands-on example using PyBind11
 teaching: 40
 exercises: 0
 questions:
-  - Write me.
+  - What tool do you recommend to interface Python and C++?
 objectives:
   - Unit testing and prototyping of C++ code.
 keypoints:
@@ -219,14 +219,17 @@ std::string call_encode(PhoneticAlgorithm& phxalg) {
 PYBIND11_MODULE(phoneticA, mod) {
   mod.doc() = "pybind11 phonetic plugin";
 
+
   py::class_<PhoneticAlgorithm, PyPhoneticAlg> phalgo(mod,"phalgo");
   phalgo
     .def(py::init<>())
     .def("encode", &PhoneticAlgorithm::encode);
 
+
   py::class_<Soundex>(mod,"sndx",phalgo)
     .def(py::init<>())
     .def("encode", &Soundex::encode);
+
 
   mod.def("call_encode", &call_encode);
 
@@ -249,6 +252,7 @@ SET(CMAKE_LIBRARY_OUTPUT_DIRECTORY
 add_subdirectory(pybind11)
 add_subdirectory(src)
 ```
+
 
 This is the CMake file in the `src` subdirectory:
 
@@ -410,7 +414,6 @@ PYBIND11_MODULE(phoneticA, mod) {
 
 We add the `py::dynamic_attr` tag to the  `py::class_` constructor. In addition
 we state the inheritance on the "C++"-side of the Soundex() `py::class_` constructor.
-
 
 We build the module once more, assuming we are done in the `src`-directory:
 

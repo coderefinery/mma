@@ -1,7 +1,7 @@
 ---
 layout: episode
 title: Break
-teaching: 30
+teaching: 10
 exercises: 0
 questions:
 ---
