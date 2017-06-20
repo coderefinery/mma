@@ -51,7 +51,7 @@ most suitable tool for integrating Python and C++.
 Scripting for Computational Science" transferring Numpy arrays between Python
 and compiled Fortran code is easier with F2PY than SWIG.
 
-**CFFI** C Foreign Function Inteface for Python requires only knowledge of C
+**CFFI** C Foreign Function Interface for Python requires only knowledge of C
 and Python. There is no need to gain knowledge of a domain specific language.
 
 ### How too choose the most suitable tool?
@@ -539,5 +539,4 @@ remote: Total 8182 (delta 4), reused 11 (delta 3), pack-reused 8161
 Receiving objects: 100% (8182/8182), 2.85 MiB | 1.12 MiB/s, done.
 Resolving deltas: 100% (5444/5444), done.
 Submodule path 'pybind11-demo/pybind11': checked out '13d8cd2cc7566de34d724f428ea7a6b6448d6a0c'
-
 ```
