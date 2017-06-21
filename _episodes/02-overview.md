@@ -58,12 +58,13 @@ and Python. There is no need to gain knowledge of a domain specific language.
 Here are our rule of thumb:
 
 If you need to interface C/C++, four of the mentioned tools/libraries are
-available to you. Are you most experienced with python and python is your
+available to you. Are you most experienced with Python and Python is your
 preferred language, choose Cython. If your competence are mainly in C++,
-but you need to provide a python library, choose Pybind11.
+but you need to provide a Python library, choose Pybind11.
 
-If python is not your choice, but you need to bind another scripting language
-with compiled code, then go with SWIG.
+If Python is not your choice, but you need to bind another scripting language
+with compiled code, then go with SWIG, but use CMake to hide complexity in the
+building process.
 
 If C or Fortran is your preferred compiled language, then consider CFFI.
 
@@ -149,7 +150,7 @@ use of `distutils`. How to build with `distutils` is also shown be low.
 You will need to clone a git repository:
 
 ```bash
-$ git clone https://github.com/blindij/python-ctools-demo.git --recursive
+$ git clone https://github.com/coderefinery/python-ctools-demo.git --recursive
 $ cd python-ctools-demo/cmake-demo
 ```
 
