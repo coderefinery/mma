@@ -254,7 +254,7 @@ history](https://travis-ci.org/bast/python-cffi-demo/builds) for your project.
 ## Exercise 6: adding a setup script
 
 Finally we want to put a cherry on top of our project and make it possible to
-install with `pip` and even upload to [PyPI - the Python Package Index](https://pypi.python.org/pypi).
+install with `pip` and even upload to [PyPI - the Python Package Index](https://pypi.org).
 
 For this go to the root directory of your project (one level above the `island`
 directory) and fetch a setup script which we have already prepared for you:
@@ -301,7 +301,7 @@ In the setup script we subclass the `install` and `build` methods and call
 CMake under the hood which configures, builds, and installs the libraries in
 the right place.
 
-If you are not ready for [PyPI](https://pypi.python.org/pypi)
+If you are not ready for [PyPI](https://pypi.org)
 yet, you can also install directly from GitHub:
 
 ```shell
