@@ -11,7 +11,7 @@ keypoints:
   - Use the right tool for the right task and leverage tools.
 ---
 
-## Why?
+## Why is one programming language often not enough?
 
 |      | Python      | C                          | C++                                    | Fortran            |
 |------|-------------|----------------------------|----------------------------------------|--------------------|
@@ -22,8 +22,9 @@ keypoints:
 | Cons | speed       | low-level                  | complexity                             | lack of containers |
 |      |             | explicit memory management | lots of boilerplate code               | input parsing      |
 
+---
 
-### Motivation
+## Motivation for this tutorial
 
 - Each language has strengths and weaknesses, combine the strengths.
 - To speed up Python code: move the bottleneck outside of Python.
