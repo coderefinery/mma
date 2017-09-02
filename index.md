@@ -29,12 +29,14 @@ like to be able to combine these languages within one code project:
 - When combining modules written in different programming languages.
 - When writing a Python interface to a software in C or C++ or Fortran to
   leverage the wealth of libraries available in Python.
+- For testing and prototyping compiled code with Python.
 
 
 ## Prerequisites
 
 To appreciate the material it helps to have some previous exposure to Python
-and a compiled language (such as C, C++, or Fortran).
+and a compiled language (C, C++, or Fortran).
 
 To traverse the material you will need a C++ compiler which is C++11 compliant,
-a Fortran compiler, CMake, Make, Git and a [couple of Python packages](https://coderefinery.github.io/installation/).
+a Fortran compiler, CMake, Make, Git and a [couple of Python
+packages](https://coderefinery.github.io/installation/).
