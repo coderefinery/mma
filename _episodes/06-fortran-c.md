@@ -102,6 +102,7 @@ def approximate_pi(num_points):
 ### Questions
 
 - Does it converge to the right number?
+- Does it take longer when you increase `num_points`?
 - Why is there no `math.sqrt` in the code?
 
 ---
