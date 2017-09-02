@@ -1,8 +1,8 @@
 ---
 layout: episode
-title: Hands-on example using PyBind11
-teaching: 40
-exercises: 0
+title: Hands-on example using pybind11
+teaching: 15
+exercises: 15
 questions:
   - What tool do you recommend to interface Python and C++?
 objectives:

@@ -1,7 +1,7 @@
 ---
 layout: episode
 title: Using the C Foreign Function Interface for Python
-teaching: 20
+teaching: 15
 exercises: 20
 questions:
   - Is there a non-intrusive way to couple C/C++/Fortran and Python?

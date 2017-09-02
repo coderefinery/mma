@@ -1,7 +1,7 @@
 ---
 layout: episode
 title: Overview over different approaches
-teaching: 10
+teaching: 5
 exercises: 0
 questions:
   - Which tools are out there?
