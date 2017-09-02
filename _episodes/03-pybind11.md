@@ -7,8 +7,8 @@ questions:
   - What tool do you recommend to interface Python and C++?
 objectives:
   - Unit testing and prototyping of C++ code.
-keypoints:
-  - Write me.
+#keypoints:
+#  - Write me.
 ---
 
 ### Combining a C++-code with Cython or Pybind11
