@@ -40,7 +40,7 @@ There exist several technologies which make it possible to couple Python and com
 |          | generates Python bindings |                                  |
 |          | any language (via C)      |                                  |
 
-In this tutorial we will take a closer look at two tools:
+In this tutorial we will take a closer look at two of these tools:
 
 - pybind11: it is possibly the simplest and most modern way to interface Python and C++.
 
