@@ -37,7 +37,7 @@ keypoints:
 - Use tools like [gcov](https://gcc.gnu.org/onlinedocs/gcc/Gcov.html).
 - Use platforms like [Coveralls](https://coveralls.io).
 - Identify untested code and dead wood.
-- Iterate with step 1) and 2).
+- Iterate with step 1 and 2.
 
 
 ### 4) Define interfaces
