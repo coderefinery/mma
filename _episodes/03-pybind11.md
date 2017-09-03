@@ -44,7 +44,7 @@ class Pet
 
 ---
 
-## Download and build the example project
+## Download and build the [example project](https://github.com/bast/pybind11-demo)
 
 Note the `--recursive` when cloning the project. This is important since the
 example project recursively clones the header library pybind11 which will
