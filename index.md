@@ -37,6 +37,11 @@ like to be able to combine these languages within one code project:
 To appreciate the material it helps to have some previous exposure to Python
 and a compiled language (C, C++, or Fortran).
 
+
+## Required software
+
 To traverse the material you will need a C++ compiler which is C++11 compliant,
-a Fortran compiler, CMake, Make, Git and a [couple of Python
-packages](https://coderefinery.github.io/installation/).
+a Fortran compiler, CMake, Make, Git and the Python packages pytest and cffi.
+You will also need header files to build Python extensions by installing
+python-dev (Debian-like systems) or python-devel/python3-devel (RedHat-like
+systems).
