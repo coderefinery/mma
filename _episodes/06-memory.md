@@ -70,6 +70,8 @@ void get_array_safe(const int len, double array[])
 How can we use the second one?
 
 ```python
+from cffi import FFI
+
 def get_array_safe(length):
     ffi = FFI()
     lib = ffi.dlopen(...)
