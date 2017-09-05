@@ -8,7 +8,7 @@ questions:
 objectives:
   - Unit testing and prototyping of C++ code.
 keypoints:
-  - pybind11 is the way to go to interface C++11 with Python.
+  - pybind11 is the recommended tool to interface C++11 with Python.
 ---
 
 ## Example
