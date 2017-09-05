@@ -13,7 +13,7 @@ keypoints:
 
 ## Overview
 
-There exist several technologies which make it possible to couple Python and compiled libraries:
+There exist several tools which make it possible to couple Python and compiled libraries:
 
 |          | Pros                      | Cons                             |
 |----------|---------------------------|----------------------------------|
@@ -31,7 +31,7 @@ There exist several technologies which make it possible to couple Python and com
 | Boost    | powerful                  | huge                             |
 |----------|---------------------------|----------------------------------|
 | F2PY     | direct link to Fortran    | intrusive to source code         |
-|          | no need to go via C       | restrictive to functionality     |
+|          | no need to go via C       | restricts some features          |
 |----------|---------------------------|----------------------------------|
 | CFFI     | general                   | for C++, pybind11 is more direct |
 |          | simple                    |                                  |
@@ -42,7 +42,7 @@ There exist several technologies which make it possible to couple Python and com
 
 In this tutorial we will take a closer look at two of these tools:
 
-- pybind11: it is possibly the simplest and most modern way to interface Python and C++.
+- pybind11: it is a modern, simple, and lightweight way to interface Python and C++.
 
 - CFFI: because it is modern, simple, non-intrusive (does not require modifying
   neither the Python nor the compiled code), and very general since almost any
