@@ -35,5 +35,5 @@ and a compiled language (C, C++, or Fortran).
 - CMake
 - Make
 - Git
-- pytest and cffi
+- pytest and cffi (we recommend to install these using Virtualenv or Anacoda or Miniconda)
 - python-dev (Debian-like systems) or python-devel/python3-devel (RedHat-like systems)
