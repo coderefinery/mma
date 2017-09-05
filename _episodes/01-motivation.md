@@ -20,7 +20,10 @@ keypoints:
 |      | libraries   |                            |                                        |                    |
 |------|-------------|----------------------------|----------------------------------------|--------------------|
 | Cons | speed       | low-level                  | complexity                             | lack of containers |
-|      |             | explicit memory management | lots of boilerplate code               | input parsing      |
+|      | type system | explicit memory management | lots of boilerplate code               | input parsing      |
+
+Some cons are sometimes pros. This is not a flame-war.
+The point here is that different languages have their own strengths and weaknesses.
 
 ---
 
