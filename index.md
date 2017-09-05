@@ -34,6 +34,9 @@ and a compiled language (C, C++, or Fortran).
 
 ## Required software
 
+This lesson is tested on Linux and Mac.
+It should be possible to get it to run on Windows but tweaks are then necessary.
+
 - C++ compiler which is C++11 compliant (e.g. g++)
 - Fortran compiler (e.g. gfortran)
 - CMake
