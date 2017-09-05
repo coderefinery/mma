@@ -70,7 +70,7 @@ Later we will combine these 3 implementations in a Python package and learn few 
 
 ---
 
-## Exercise 1: testing the algorithm
+## Exercise 3: testing the algorithm
 
 Before you continue, create a fresh directory for this session.
 
@@ -107,7 +107,7 @@ def approximate_pi(num_points):
 
 ---
 
-## Exercise 2: testing the isolated C++ and Fortran implementations
+## Exercise 4: testing the isolated C++ and Fortran implementations
 
 Let us now fetch an example from the web:
 
@@ -151,7 +151,7 @@ $ make
 
 ---
 
-## Exercise 3: C++ and Fortran talking to each other
+## Exercise 5: C++ and Fortran talking to each other
 
 Your task now is to let C++ also call the Fortran implementation and to let
 Fortran also call the C++ implementation.

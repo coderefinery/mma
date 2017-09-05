@@ -54,7 +54,7 @@ Imagine one of two situations:
 
 ---
 
-## Exercise 4: adding a Python interface
+## Exercise 6: adding a Python interface
 
 First make sure that the C++ and Fortran libraries from the previous session are compiled.
 
@@ -199,7 +199,7 @@ After testing the interface, take the time to study the files and discuss the co
 
 ---
 
-## Exercise 5: adding automated testing
+## Exercise 7: adding automated testing
 
 ### Motivations for testing your C/C++/Fortran code with Python
 
@@ -251,7 +251,7 @@ history](https://travis-ci.org/bast/python-cffi-demo/builds) for your project.
 
 ---
 
-## Exercise 6: adding a setup script
+## Exercise 8: adding a setup script
 
 Finally we want to put a cherry on top of our project and make it possible to
 install with `pip` and even upload to [PyPI - the Python Package Index](https://pypi.org).
