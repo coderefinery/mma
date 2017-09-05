@@ -64,3 +64,6 @@ collections:
   episodes:
     output: true
     permalink: /:name/
+  bonus:
+    output: true
+    permalink: /:name/
