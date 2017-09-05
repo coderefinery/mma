@@ -3,17 +3,7 @@ layout: lesson
 permalink: /
 ---
 
-# Mixed Martial Arts: Interfacing Fortran, C, C++, and Python for Great Good!
-
-<div class="panel panel-danger">
-  <div class="panel-heading">
-    <h3 class="panel-title">Status</h3>
-  </div>
-  <div class="panel-body">
-    This lesson is currently under construction - feedback and suggestions are most
-    welcome.
-  </div>
-</div>
+# Mixed Martial Arts: Interfacing Fortran, C, C++, and Python
 
 
 ## Learning goals
@@ -40,8 +30,10 @@ and a compiled language (C, C++, or Fortran).
 
 ## Required software
 
-To traverse the material you will need a C++ compiler which is C++11 compliant,
-a Fortran compiler, CMake, Make, Git and the Python packages pytest and cffi.
-You will also need header files to build Python extensions by installing
-python-dev (Debian-like systems) or python-devel/python3-devel (RedHat-like
-systems).
+- C++ compiler which is C++11 compliant (e.g. g++)
+- Fortran compiler (e.g. gfortran)
+- CMake
+- Make
+- Git
+- pytest and cffi
+- python-dev (Debian-like systems) or python-devel/python3-devel (RedHat-like systems)
