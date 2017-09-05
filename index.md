@@ -21,6 +21,10 @@ like to be able to combine these languages within one code project:
   leverage the wealth of libraries available in Python.
 - For testing and prototyping compiled code with Python.
 
+The goal of this lesson is not to become expert in pybind11 or Python CFFI but
+to get you on a good track with simple but working examples which can be
+adapted to your domain.
+
 
 ## Prerequisites
 
