@@ -103,7 +103,7 @@ def approximate_pi(num_points):
 
 - Does it converge to the right number?
 - Does it take longer when you increase `num_points`?
-- Why is there no `math.sqrt` in the code?
+- Why is there no `math.sqrt` when computing distances?
 
 ---
 
@@ -145,7 +145,9 @@ $ make
 ```
 
 - Test the binaries built under `build/bin/`.
-- Also have a look at [CMakeLists.txt](https://github.com/bast/python-cffi-demo/blob/exercise/cxx-fortran/CMakeLists.txt) and see if you can make sense of it.
+- Also have a look at [CMakeLists.txt](https://github.com/bast/python-cffi-demo/blob/exercise/cxx-fortran/CMakeLists.txt)
+  which defines the configuration of the code
+  and see if you can make sense of it.
 
 ---
 
