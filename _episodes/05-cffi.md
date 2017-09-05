@@ -128,7 +128,7 @@ If the commands above did not work, you can find the files
 [here](https://github.com/bast/python-cffi-demo/tree/master/island).
 
 The first file contains a function `get_lib_handle` which tells CFFI where to find the header file and the
-dynamic library from which CFFI creates a Python interface.
+dynamic library from which CFFI creates a Python interface - this is all CFFI needs to know!
 
 We have placed this function into a separate file so that you can reuse it for
 different libraries.
