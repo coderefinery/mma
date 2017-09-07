@@ -22,8 +22,9 @@ There exist several tools which make it possible to couple Python and compiled l
 |          |                           | complicates build process        |
 |----------|---------------------------|----------------------------------|
 | pybind11 | header-only               | requires C++11                   |
-|          | lightweight API           |                                  |
+|          | lightweight               |                                  |
 |          | great for C++11           |                                  |
+|          | C++ can call Python       |                                  |
 |----------|---------------------------|----------------------------------|
 | SWIG     | supports many languages   | requires writing interface files |
 |          |                           | complicates build process        |
