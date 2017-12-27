@@ -150,7 +150,7 @@ Let us first test it (at this point you need the `cffi` package activated):
 
 ```shell
 $ cd ..
-$ PI_BUILD_DIR=build python
+$ PI_LIBRARY_DIR=build/lib PI_INCLUDE_DIR=island python
 
 Python 3.6.1 (default, Mar 27 2017, 00:27:06)
 [GCC 6.3.1 20170306] on linux
@@ -161,7 +161,7 @@ Type "help", "copyright", "credits" or "license" for more information.
 >>>
 ```
 
-Why do we need to set `PI_BUILD_DIR` when importing our `island` package?
+Why do we need to set `PI_LIBRARY_DIR` and `PI_INCLUDE_DIR` when importing our `island` package?
 
 Now we can run some timings - create a file called `test.py` which contains:
 
@@ -190,7 +190,7 @@ if __name__ == '__main__':
 Try it out:
 
 ```shell
-$ PI_BUILD_DIR=build python test.py
+$ PI_LIBRARY_DIR=build/lib PI_INCLUDE_DIR=island python test.py
 ```
 
 Experiment with varying number of points.
@@ -220,7 +220,7 @@ For this you can enhance the `test.py` script with few test functions:
 Run the test set with:
 
 ```shell
-$ PI_BUILD_DIR=build pytest -vv test.py
+$ PI_LIBRARY_DIR=build/lib PI_INCLUDE_DIR=island pytest -vv test.py
 ```
 
 And you will hopefully see:
